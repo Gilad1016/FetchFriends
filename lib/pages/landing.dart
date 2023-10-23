@@ -1,9 +1,10 @@
 import 'package:dogy_park/design/color_pallette.dart';
-import 'package:dogy_park/pages/register.dart';
+import 'package:dogy_park/pages/signin/signin.dart';
 import 'package:flutter/material.dart';
+import 'package:dogy_park/widgets/custom_button.dart';
 
 class LandingPage extends StatelessWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  const LandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,10 @@ class LandingPage extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width * 0.2,
-                left: MediaQuery.of(context).size.width * 0.1,
-                right: MediaQuery.of(context).size.width * 0.1),
+              top: MediaQuery.of(context).size.width * 0.2,
+              left: MediaQuery.of(context).size.width * 0.1,
+              right: MediaQuery.of(context).size.width * 0.1,
+            ),
             child: Image.asset(
               'assets/who-let-the-dogs-out-logo-zip-file/png/logo-no-background.png',
               width: MediaQuery.of(context).size.width * 0.8,
@@ -39,8 +41,8 @@ class LandingPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
-            // margin: const EdgeInsets.only(top: 20, bottom: 20, left: 20, right: 20),
-            child: ElevatedButton(
+            child: CustomButton(
+              text: 'Bark!',
               onPressed: () {
                 // Replace this logic with your actual condition to check if a user item is stored
                 bool isUserStored =
@@ -54,31 +56,11 @@ class LandingPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const RegisterPage(),
+                      builder: (context) => SigninPage(),
                     ),
                   );
                 }
               },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.all(20),
-                backgroundColor: Colors.white, // White background
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  side: const BorderSide(
-                      color: AppColors.primaryColor,
-                      width: 5 // Border color
-                  ), // Outline color
-                ),
-              ),
-              child: const Text(
-                'Bark!',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
-                  color: AppColors.primaryColor, // Text color
-                ),
-              ),
             ),
           ),
         ],
