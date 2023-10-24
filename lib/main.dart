@@ -1,13 +1,13 @@
+import 'package:dogy_park/pages/signin/signup.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/firebase.dart';
 import 'package:dogy_park/pages/landing.dart';
 import 'package:dogy_park/tools/session_manager.dart';
 import 'package:dogy_park/design/color_pallette.dart';
-// import 'package:dogy_park/pages/login.dart';
-// import 'package:dogy_park/pages/home.dart';
-// import 'package:dogy_park/pages/signin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
      ),
       initialRoute: 'welcome',
       routes: {
-        'welcome': (context) => const LandingPage(),
+        '/welcome': (context) => const LandingPage(),
+        '/signup': (context) => SignupPage(),
       },
     );
   }

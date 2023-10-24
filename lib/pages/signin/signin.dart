@@ -1,7 +1,10 @@
+import 'package:dogy_park/pages/signin/signup.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/password_input.dart';
+import '../../widgets/inputs/email_input.dart';
+import '../../widgets/inputs/password_input.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/app_bar.dart';
+import '../../widgets/text_widget.dart';
 
 class SigninPage extends StatelessWidget {
   final _emailController = TextEditingController();
@@ -18,7 +21,10 @@ class SigninPage extends StatelessWidget {
   }
 
   void _onSignupButtonPressed(BuildContext context) {
-    // TODO: Navigate to signup page here.
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignupPage()),
+    );
   }
 
   @override
@@ -28,62 +34,48 @@ class SigninPage extends StatelessWidget {
         titleText: 'Signin',
         onLeadingPressed: () {
           // Handle leading button press
-          Navigator.pop(context); // Example: Navigate back
         },
         onActionPressed: () {
           // Handle action button press
           // For example, show a menu or perform an action
         },
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Signin',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const TextWidget(
+              headerText: 'Hello!',
+              subheaderText: 'Find out \'who let the dogs out?\' \n and where?',
+            ),
+            EmailInput(
+              controller: _emailController,
+            ),
+            PasswordInput(
+              passwordController: _passwordController,
+              hintText: 'Password',
+            ),
+            CustomButton(
+              text: 'Signin', // Use your CustomButton widget
+              onPressed: _onSigninButtonPressed,
+            ),
+            TextButton(
+              onPressed: () => _onForgotPasswordButtonPressed(),
+              child: const Text('Forget password?'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('Don\'t have an account?'),
+                TextButton(
+                  onPressed: () => _onSignupButtonPressed(context),
+                  child: const Text('Sign up'),
                 ),
-              ),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                  hintText: 'Enter your email',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                    borderSide: BorderSide(color: Colors.blue, width: 3.0),
-                  ),
-                ),
-              ),
-              PasswordInput(
-                passwordController: _passwordController,
-                onForgotPasswordButtonPressed: _onForgotPasswordButtonPressed,
-              ),
-              CustomButton(
-                text: 'Signin', // Use your CustomButton widget
-                onPressed: _onSigninButtonPressed,
-              ),
-              //add row widget
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text('Don\'t have an account?'),
-                  TextButton(
-                    onPressed: () => _onSignupButtonPressed(context),
-                    child: const Text('Sign up'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );
