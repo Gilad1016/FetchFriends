@@ -1,16 +1,18 @@
 import 'package:dogy_park/pages/signin/signin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // For email input formatting
+import '../../tools/firestore_provider.dart';
 import '../../widgets/inputs/email_input.dart';
 import '../../widgets/inputs/password_input.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/app_bar.dart';
 import '../../widgets/text_widget.dart';
+import '../park.dart';
 
 class SignupPage extends StatelessWidget {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final AuthProvider authProvider = AuthProvider();
 
   SignupPage({super.key});
 
@@ -26,7 +28,7 @@ class SignupPage extends StatelessWidget {
     return password.length >= 8;
   }
 
-  void _onSignupButtonPressed(BuildContext context) {
+  Future<void> _onSignupButtonPressed(BuildContext context) async {
     final email = _emailController.text;
     final password = _passwordController.text;
     final confirmPassword = _confirmPasswordController.text;
@@ -50,7 +52,18 @@ class SignupPage extends StatelessWidget {
         ),
       );
     } else {
-      // TODO: Implement sign-up logic here if all validations pass.
+      final user =
+          await authProvider.registerWithEmailAndPassword(email, password);
+      if (user != null) {
+        // Registration successful, you can navigate to another page or show a success message
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ParkPage()),
+        );
+
+      } else {
+        // Registration failed, handle the error (e.g., show an error message)
+      }
     }
   }
 

@@ -21,10 +21,12 @@ class SigninPage extends StatelessWidget {
   }
 
   void _onSignupButtonPressed(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignupPage()),
-    );
+    Navigator.pushReplacementNamed(context, '/');
+
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => SignupPage()),
+    // );
   }
 
   @override
@@ -48,7 +50,7 @@ class SigninPage extends StatelessWidget {
           children: <Widget>[
             const TextWidget(
               headerText: 'Hello!',
-              subheaderText: 'Find out \'who let the dogs out?\' \n and where?',
+              subheaderText: 'Find out \'Who let the dogs out?\' \nand where?',
             ),
             EmailInput(
               controller: _emailController,

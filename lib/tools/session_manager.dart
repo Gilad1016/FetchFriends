@@ -22,4 +22,8 @@ class SessionManager {
     prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
+
+  isSignedIn() {
+    return getAuthToken() != null;
+  }
 }
