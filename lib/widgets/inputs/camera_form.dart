@@ -6,8 +6,7 @@ class CameraForm extends StatefulWidget {
   final File? selectedImage;
   final void Function(File? image) onImageSelected;
 
-  const CameraForm({Key? key, required this.selectedImage, required this.onImageSelected})
-      : super(key: key);
+  const CameraForm({super.key, required this.selectedImage, required this.onImageSelected});
 
   @override
   CameraFormState createState() => CameraFormState(); // Change the class name here
