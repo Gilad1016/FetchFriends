@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage> {
 
   void onStartUp() async {
     await _appProvider.onAppStart();
-    // _appProvider.notifyListeners();
+    _appProvider.notifyListeners();
   }
 
   @override

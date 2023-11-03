@@ -18,7 +18,7 @@ class AppRouter {
 
   late final GoRouter _goRouter = GoRouter(
     refreshListenable: appProvider,
-    initialLocation: AppPage.landing.toPath,
+    // initialLocation: AppPage.error.toPath,
     routes: <GoRoute>[
       GoRoute(
         path: AppPage.park.toPath,
@@ -55,6 +55,9 @@ class AppRouter {
     redirect: (context, state) {
       print("redirect");
 
+      if(!appProvider.init) {
+        return AppPage.splash.toPath;
+      }
       // Redirect to landing if login state is false and page is not landing or
       // login or register
       if (!appProvider.loginState &&

@@ -8,14 +8,17 @@ String onboardKey = "GD2G82CG9G82VDFGVD22DVG";
 
 class AppProvider with ChangeNotifier {
   late final SharedPreferences sharedPreferences;
-  final StreamController<bool> _loginStateChange = StreamController<bool>.broadcast();
+  final StreamController<bool> _loginStateChange =
+      StreamController<bool>.broadcast();
   bool _loginState = false;
-  bool _landing = false;
+  bool _init = false;
 
   AppProvider(this.sharedPreferences);
 
   bool get loginState => _loginState;
-  bool get landing => _landing;
+
+  bool get init => _init;
+
   Stream<bool> get loginStateChange => _loginStateChange.stream;
 
   set loginState(bool state) {
@@ -24,20 +27,15 @@ class AppProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set landing(bool value) {
+  set init(bool value) {
     sharedPreferences.setBool(onboardKey, value);
-    _landing = value;
+    _init = value;
     notifyListeners();
   }
 
   Future<void> onAppStart() async {
-    _landing = sharedPreferences.getBool(onboardKey) ?? false;
     _loginState = sharedPreferences.getBool(loginKey) ?? false;
-    // check if user is logged in from shared preferences and update login state
-    if (sharedPreferences.containsKey(loginKey)) {
-      _loginState = sharedPreferences.getBool(loginKey)!;
-    }
-    _loginStateChange.add(_loginState); // Notify the stream when initializing
+    _init = true;
 
   }
 }
