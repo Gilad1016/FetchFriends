@@ -18,8 +18,6 @@ extension AppPageExtension on AppPage {
         return "/login";
       case AppPage.register:
         return "/register";
-      case AppPage.splash:
-        return "/splash";
       case AppPage.error:
         return "/error";
       case AppPage.landing:
@@ -41,8 +39,6 @@ extension AppPageExtension on AppPage {
         return "LOGIN";
       case AppPage.register:
         return "REGISTER";
-      case AppPage.splash:
-        return "SPLASH";
       case AppPage.error:
         return "ERROR";
       case AppPage.landing:
@@ -64,8 +60,6 @@ extension AppPageExtension on AppPage {
         return "My App Log In";
       case AppPage.register:
         return "My App Register";
-      case AppPage.splash:
-        return "My App Splash";
       case AppPage.error:
         return "My App Error";
       case AppPage.landing:

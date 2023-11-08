@@ -1,7 +1,8 @@
-import 'package:dogy_park/pages/auth/register.dart';
 import 'package:dogy_park/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/back_button.dart';
 import '../../widgets/inputs/email_input.dart';
 import '../../widgets/inputs/password_input.dart';
 import '../../widgets/custom_button.dart';
@@ -34,24 +35,21 @@ class LoginPage extends StatelessWidget {
   }
 
   void _onRegisterButtonPressed(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => RegisterPage()),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => RegisterPage()),
+    // );
+
+    GoRouter.of(context).pushReplacement('/register');
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         titleText: 'Signin',
-        onLeadingPressed: () {
-          Navigator.pushReplacementNamed(context, '/landing');
-        },
-        onActionPressed: () {
-          // Handle action button press
-          // For example, show a menu or perform an action
-        },
+        leadingWidget: BackWidget()
       ),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),

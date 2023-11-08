@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/dog_item.dart';
 import '../providers/data_provider.dart';
+import '../widgets/app_bar.dart';
 
 class AddDogPage extends StatefulWidget {
   const AddDogPage({super.key});
@@ -62,8 +63,8 @@ class _AddDogPageState extends State<AddDogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Dog'),
+      appBar: const CustomAppBar(
+          titleText: 'Add a Dog',
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

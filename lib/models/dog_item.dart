@@ -8,7 +8,6 @@ class DogItem {
 
   factory DogItem.fromJson(Map<String, dynamic> docDocument) {
     return DogItem(
-      // get name from ref to doc in key 'dogRef' in relation document
       name: docDocument['name'] as String,
       ownerEmail: docDocument['ownerEmail'] as String,
     );

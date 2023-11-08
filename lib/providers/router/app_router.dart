@@ -8,7 +8,6 @@ import '../../pages/auth/register.dart';
 import '../../pages/auth/login.dart';
 import '../../pages/error.dart';
 import '../../pages/landing.dart';
-import '../../pages/splash.dart';
 import '../app_state_provider.dart';
 
 class AppRouter {
@@ -26,11 +25,6 @@ class AppRouter {
         path: AppPage.park.toPath,
         name: AppPage.park.toName,
         builder: (context, state) => const ParkPage(),
-      ),
-      GoRoute(
-        path: AppPage.splash.toPath,
-        name: AppPage.splash.toName,
-        builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
         path: AppPage.login.toPath,

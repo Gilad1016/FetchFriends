@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/dog_item.dart';
 import 'data_provider.dart';
 
 String loginKey = "5FD6G46SDF4GD64F1VG9SD68";
