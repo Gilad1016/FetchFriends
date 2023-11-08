@@ -5,6 +5,7 @@ enum AppPage {
   park,
   error,
   landing,
+  boot,
 }
 
 extension AppPageExtension on AppPage {
@@ -22,6 +23,8 @@ extension AppPageExtension on AppPage {
         return "/error";
       case AppPage.landing:
         return "/landing";
+      case AppPage.boot:
+        return "/boot";
       default:
         return "/";
     }
@@ -41,6 +44,8 @@ extension AppPageExtension on AppPage {
         return "ERROR";
       case AppPage.landing:
         return "LANDING";
+      case AppPage.boot:
+        return "BOOT";
       default:
         return "PARK";
     }
@@ -60,6 +65,8 @@ extension AppPageExtension on AppPage {
         return "My App Error";
       case AppPage.landing:
         return "Welcome to My App";
+      case AppPage.boot:
+        return "My App Boot";
       default:
         return "My App";
     }

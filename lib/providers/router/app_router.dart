@@ -1,3 +1,4 @@
+import 'package:dogy_park/pages/boot.dart';
 import 'package:dogy_park/providers/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,10 +8,10 @@ import '../../pages/auth/login.dart';
 import '../../pages/error.dart';
 import '../../pages/landing.dart';
 import '../../pages/splash.dart';
-import '../app_provider.dart';
+import '../app_state_provider.dart';
 
 class AppRouter {
-  late final AppProvider appProvider;
+  late final AppStateProvider appProvider;
 
   GoRouter get router => _goRouter;
 
@@ -18,7 +19,7 @@ class AppRouter {
 
   late final GoRouter _goRouter = GoRouter(
     refreshListenable: appProvider,
-    // initialLocation: AppPage.error.toPath,
+    // initialLocation: AppPage.boot.toPath,
     routes: <GoRoute>[
       GoRoute(
         path: AppPage.park.toPath,
@@ -50,19 +51,25 @@ class AppRouter {
         name: AppPage.error.toName,
         builder: (context, state) => ErrorPage(error: state.extra.toString()),
       ),
+      GoRoute(
+        path: AppPage.boot.toPath,
+        name: AppPage.boot.toName,
+        builder: (context, state) => const BootPage(),
+      )
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
     redirect: (context, state) {
       print("redirect");
-
+      // Redirect to boot if init is false
       if(!appProvider.init) {
-        return AppPage.splash.toPath;
+        return AppPage.boot.toPath;
       }
       // Redirect to landing if login state is false and page is not landing or
       // login or register
       if (!appProvider.loginState &&
-          state.matchedLocation != AppPage.landing.toPath &&
-          state.matchedLocation != AppPage.login.toPath) {
+          (state.matchedLocation != AppPage.landing.toPath &&
+              state.matchedLocation != AppPage.login.toPath &&
+              state.matchedLocation != AppPage.register.toPath)) {
         return AppPage.landing.toPath;
       }
 
@@ -70,9 +77,12 @@ class AppRouter {
       // login or register
       if (appProvider.loginState &&
           (state.matchedLocation == AppPage.landing.toPath ||
-              state.matchedLocation == AppPage.login.toPath)) {
+              state.matchedLocation == AppPage.login.toPath ||
+              state.matchedLocation == AppPage.register.toPath ||
+              state.matchedLocation == AppPage.boot.toPath)) {
         return AppPage.park.toPath;
       }
+
       //return page same as path
       return state.matchedLocation;
     },

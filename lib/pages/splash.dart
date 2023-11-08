@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/app_provider.dart';
+import '../providers/app_state_provider.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({ super.key });
@@ -11,19 +11,20 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late AppProvider _appProvider;
+  late AppStateProvider _appProvider;
 
   @override
   void initState() {
-    _appProvider = Provider.of<AppProvider>(context, listen: false);
-    onStartUp();
+    _appProvider = Provider.of<AppStateProvider>(context, listen: false);
+    // onStartUp();
     super.initState();
   }
 
   void onStartUp() async {
     await _appProvider.onAppStart();
-    _appProvider.notifyListeners();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

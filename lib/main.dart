@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'design/color_pallette.dart';
 import 'firebase_options.dart';
-import 'package:dogy_park/providers/app_provider.dart';
+import 'package:dogy_park/providers/app_state_provider.dart';
 import 'package:dogy_park/providers/auth_provider.dart';
 import 'package:dogy_park/providers/router/app_router.dart';
 
@@ -34,13 +34,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late AppProvider appProvider;
+  late AppStateProvider appProvider;
   late AuthProvider authProvider;
   late StreamSubscription<bool> authSubscription;
 
   @override
   void initState() {
-    appProvider = AppProvider(widget.sharedPreferences);
+    appProvider = AppStateProvider(widget.sharedPreferences);
     authProvider = AuthProvider();
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
     super.initState();
@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppProvider>(create: (_) => appProvider),
+        ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         Provider<AuthProvider>(create: (_) => authProvider),
       ],
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyApp> {
             routeInformationProvider: goRouter.routeInformationProvider,
             routerDelegate: goRouter.routerDelegate,
             theme: ThemeData(
-              fontFamily: 'Fredoka', // Set the font family
+              fontFamily: 'Fredoka',
               colorScheme: ColorScheme.fromSeed(
                 seedColor: AppColors.primaryColor,
               ),

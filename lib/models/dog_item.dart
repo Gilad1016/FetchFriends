@@ -1,36 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DogItem {
-  String id;
-  String name;
-  String ownerName;
-  int energyLevel;
-  List<String> mustKnow;
+  String id = '';
+  String name = '';
+  String ownerEmail = '';
 
-  DogItem({
-    required this.id,
-    required this.name,
-    required this.ownerName,
-    required this.energyLevel,
-    required this.mustKnow,
-  });
+  DogItem({required this.name, required this.ownerEmail});
 
+  factory DogItem.fromJson(Map<String, dynamic> docDocument) {
+    return DogItem(
+      // get name from ref to doc in key 'dogRef' in relation document
+      name: docDocument['name'] as String,
+      ownerEmail: docDocument['ownerEmail'] as String,
+    );
+  }
 
-  Map<String,dynamic> toFirestoreMap(){
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
-      'ownerName': ownerName,
-      'energyLevel': energyLevel,
-      'mustKnow': mustKnow,
+      'ownerEmail': ownerEmail,
     };
-  }
-
-  factory DogItem.fromFirestoreMap(Map<String,dynamic> map){
-    return DogItem(
-      id: map['id'],
-      name: map['name'],
-      ownerName: map['ownerName'],
-      energyLevel: map['energyLevel'],
-      mustKnow: List<String>.from(map['mustKnow']),
-    );
   }
 }
