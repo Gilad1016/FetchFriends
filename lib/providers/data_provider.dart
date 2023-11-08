@@ -1,14 +1,18 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/dog_item.dart';
 
-class DogProvider {
+class DataProvider {
+  final StreamController<bool> _onMyDogsChange =
+  StreamController.broadcast();
   final FirebaseFirestore _firestore;
   final SharedPreferences _sharedPreferences;
+  Stream<bool> get onMyDogsChange => _onMyDogsChange.stream;
 
-  DogProvider(this._firestore, this._sharedPreferences);
+  DataProvider(this._firestore, this._sharedPreferences);
 
   // uses firestore to query and return a list of dogs that belong to the user
   // if the user is not logged in, returns null
@@ -46,5 +50,16 @@ class DogProvider {
 
     final userDogsData = userDogs.map((dog) => jsonEncode(dog.toJson())).toList();
     await _sharedPreferences.setStringList('user_dogs', userDogsData);
+    _onMyDogsChange.add(true);
+  }
+
+  Future<void> addDog(DogItem dog) async {
+    final dogDocumentReference = await _firestore.collection('dogs').add(dog.toJson());
+    dog.id = dogDocumentReference.id;
+    final userDogs = await getUserDogs(true);
+    userDogs!.add(dog);
+    final userDogsData = userDogs.map((dog) => jsonEncode(dog.toJson())).toList();
+    await _sharedPreferences.setStringList('user_dogs', userDogsData);
+    _onMyDogsChange.add(true);
   }
 }

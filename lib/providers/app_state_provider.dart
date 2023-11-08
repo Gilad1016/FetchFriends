@@ -8,13 +8,13 @@ import '../models/dog_item.dart';
 import 'data_provider.dart';
 
 String loginKey = "5FD6G46SDF4GD64F1VG9SD68";
-String onboardKey = "GD2G82CG9G82VDFGVD22DVG";
 
 class AppStateProvider with ChangeNotifier {
   late final SharedPreferences sharedPreferences;
   final StreamController<bool> _loginStateChange =
       StreamController<bool>.broadcast();
-  late final dogProvider;
+  final StreamController<bool> _dogsLoadedChange =
+      StreamController<bool>.broadcast();
 
   bool _init = false;
   bool _loginState = false;
@@ -22,13 +22,12 @@ class AppStateProvider with ChangeNotifier {
 
   AppStateProvider(this.sharedPreferences);
 
-  bool get loginState => _loginState;
-
   bool get init => _init;
-
+  bool get loginState => _loginState;
   bool get dogsLoaded => _dogsLoaded;
 
   Stream<bool> get loginStateChange => _loginStateChange.stream;
+  Stream<bool> get dogsLoadedChange => _dogsLoadedChange.stream;
 
   set loginState(bool state) {
     sharedPreferences.setBool(loginKey, state);
@@ -37,7 +36,6 @@ class AppStateProvider with ChangeNotifier {
   }
 
   set init(bool value) {
-    // sharedPreferences.setBool(onboardKey, value);
     _init = value;
     notifyListeners();
   }
@@ -50,13 +48,19 @@ class AppStateProvider with ChangeNotifier {
   Future<void> onAppStart() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     _loginState = sharedPreferences.getBool(loginKey) ?? false;
-    dogProvider = DogProvider(FirebaseFirestore.instance, sharedPreferences);
 
-    _init = true;
     if (_loginState) {
-      List<DogItem>? myDogs = await dogProvider.getUserDogs(true);
-      _dogsLoaded = (myDogs!.isNotEmpty)!;
+      final dataProvider = DataProvider(
+        FirebaseFirestore.instance,
+        sharedPreferences,
+      );
+      final dogs = await dataProvider.getUserDogs(false);
+      if (dogs != null) {
+        _dogsLoaded = true;
+      }
+
     }
+    _init = true;
     notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:dogy_park/pages/add_dog.dart';
 import 'package:dogy_park/pages/boot.dart';
 import 'package:dogy_park/providers/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
@@ -55,35 +56,42 @@ class AppRouter {
         path: AppPage.boot.toPath,
         name: AppPage.boot.toName,
         builder: (context, state) => const BootPage(),
+      ),
+      GoRoute(
+        path: AppPage.addDog.toPath,
+        name: AppPage.addDog.toName,
+        builder: (context, state) => const AddDogPage(),
       )
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
     redirect: (context, state) {
       print("redirect");
-      // Redirect to boot if init is false
-      if(!appProvider.init) {
+
+      if (!appProvider.init) {
         return AppPage.boot.toPath;
       }
-      // Redirect to landing if login state is false and page is not landing or
-      // login or register
-      if (!appProvider.loginState &&
-          (state.matchedLocation != AppPage.landing.toPath &&
-              state.matchedLocation != AppPage.login.toPath &&
-              state.matchedLocation != AppPage.register.toPath)) {
-        return AppPage.landing.toPath;
+
+      if (!appProvider.loginState) {
+        print("user is not logged in");
+        if (state.matchedLocation != AppPage.landing.toPath &&
+            state.matchedLocation != AppPage.login.toPath &&
+            state.matchedLocation != AppPage.register.toPath) {
+          return AppPage.landing.toPath;
+        }
+      } else {
+        print("user is logged in");
+        if (!appProvider.dogsLoaded) {
+          return AppPage.addDog.toPath;
+        }
+
+        if (state.matchedLocation == AppPage.landing.toPath ||
+            state.matchedLocation == AppPage.login.toPath ||
+            state.matchedLocation == AppPage.register.toPath ||
+            state.matchedLocation == AppPage.boot.toPath) {
+          return AppPage.park.toPath;
+        }
       }
 
-      // Redirect to Park if login state is true and page is landing or
-      // login or register
-      if (appProvider.loginState &&
-          (state.matchedLocation == AppPage.landing.toPath ||
-              state.matchedLocation == AppPage.login.toPath ||
-              state.matchedLocation == AppPage.register.toPath ||
-              state.matchedLocation == AppPage.boot.toPath)) {
-        return AppPage.park.toPath;
-      }
-
-      //return page same as path
       return state.matchedLocation;
     },
   );

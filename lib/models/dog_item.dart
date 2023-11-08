@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class DogItem {
   String id = '';
   String name = '';
   String ownerEmail = '';
+  String? imageUrl = '';
 
-  DogItem({required this.name, required this.ownerEmail});
+  DogItem({required this.name, required this.ownerEmail, this.imageUrl = ''});
 
   factory DogItem.fromJson(Map<String, dynamic> docDocument) {
     return DogItem(

@@ -6,6 +6,7 @@ enum AppPage {
   error,
   landing,
   boot,
+  addDog,
 }
 
 extension AppPageExtension on AppPage {
@@ -25,6 +26,8 @@ extension AppPageExtension on AppPage {
         return "/landing";
       case AppPage.boot:
         return "/boot";
+      case AppPage.addDog:
+        return "/addDog";
       default:
         return "/";
     }
@@ -46,6 +49,8 @@ extension AppPageExtension on AppPage {
         return "LANDING";
       case AppPage.boot:
         return "BOOT";
+      case AppPage.addDog:
+        return "ADD_DOG";
       default:
         return "PARK";
     }
@@ -67,6 +72,8 @@ extension AppPageExtension on AppPage {
         return "Welcome to My App";
       case AppPage.boot:
         return "My App Boot";
+      case AppPage.addDog:
+        return "My App Add Dog";
       default:
         return "My App";
     }

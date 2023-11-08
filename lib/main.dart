@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dogy_park/providers/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
@@ -17,13 +19,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
 
   runApp(MyApp(sharedPreferences: sharedPreferences));
 }
 
 class MyApp extends StatefulWidget {
   final SharedPreferences sharedPreferences;
+
   const MyApp({
     super.key,
     required this.sharedPreferences,
@@ -36,13 +40,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
+  late DataProvider dataProvider;
   late StreamSubscription<bool> authSubscription;
+  late StreamSubscription<bool> myDogsSubscription;
 
   @override
   void initState() {
     appProvider = AppStateProvider(widget.sharedPreferences);
     authProvider = AuthProvider();
+    dataProvider = DataProvider(
+      FirebaseFirestore.instance,
+      widget.sharedPreferences,
+    );
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
+    myDogsSubscription = dataProvider.onMyDogsChange.listen(onMyDogsChange);
+
     super.initState();
   }
 
@@ -50,9 +62,14 @@ class _MyAppState extends State<MyApp> {
     appProvider.loginState = login;
   }
 
+  void onMyDogsChange(bool isMyDogsLoaded) {
+    appProvider.dogsLoaded = isMyDogsLoaded;
+  }
+
   @override
   void dispose() {
     authSubscription.cancel();
+    myDogsSubscription.cancel();
     super.dispose();
   }
 
