@@ -1,30 +1,19 @@
+import 'package:dogy_park/widgets/setting_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../providers/auth_provider.dart';
+import '../widgets/app_bar.dart';
 
 class ParkPage extends StatelessWidget {
   const ParkPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Park Page'),
-        actions: <Widget>[
-          // Add a logout button to the AppBar
-          IconButton(
-            icon: const Icon(Icons.logout),
-            // You can use any logout icon you prefer
-            onPressed: () {
-              authProvider.logOut();
-            },
-          ),
-        ],
+    return const Scaffold(
+      appBar:  CustomAppBar(
+          titleText: 'Sokolov Garden',
+          trailingWidget: SettingWidget()
       ),
-      body: const Center(
+      body: Center(
         child: Text('Welcome to the Park page'),
       ),
     );
