@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data_provider.dart';
@@ -12,21 +12,22 @@ class AppStateProvider with ChangeNotifier {
   late final SharedPreferences sharedPreferences;
   final StreamController<bool> _loginStateChange =
       StreamController<bool>.broadcast();
-  final StreamController<bool> _dogsLoadedChange =
-      StreamController<bool>.broadcast();
+  // final StreamController<bool> _dogsLoadedChange =
+  //     StreamController<bool>.broadcast();
 
   bool _init = false;
   bool _loginState = false;
-  bool _dogsLoaded = false;
+  bool _userHasDogs = false;
 
   AppStateProvider(this.sharedPreferences);
 
   bool get init => _init;
   bool get loginState => _loginState;
-  bool get dogsLoaded => _dogsLoaded;
+  bool get userHasDogs => _userHasDogs;
 
   Stream<bool> get loginStateChange => _loginStateChange.stream;
-  Stream<bool> get dogsLoadedChange => _dogsLoadedChange.stream;
+
+  get loading => _init && !_loginState;
 
   set loginState(bool state) {
     sharedPreferences.setBool(loginKey, state);
@@ -39,26 +40,23 @@ class AppStateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  set dogsLoaded(bool value) {
-    _dogsLoaded = value;
+  set userHasDogs(bool value) {
+    _userHasDogs = value;
     notifyListeners();
   }
 
-  Future<void> onAppStart() async {
+  Future<void> onAppStart(context) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     _loginState = sharedPreferences.getBool(loginKey) ?? false;
 
     if (_loginState) {
-      final dataProvider = DataProvider(
-        FirebaseFirestore.instance,
-        sharedPreferences,
-      );
-      final dogs = await dataProvider.getUserDogs(false);
-      if (dogs != null) {
-        _dogsLoaded = true;
-      }
-
+      final userToken = sharedPreferences.getString('token');
+      final myDogs = await Provider.of<DataProvider>(context, listen: false).getMyDogs(userToken!);
+      print("myDogs: $myDogs");
+      assert(myDogs != null, "Failed to load dogs");
+      _userHasDogs = myDogs!.isNotEmpty;
     }
+
     _init = true;
     notifyListeners();
   }

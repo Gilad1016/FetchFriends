@@ -61,23 +61,20 @@ class AppRouter {
     redirect: (context, state) {
       print("redirect");
 
-      if (!appProvider.init) {
+      if ((!appProvider.init) || (appProvider.loading)) {
         return AppPage.boot.toPath;
       }
 
       if (!appProvider.loginState) {
-        print("user is not logged in");
         if (state.matchedLocation != AppPage.landing.toPath &&
             state.matchedLocation != AppPage.login.toPath &&
             state.matchedLocation != AppPage.register.toPath) {
           return AppPage.landing.toPath;
         }
       } else {
-        print("user is logged in");
-        if (!appProvider.dogsLoaded) {
+        if (!appProvider.userHasDogs) {
           return AppPage.addDog.toPath;
         }
-
         if (state.matchedLocation == AppPage.landing.toPath ||
             state.matchedLocation == AppPage.login.toPath ||
             state.matchedLocation == AppPage.register.toPath ||

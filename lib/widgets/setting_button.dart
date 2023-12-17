@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../design/color_pallette.dart';
 import '../providers/auth_provider.dart';
 
 class SettingWidget extends StatelessWidget {
@@ -14,8 +15,8 @@ class SettingWidget extends StatelessWidget {
     return PopupMenuButton(
       icon: const Icon(
         CupertinoIcons.ellipsis,
-        size: 20,
-        color: Colors.black,
+        size: 24,
+        color: AppColors.secondaryColor
       ),
       itemBuilder: (context) => [
         const PopupMenuItem(

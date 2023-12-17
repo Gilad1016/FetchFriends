@@ -73,4 +73,8 @@ class AuthProvider {
     _onAuthStateChange.add(false);
     sharedPreferences.then((value) => value.remove('token'));
   }
+
+  Future<String> getMyToken() {
+    return sharedPreferences.then((value) => value.getString('token') ?? "");
+  }
 }

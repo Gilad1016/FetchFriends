@@ -3,6 +3,7 @@ class ParkItem {
   String name = '';
   String mapsURL = '';
 
+
   ParkItem({required this.name, required this.mapsURL});
 
   factory ParkItem.fromJson(Map<String, dynamic> docDocument) {

@@ -9,12 +9,13 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    TextStyle? textStyle,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top:20, bottom: 10),
+      margin: const EdgeInsets.only(top: 20, bottom: 10),
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(

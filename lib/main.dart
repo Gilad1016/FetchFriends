@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogy_park/providers/data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +39,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
-  late DataProvider dataProvider;
   late StreamSubscription<bool> authSubscription;
   late StreamSubscription<bool> myDogsSubscription;
 
@@ -48,12 +46,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     appProvider = AppStateProvider(widget.sharedPreferences);
     authProvider = AuthProvider();
-    dataProvider = DataProvider(
-      FirebaseFirestore.instance,
-      widget.sharedPreferences,
-    );
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
-    myDogsSubscription = dataProvider.onMyDogsChange.listen(onMyDogsChange);
 
     super.initState();
   }
@@ -62,14 +55,9 @@ class _MyAppState extends State<MyApp> {
     appProvider.loginState = login;
   }
 
-  void onMyDogsChange(bool isMyDogsLoaded) {
-    appProvider.dogsLoaded = isMyDogsLoaded;
-  }
-
   @override
   void dispose() {
     authSubscription.cancel();
-    myDogsSubscription.cancel();
     super.dispose();
   }
 
@@ -80,21 +68,25 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         Provider<AuthProvider>(create: (_) => authProvider),
+        Provider<DataProvider>(create: (_) => DataProvider()),
       ],
       child: Builder(
         builder: (context) {
           final GoRouter goRouter =
               Provider.of<AppRouter>(context, listen: false).router;
           return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             title: "FetchFriends",
             routeInformationParser: goRouter.routeInformationParser,
             routeInformationProvider: goRouter.routeInformationProvider,
             routerDelegate: goRouter.routerDelegate,
             theme: ThemeData(
               fontFamily: 'Fredoka',
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: AppColors.primaryColor,
-              ),
+              primaryColor: AppColors.primaryColor,
+              canvasColor: AppColors.backgroundColor,
+              // colorScheme: ColorScheme.fromSeed(
+              //   seedColor: AppColors.primaryColor,
+              // ),
             ),
           );
         },

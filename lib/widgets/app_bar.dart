@@ -1,3 +1,4 @@
+import 'package:dogy_park/design/color_pallette.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -15,21 +16,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        title: Text(
-          titleText,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+      title: Text(
+        titleText,
+        style: const TextStyle(
+          color: AppColors.secondaryColor,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
         ),
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        centerTitle: true,
-        leading: leadingWidget ?? Container(),
-        actions: <Widget>[
-          trailingWidget ?? Container(),
-        ],
+      ),
+      backgroundColor: AppColors.primaryColor,
+      elevation: 0.0,
+      centerTitle: true,
+      leading: leadingWidget ?? Container(),
+      actions: <Widget>[
+        trailingWidget ?? Container(),
+      ],
     );
   }
 
