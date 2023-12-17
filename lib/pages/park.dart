@@ -39,7 +39,6 @@ class _ParkPageState extends State<ParkPage> {
     return Scaffold(
       appBar: const CustomAppBar(
           titleText: 'Sokolov Garden', trailingWidget: SettingWidget()),
-      //TODO: present the list here in body
       // Replace the existing body with this:
       body: StreamBuilder<QuerySnapshot>(
         stream: dogData.snapshots(),
