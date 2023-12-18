@@ -1,5 +1,6 @@
 import 'package:dogy_park/pages/add_dog.dart';
 import 'package:dogy_park/pages/boot.dart';
+import 'package:dogy_park/pages/profile.dart';
 import 'package:dogy_park/providers/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
@@ -56,7 +57,12 @@ class AppRouter {
         path: AppPage.addDog.toPath,
         name: AppPage.addDog.toName,
         builder: (context, state) => const AddDogPage(),
-      )
+      ),
+      GoRoute(
+        path: AppPage.profile.toPath,
+        name: AppPage.profile.toName,
+        builder: (context, state) => const ProfilePage(),
+      ),
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
     redirect: (context, state) {

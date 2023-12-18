@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../design/color_pallette.dart';
 import '../providers/auth_provider.dart';
+import '../providers/router/routes_utils.dart';
 
 class SettingWidget extends StatelessWidget {
   const SettingWidget({super.key});
@@ -13,11 +15,8 @@ class SettingWidget extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return PopupMenuButton(
-      icon: const Icon(
-        CupertinoIcons.ellipsis,
-        size: 24,
-        color: AppColors.secondaryColor
-      ),
+      icon: const Icon(CupertinoIcons.ellipsis,
+          size: 24, color: AppColors.secondaryColor),
       itemBuilder: (context) => [
         const PopupMenuItem(
           value: 1,
@@ -43,7 +42,8 @@ class SettingWidget extends StatelessWidget {
       onSelected: (value) {
         switch (value) {
           case 1:
-            //TODO: create profile page and navigate to it
+            print('Profile');
+            GoRouter.of(context).pushNamed(AppPage.profile.toName);
             break;
           case 2:
             authProvider.logOut();
