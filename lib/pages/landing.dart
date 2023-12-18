@@ -1,5 +1,3 @@
-import 'package:dogy_park/pages/auth/login.dart';
-import 'package:dogy_park/pages/auth/register.dart';
 import 'package:dogy_park/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:dogy_park/widgets/custom_button.dart';

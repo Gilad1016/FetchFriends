@@ -7,6 +7,7 @@ import '../providers/data_provider.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/arrival_button.dart';
 import '../models/dog_item.dart';
+import '../widgets/arrival_tile.dart';
 
 class ParkPage extends StatefulWidget {
   const ParkPage({super.key});
@@ -57,30 +58,21 @@ class _ParkPageState extends State<ParkPage> {
               snapshot.data!.docs; // List of QueryDocumentsSnapshot
           final dogItems = dogDocuments
               .map((dogDocument) =>
-                  DogItem.fromMap(dogDocument.data() as Map<String, dynamic>
-                  )..id = dogDocument.id)
+                  DogItem.fromMap(dogDocument.data() as Map<String, dynamic>)
+                    ..id = dogDocument.id)
               .toList();
 
           // Here, dogItems list contains all retrieved DogItem objects.
 
-          return ListView.builder(
-            itemCount: dogItems.length,
-            itemBuilder: (context, index) {
-              final dogItem = dogItems[index];
-              // Use dogItem details to build your dog list item widget
-              // For example, you could build a ListTile here with dog info and image
-              return ListTile(
-                title: Text(dogItem.name),
-                subtitle: Text(dogItem.ownerUID),
-                leading: (dogItem.imageUrl != null)
-                    ? CircleAvatar(
-                        backgroundImage: NetworkImage(dogItem.imageUrl!),
-                      )
-                    : null,
-                // Add any other widget elements you want based on your DogItem model
-              );
-            },
-          );
+          return Padding(
+              padding: const EdgeInsets.only(bottom: 40, left: 28, right: 28),
+              child: ListView.builder(
+                itemCount: dogItems.length,
+                itemBuilder: (context, index) {
+                  final dogItem = dogItems[index];
+                  return ArrivalTile(dogItem: dogItem);
+                },
+              ));
         },
       ),
 
