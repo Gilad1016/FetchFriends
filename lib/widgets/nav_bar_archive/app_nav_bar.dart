@@ -1,5 +1,5 @@
 import 'package:dogy_park/widgets/arrival_button.dart';
-import 'package:dogy_park/widgets/nav_bar/nav_bar_button.dart';
+import 'package:dogy_park/widgets/nav_bar_archive/nav_bar_button.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavBar extends StatelessWidget {

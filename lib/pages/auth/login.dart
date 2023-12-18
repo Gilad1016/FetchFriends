@@ -1,12 +1,11 @@
 import 'package:dogy_park/providers/auth_provider.dart';
+import 'package:dogy_park/widgets/inputs/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/back_button.dart';
-import '../../widgets/inputs/email_input.dart';
-import '../../widgets/inputs/password_input.dart';
+import '../../widgets/top_bar/back_button.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/app_bar.dart';
+import '../../widgets/top_bar/app_bar.dart';
 import '../../widgets/text_widget.dart';
 
 class LoginPage extends StatelessWidget {
@@ -30,7 +29,7 @@ class LoginPage extends StatelessWidget {
     }
 
     if (msg == 'success') {
-      GoRouter.of(context).pushReplacement('/park');
+      GoRouter.of(context).pushReplacement('/');
     }
   }
 
@@ -45,16 +44,13 @@ class LoginPage extends StatelessWidget {
     // );
 
     GoRouter.of(context).pushReplacement('/register');
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        titleText: 'Signin',
-        leadingWidget: BackWidget()
-      ),
+      appBar:
+          const CustomAppBar(titleText: 'Signin', leadingWidget: BackWidget()),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
         child: Column(
@@ -65,14 +61,20 @@ class LoginPage extends StatelessWidget {
               headerText: 'Hello!',
               subheaderText: 'Find out \'Who let the dogs out?\' \nand where?',
             ),
-            EmailInput(
+            CustomInputText(
+              hintText: 'ball_fetch@gmail.com',
+              labelText: 'Email',
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              prefixIcon: const Icon(Icons.email),
             ),
-            PasswordInput(
-              passwordController: _passwordController,
-              hintText: 'Password',
+            CustomInputText(
+              hintText: 'Enter your password',
+              labelText: 'Password',
+              controller: _passwordController,
+              obscureText: true,
+              prefixIcon: const Icon(Icons.lock),
             ),
-
             // Display the error message below the password input field.
             ValueListenableBuilder<String?>(
               valueListenable: _loginErrorMessageNotifier,

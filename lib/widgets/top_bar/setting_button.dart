@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../design/color_pallette.dart';
-import '../providers/auth_provider.dart';
-import '../providers/router/routes_utils.dart';
+import '../../design/color_pallette.dart';
+import '../../providers/auth_provider.dart';
+import '../../providers/router/routes_utils.dart';
 
 class SettingWidget extends StatelessWidget {
   const SettingWidget({super.key});

@@ -1,12 +1,11 @@
+import 'package:dogy_park/widgets/inputs/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../widgets/back_button.dart';
-import '../../widgets/inputs/email_input.dart';
-import '../../widgets/inputs/password_input.dart';
+import '../../widgets/top_bar/back_button.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/app_bar.dart';
+import '../../widgets/top_bar/app_bar.dart';
 import '../../widgets/text_widget.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -17,9 +16,9 @@ class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
 
   final ValueNotifier<String?> _registerErrorMessageNotifier =
-  ValueNotifier<String?>(null);
+      ValueNotifier<String?>(null);
 
-  Future<void> _onRegisterButtonPressed(BuildContext context) async {
+  void _onRegisterButtonPressed(BuildContext context) async {
     if (_passwordController.text != _confirmPasswordController.text) {
       _registerErrorMessageNotifier.value = 'Passwords do not match';
       return;
@@ -34,6 +33,10 @@ class RegisterPage extends StatelessWidget {
       // Set the loginErrorMessageNotifier value to the error message.
       _registerErrorMessageNotifier.value = msg;
     }
+
+    if (msg == 'success') {
+      GoRouter.of(context).pushReplacement('/');
+    }
   }
 
   void _onForgotPasswordButtonPressed() {
@@ -46,16 +49,13 @@ class RegisterPage extends StatelessWidget {
     //   MaterialPageRoute(builder: (context) => LoginPage()),
     // );
     GoRouter.of(context).pushReplacement('/login');
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        titleText: 'Signup',
-          leadingWidget: BackWidget()
-      ),
+      appBar:
+          const CustomAppBar(titleText: 'Signup', leadingWidget: BackWidget()),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -66,16 +66,26 @@ class RegisterPage extends StatelessWidget {
               headerText: 'Hello!',
               subheaderText: 'Find out \'who let the dogs out?\' \n and where?',
             ),
-            EmailInput(
+            CustomInputText(
+              labelText: 'Email',
+              hintText: 'Enter your email',
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              prefixIcon: const Icon(Icons.email),
             ),
-            PasswordInput(
-              passwordController: _passwordController,
-              hintText: 'Password',
+            CustomInputText(
+              labelText: 'Password',
+              hintText: 'Enter your password',
+              controller: _passwordController,
+              obscureText: true,
+              prefixIcon: const Icon(Icons.lock),
             ),
-            PasswordInput(
-              passwordController: _confirmPasswordController,
-              hintText: 'Confirm Password',
+            CustomInputText(
+              labelText: 'Confirm Password',
+              hintText: 'Confirm your password',
+              controller: _confirmPasswordController,
+              obscureText: true,
+              prefixIcon: const Icon(Icons.lock),
             ),
             ValueListenableBuilder<String?>(
               valueListenable: _registerErrorMessageNotifier,

@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/app_bar.dart';
-import '../widgets/back_button.dart';
-import '../widgets/dog_tile.dart';
+import '../widgets/top_bar/app_bar.dart';
+import '../widgets/top_bar/back_button.dart';
+import '../widgets/dog_card/dog_card_hero.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -37,7 +37,7 @@ class ProfilePage extends StatelessWidget {
 
         return Scaffold(
           appBar: const CustomAppBar(
-            titleText: 'My Profile',
+            titleText: 'My Dogs',
             leadingWidget: BackWidget(),
           ),
           body: Padding(
@@ -52,12 +52,8 @@ class ProfilePage extends StatelessWidget {
                     itemCount: myDogs.length,
                     itemBuilder: (context, index) {
                       final dog = myDogs[index];
-                      return DogTile(
+                      return DogHero(
                         dogItem: dog,
-                        onPressed: () {
-                          // appStateProvider.setDog(dog);
-                          // GoRouter.of(context).pushNamed(AppPage.dog.toName);
-                        },
                       );
                     },
                   ),

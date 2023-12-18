@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../models/dog_item.dart';
 import '../providers/app_state/states_utils.dart';
 import '../providers/data_provider.dart';
-import '../widgets/app_bar.dart';
+import '../widgets/top_bar/app_bar.dart';
 
 class AddDogPage extends StatefulWidget {
   const AddDogPage({super.key});
@@ -70,7 +70,7 @@ class _AddDogPageState extends State<AddDogPage> {
     GoRouter.of(context).pushReplacement('/');
 
   }
-
+  //TODO: delete and use edit profile logic
   @override
   Widget build(BuildContext context) {
     return Scaffold(
