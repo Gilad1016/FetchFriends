@@ -8,7 +8,8 @@ import '../../pages/auth/register.dart';
 import '../../pages/auth/login.dart';
 import '../../pages/error.dart';
 import '../../pages/landing.dart';
-import '../app_state_provider.dart';
+import '../app_state/app_state_provider.dart';
+import '../app_state/states_utils.dart';
 
 class AppRouter {
   late final AppStateProvider appProvider;
@@ -60,29 +61,37 @@ class AppRouter {
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
     redirect: (context, state) {
       print("redirect");
+      print("state: ${appProvider.state}");
+      print("matchedLocation: ${state.matchedLocation}");
 
-      if ((!appProvider.init) || (appProvider.loading)) {
-        return AppPage.boot.toPath;
-      }
+      switch (appProvider.state) {
+        case AppState.init:
+          return AppPage.boot.toPath;
 
-      if (!appProvider.loginState) {
-        if (state.matchedLocation != AppPage.landing.toPath &&
-            state.matchedLocation != AppPage.login.toPath &&
-            state.matchedLocation != AppPage.register.toPath) {
-          return AppPage.landing.toPath;
-        }
-      } else {
-        if (!appProvider.userHasDogs) {
+        case AppState.loading:
+          print("loading");
+        // return AppPage.landing.toPath; //only temporary
+
+        case AppState.unauthenticated:
+          if ((state.matchedLocation != AppPage.landing.toPath) &&
+              (state.matchedLocation != AppPage.login.toPath) &&
+              (state.matchedLocation != AppPage.register.toPath)) {
+            return AppPage.landing.toPath;
+          }
+
+        case AppState.loggedIn:
           return AppPage.addDog.toPath;
-        }
-        if (state.matchedLocation == AppPage.landing.toPath ||
-            state.matchedLocation == AppPage.login.toPath ||
-            state.matchedLocation == AppPage.register.toPath ||
-            state.matchedLocation == AppPage.boot.toPath) {
-          return AppPage.park.toPath;
-        }
+
+        case AppState.loggedInWithDogs:
+          if ((state.matchedLocation == AppPage.landing.toPath ||
+              state.matchedLocation == AppPage.login.toPath ||
+              state.matchedLocation == AppPage.register.toPath ||
+              state.matchedLocation == AppPage.boot.toPath)) {
+            return AppPage.park.toPath;
+          }
       }
 
+      print("no surprises");
       return state.matchedLocation;
     },
   );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/app_state_provider.dart';
+import '../providers/app_state/app_state_provider.dart';
 
 class BootPage extends StatefulWidget {
   const BootPage({super.key});

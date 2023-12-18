@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:dogy_park/providers/app_state/states_utils.dart';
 import 'package:dogy_park/providers/data_provider.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'design/color_pallette.dart';
 import 'firebase_options.dart';
-import 'package:dogy_park/providers/app_state_provider.dart';
+import 'package:dogy_park/providers/app_state/app_state_provider.dart';
 import 'package:dogy_park/providers/auth_provider.dart';
 import 'package:dogy_park/providers/router/app_router.dart';
 
@@ -18,6 +20,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseAppCheck.instance.activate(
+      webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+      androidProvider: AndroidProvider.debug);
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
@@ -39,20 +44,31 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
-  late StreamSubscription<bool> authSubscription;
-  late StreamSubscription<bool> myDogsSubscription;
+  late StreamSubscription<AppState> authSubscription;
+  late DataProvider dataProvider;
 
   @override
   void initState() {
     appProvider = AppStateProvider(widget.sharedPreferences);
     authProvider = AuthProvider();
+    dataProvider = DataProvider();
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
 
     super.initState();
   }
 
-  void onAuthStateChange(bool login) {
-    appProvider.loginState = login;
+  void onAuthStateChange(AppState login) {
+    if (login == AppState.unauthenticated) {
+      appProvider.state = AppState.unauthenticated;
+      return;
+    }
+
+    if (login == AppState.loggedIn) {
+      if (appProvider.state == AppState.loggedInWithDogs) {
+        return;
+      }
+      appProvider.state = AppState.loggedIn;
+    }
   }
 
   @override
@@ -68,7 +84,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         Provider<AuthProvider>(create: (_) => authProvider),
-        Provider<DataProvider>(create: (_) => DataProvider()),
+        Provider<DataProvider>(create: (_) => dataProvider),
       ],
       child: Builder(
         builder: (context) {

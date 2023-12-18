@@ -2,14 +2,16 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'app_state/states_utils.dart';
+
 class AuthProvider {
-  final StreamController<bool> _onAuthStateChange =
+  final StreamController<AppState> _onAuthStateChange =
   StreamController.broadcast();
   final sharedPreferences = SharedPreferences.getInstance();
 
   String? loginErrorMessage;
 
-  Stream<bool> get onAuthStateChange => _onAuthStateChange.stream;
+  Stream<AppState> get onAuthStateChange => _onAuthStateChange.stream;
 
   Future<String> register(String email, String password) async {
     try {
@@ -21,7 +23,7 @@ class AuthProvider {
 
       sharedPreferences
           .then((value) => value.setString('token', credential.user!.uid));
-      _onAuthStateChange.add(true);
+      _onAuthStateChange.add(AppState.loggedIn);
       return "success";
     } on FirebaseAuthException catch (e) {
       loginErrorMessage = e.message ?? "An error occurred";
@@ -42,7 +44,7 @@ class AuthProvider {
 
       sharedPreferences
           .then((value) => value.setString('token', credential.user!.uid));
-      _onAuthStateChange.add(true);
+      _onAuthStateChange.add(AppState.loggedIn);
       return "success";
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -70,7 +72,7 @@ class AuthProvider {
 
 
   void logOut() {
-    _onAuthStateChange.add(false);
+    _onAuthStateChange.add(AppState.unauthenticated);
     sharedPreferences.then((value) => value.remove('token'));
   }
 

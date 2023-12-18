@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:dogy_park/design/color_pallette.dart';
 import 'package:flutter/cupertino.dart';
 
 class BackWidget extends StatelessWidget {
@@ -21,13 +21,13 @@ class BackWidget extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: const Color(0xffF7F8F8),
-          borderRadius: BorderRadius.circular(10),
+          // color: const Color(0xffF7F8F8),
+          borderRadius: BorderRadius.circular(50),
         ),
         child: const Icon(
           CupertinoIcons.back,
           size: 20,
-          color: Colors.black,
+          color: AppColors.secondaryColor,
         ),
       ),
     );

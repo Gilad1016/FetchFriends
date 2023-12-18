@@ -75,13 +75,22 @@
 //   }
 // }
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogy_park/models/dog_item.dart';
 import 'package:dogy_park/models/park_item.dart';
 import 'dart:async';
 
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:provider/provider.dart';
+
+import 'app_state/app_state_provider.dart';
+import 'app_state/states_utils.dart';
+
 class DataProvider {
   final _db = FirebaseFirestore.instance;
+  final storageRef = FirebaseStorage.instance.ref();
 
   Query getMyDogsRef(String userToken) {
     final myDogsRef =
@@ -104,12 +113,23 @@ class DataProvider {
     return await myDogs;
   }
 
-  void addDog(DogItem dog) async {
+  Future<void> addDog(DogItem dog) async {
     final dogDocumentReference = await _db.collection('dogs').add(dog.toMap());
+
     dog.id = dogDocumentReference.id;
+    try {
+      final imageFile = File(dog.imageUrl!);
+      final imageRef = storageRef.child('dogs/${dog.id}.jpg');
+      await imageRef.putFile(imageFile);
+      dog.imageUrl = await imageRef.getDownloadURL();
+    } catch (e) {
+      print(e);
+    }
+
+    updateDog(dog);
   }
 
-  void updateDog(DogItem dog) async {
+  Future<void> updateDog(DogItem dog) async {
     await _db.collection('dogs').doc(dog.id).update(dog.toMap());
   }
 

@@ -28,6 +28,10 @@ class LoginPage extends StatelessWidget {
       // Set the loginErrorMessageNotifier value to the error message.
       _loginErrorMessageNotifier.value = msg;
     }
+
+    if (msg == 'success') {
+      GoRouter.of(context).pushReplacement('/park');
+    }
   }
 
   void _onForgotPasswordButtonPressed() {

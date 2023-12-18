@@ -23,7 +23,7 @@ class ErrorPage extends StatelessWidget {
             Text(error ?? ""),
             TextButton(
               onPressed: () {
-                GoRouter.of(context).goNamed(AppPage.park.toName);
+                GoRouter.of(context).pushNamed(AppPage.park.toName);
               },
               child: const Text(
                   "Back to Home"
