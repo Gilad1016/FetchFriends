@@ -73,11 +73,7 @@ class AppRouter {
       switch (appProvider.state) {
         case AppState.init:
           return AppPage.boot.toPath;
-
-        case AppState.loading:
-          print("loading");
-        // return AppPage.landing.toPath; //only temporary
-
+          
         case AppState.unauthenticated:
           if ((state.matchedLocation != AppPage.landing.toPath) &&
               (state.matchedLocation != AppPage.login.toPath) &&

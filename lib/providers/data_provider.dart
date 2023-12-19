@@ -6,7 +6,6 @@ import 'package:dogy_park/models/dog_item.dart';
 import 'package:dogy_park/models/park_item.dart';
 import 'dart:async';
 
-
 class DataProvider {
   final _db = FirebaseFirestore.instance;
   final storageRef = FirebaseStorage.instance.ref();
@@ -56,31 +55,38 @@ class DataProvider {
     await _db.collection('dogs').doc(dog.id).delete();
   }
 
+  Query getDogsAtParkRef(String parkId) {
+    final dogsAtParkRef =
+        _db.collection('dogs').where('arrival.parkId', isEqualTo: parkId);
+    return dogsAtParkRef;
+  }
+
   void addPark(ParkItem park) async {
     final parkDocumentReference =
-        await _db.collection('parks').add(park.toJson());
+        await _db.collection('parks').add(park.toMap());
     park.id = parkDocumentReference.id;
   }
 
   void updatePark(ParkItem park) async {
-    await _db.collection('parks').doc(park.id).update(park.toJson());
+    await _db.collection('parks').doc(park.id).update(park.toMap());
   }
 
   void deletePark(ParkItem park) async {
     await _db.collection('parks').doc(park.id).delete();
   }
 
-  Stream<List<ParkItem>> getParks() {
-    final parksRef = _db.collection('parks');
+  Future<List<ParkItem>> getParks() async {
+    final parksRef =
+    _db.collection('parks');
 
-    final parks = parksRef.snapshots().map((snapshot) {
+    final allParks = parksRef.get().then((snapshot) {
       final parks = snapshot.docs.map((parkDocumentSnapshot) {
-        final park = ParkItem.fromJson(parkDocumentSnapshot.data());
+        final park = ParkItem.fromMap(parkDocumentSnapshot.data());
         park.id = parkDocumentSnapshot.id;
         return park;
       }).toList();
       return parks;
     });
-    return parks;
+    return await allParks;
   }
 }

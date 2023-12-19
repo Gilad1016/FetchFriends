@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dogy_park/models/park_item.dart';
 import 'package:dogy_park/widgets/top_bar/setting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/auth_provider.dart';
 import '../providers/data_provider.dart';
 import '../widgets/top_bar/app_bar.dart';
-import '../widgets/arrival_button.dart';
+import '../widgets/arrival/arrival_button.dart';
 import '../models/dog_item.dart';
-import '../widgets/arrival_tile.dart';
+import '../widgets/arrival/arrival_tile.dart';
 
 class ParkPage extends StatefulWidget {
   const ParkPage({super.key});
@@ -18,12 +18,17 @@ class ParkPage extends StatefulWidget {
 
 class _ParkPageState extends State<ParkPage> {
   late Query dogData = FirebaseFirestore.instance.collection('dogs');
+  ParkItem park = ParkItem(
+      name: 'Sokolov Garden',
+      mapsURL: 'https://maps.app.goo.gl/QrmnpJT3EBZEppEMA');
 
   onStartUp(BuildContext context) async {
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    // final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final dataProvider = Provider.of<DataProvider>(context, listen: false);
-    final userToken = authProvider.getMyToken();
-    dogData = dataProvider.getMyDogsRef(await userToken);
+    final parks = await dataProvider.getParks();
+    // final userToken = authProvider.getMyToken();
+    dogData = dataProvider.getDogsAtParkRef(parks[0].id);
+    //dataProvider.getMyDogsRef(await userToken);
   }
 
   @override
@@ -35,12 +40,10 @@ class _ParkPageState extends State<ParkPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Get dog data from DataProvider
 
     return Scaffold(
       appBar: const CustomAppBar(
           titleText: 'Sokolov Garden', trailingWidget: SettingWidget()),
-      // Replace the existing body with this:
       body: StreamBuilder<QuerySnapshot>(
         stream: dogData.snapshots(),
         builder: (context, snapshot) {
