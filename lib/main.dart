@@ -44,30 +44,29 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
-  late StreamSubscription<AppState> authSubscription;
   late DataProvider dataProvider;
+
+  late StreamSubscription<AppState> authSubscription;
 
   @override
   void initState() {
-    appProvider = AppStateProvider(widget.sharedPreferences);
-    authProvider = AuthProvider();
     dataProvider = DataProvider();
+    appProvider = AppStateProvider(widget.sharedPreferences, dataProvider);
+    authProvider = AuthProvider();
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
 
     super.initState();
   }
 
   void onAuthStateChange(AppState login) {
+    print("onAuthStateChange: $login");
     if (login == AppState.unauthenticated) {
       appProvider.state = AppState.unauthenticated;
       return;
     }
 
     if (login == AppState.loggedIn) {
-      if (appProvider.state == AppState.loggedInWithDogs) {
-        return;
-      }
-      appProvider.state = AppState.loggedIn;
+      appProvider.onAppStart();
     }
   }
 

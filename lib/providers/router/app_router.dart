@@ -1,10 +1,12 @@
-import 'package:dogy_park/pages/add_dog.dart';
+import 'package:dogy_park/pages/new_user_flow/add_dog.dart';
 import 'package:dogy_park/pages/boot.dart';
 import 'package:dogy_park/pages/profile.dart';
 import 'package:dogy_park/providers/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../pages/park.dart';
+import '../../pages/new_user_flow/add_preferred_park.dart';
+import '../../pages/new_user_flow/request_location_permission.dart';
+import '../../pages/home.dart';
 import '../../pages/auth/register.dart';
 import '../../pages/auth/login.dart';
 import '../../pages/error.dart';
@@ -24,9 +26,9 @@ class AppRouter {
     // initialLocation: AppPage.boot.toPath,
     routes: <GoRoute>[
       GoRoute(
-        path: AppPage.park.toPath,
-        name: AppPage.park.toName,
-        builder: (context, state) => const ParkPage(),
+        path: AppPage.parkHome.toPath,
+        name: AppPage.parkHome.toName,
+        builder: (context, state) => const ParkHomePage(),
       ),
       GoRoute(
         path: AppPage.login.toPath,
@@ -63,6 +65,16 @@ class AppRouter {
         name: AppPage.profile.toName,
         builder: (context, state) => const ProfilePage(),
       ),
+      GoRoute(
+        path: AppPage.requestPermission.toPath,
+        name: AppPage.requestPermission.toName,
+        builder: (context, state) => const LocationPermissionPage(),
+      ),
+      GoRoute(
+        path: AppPage.addPreferredPark.toPath,
+        name: AppPage.addPreferredPark.toName,
+        builder: (context, state) => const AddPreferredParkPage(),
+      ),
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
     redirect: (context, state) {
@@ -73,23 +85,34 @@ class AppRouter {
       switch (appProvider.state) {
         case AppState.init:
           return AppPage.boot.toPath;
-          
+
         case AppState.unauthenticated:
           if ((state.matchedLocation != AppPage.landing.toPath) &&
               (state.matchedLocation != AppPage.login.toPath) &&
               (state.matchedLocation != AppPage.register.toPath)) {
             return AppPage.landing.toPath;
           }
-
         case AppState.loggedIn:
           return AppPage.addDog.toPath;
 
+        case AppState.noLocationPermission:
+          return AppPage.requestPermission.toPath;
+
         case AppState.loggedInWithDogs:
+          //TODO: after add parks is done change this to add parks
           if ((state.matchedLocation == AppPage.landing.toPath ||
               state.matchedLocation == AppPage.login.toPath ||
               state.matchedLocation == AppPage.register.toPath ||
               state.matchedLocation == AppPage.boot.toPath)) {
-            return AppPage.park.toPath;
+            return AppPage.parkHome.toPath;
+          }
+
+        case AppState.loggedInWithDogsAndSavedParks:
+          if ((state.matchedLocation == AppPage.landing.toPath ||
+              state.matchedLocation == AppPage.login.toPath ||
+              state.matchedLocation == AppPage.register.toPath ||
+              state.matchedLocation == AppPage.boot.toPath)) {
+            return AppPage.parkHome.toPath;
           }
       }
 

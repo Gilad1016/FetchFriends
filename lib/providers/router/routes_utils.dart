@@ -2,18 +2,20 @@ enum AppPage {
   splash,
   login,
   register,
-  park,
+  parkHome,
   error,
   landing,
   boot,
   addDog,
   profile,
+  requestPermission,
+  addPreferredPark,
 }
 
 extension AppPageExtension on AppPage {
   String get toPath {
     switch (this) {
-      case AppPage.park:
+      case AppPage.parkHome:
         return "/";
       case AppPage.login:
         return "/login";
@@ -29,6 +31,10 @@ extension AppPageExtension on AppPage {
         return "/addDog";
       case AppPage.profile:
         return "/profile";
+      case AppPage.requestPermission:
+        return "/requestPermission";
+      case AppPage.addPreferredPark:
+        return "/addPreferredPark";
       default:
         return "/";
     }
@@ -36,7 +42,7 @@ extension AppPageExtension on AppPage {
 
   String get toName {
     switch (this) {
-      case AppPage.park:
+      case AppPage.parkHome:
         return "PARK";
       case AppPage.login:
         return "LOGIN";
@@ -52,6 +58,10 @@ extension AppPageExtension on AppPage {
         return "ADD_DOG";
       case AppPage.profile:
         return "PROFILE";
+      case AppPage.requestPermission:
+        return "REQUEST_PERMISSION";
+      case AppPage.addPreferredPark:
+        return "ADD_PREFERRED_PARK";
       default:
         return "PARK";
     }
@@ -59,7 +69,7 @@ extension AppPageExtension on AppPage {
 
   String get toTitle {
     switch (this) {
-      case AppPage.park:
+      case AppPage.parkHome:
         return "My App";
       case AppPage.login:
         return "My App Log In";
@@ -75,6 +85,8 @@ extension AppPageExtension on AppPage {
         return "My App Add Dog";
       case AppPage.profile:
         return "My App Profile";
+      case AppPage.requestPermission:
+        return "My App Request Permission";
       default:
         return "My App";
     }

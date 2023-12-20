@@ -29,6 +29,7 @@ class LoginPage extends StatelessWidget {
     }
 
     if (msg == 'success') {
+
       GoRouter.of(context).pushReplacement('/');
     }
   }

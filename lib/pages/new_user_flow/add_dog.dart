@@ -8,10 +8,10 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../models/dog_item.dart';
-import '../providers/app_state/states_utils.dart';
-import '../providers/data_provider.dart';
-import '../widgets/top_bar/app_bar.dart';
+import '../../models/dog_item.dart';
+import '../../providers/app_state/states_utils.dart';
+import '../../providers/data_provider.dart';
+import '../../widgets/top_bar/app_bar.dart';
 
 class AddDogPage extends StatefulWidget {
   const AddDogPage({super.key});

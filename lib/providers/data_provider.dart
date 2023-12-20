@@ -6,6 +6,8 @@ import 'package:dogy_park/models/dog_item.dart';
 import 'package:dogy_park/models/park_item.dart';
 import 'dart:async';
 
+import '../models/user_data.dart';
+
 class DataProvider {
   final _db = FirebaseFirestore.instance;
   final storageRef = FirebaseStorage.instance.ref();
@@ -61,6 +63,29 @@ class DataProvider {
     return dogsAtParkRef;
   }
 
+  void addUserData(UserData userData) async {
+    final userDataDocumentReference =
+        await _db.collection('users_data').add(userData.toMap());
+    userData.userToken = userDataDocumentReference.id;
+  }
+
+  // Future<List<ParkItem>?> getUserSavedParks(String userToken) async {
+  //   final savedParksRef = _db
+  //       .collection('users_data')
+  //       .doc(userToken)
+  //       .where('savedParksId', arrayContains: userToken);
+  //
+  //   final savedParks = savedParksRef.get().then((snapshot) {
+  //     final parks = snapshot.docs.map((parkDocumentSnapshot) {
+  //       final park = ParkItem.fromMap(parkDocumentSnapshot.data());
+  //       park.id = parkDocumentSnapshot.id;
+  //       return park;
+  //     }).toList();
+  //     return parks;
+  //   });
+  //   return await savedParks;
+  // }
+
   void addPark(ParkItem park) async {
     final parkDocumentReference =
         await _db.collection('parks').add(park.toMap());
@@ -76,8 +101,7 @@ class DataProvider {
   }
 
   Future<List<ParkItem>> getParks() async {
-    final parksRef =
-    _db.collection('parks');
+    final parksRef = _db.collection('parks');
 
     final allParks = parksRef.get().then((snapshot) {
       final parks = snapshot.docs.map((parkDocumentSnapshot) {

@@ -1,7 +1,7 @@
 import 'package:dogy_park/design/color_pallette.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/dog_item.dart';
+import '../models/dog_item.dart';
 
 class ArrivalTile extends StatelessWidget {
   final DogItem dogItem;

@@ -7,16 +7,16 @@ import '../providers/data_provider.dart';
 import '../widgets/top_bar/app_bar.dart';
 import '../widgets/arrival/arrival_button.dart';
 import '../models/dog_item.dart';
-import '../widgets/arrival/arrival_tile.dart';
+import '../widgets/arrival_tile.dart';
 
-class ParkPage extends StatefulWidget {
-  const ParkPage({super.key});
+class ParkHomePage extends StatefulWidget {
+  const ParkHomePage({super.key});
 
   @override
-  State<ParkPage> createState() => _ParkPageState();
+  State<ParkHomePage> createState() => _ParkHomePageState();
 }
 
-class _ParkPageState extends State<ParkPage> {
+class _ParkHomePageState extends State<ParkHomePage> {
   late Query dogData = FirebaseFirestore.instance.collection('dogs');
   ParkItem park = ParkItem(
       name: 'Sokolov Garden',

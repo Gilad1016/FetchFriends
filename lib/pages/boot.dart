@@ -13,11 +13,11 @@ class BootPage extends StatefulWidget {
 class _BootPageState extends State<BootPage> {
   late AppStateProvider _appProvider;
 
-  void onStartUp(context) async {
+  void onStartUp() async {
     //WAIT 1 SECOND
     await Future.delayed(const Duration(seconds: 1));
     // TODO: REMOVE WAIT
-    await _appProvider.onAppStart(context);
+    await _appProvider.onAppStart();
   }
 
   @override
@@ -25,7 +25,7 @@ class _BootPageState extends State<BootPage> {
     super.initState();
     _appProvider = Provider.of<AppStateProvider>(context, listen: false);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => onStartUp(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) => onStartUp());
   }
 
   @override
