@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/app_state/app_state_provider.dart';
 import '../../providers/location_provider.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/text_widget.dart';
@@ -13,6 +15,8 @@ class LocationPermissionPage extends StatelessWidget {
     String request = await locationProvider.getLocation();
 
     if(request == "success") {
+      final appProvider = Provider.of<AppStateProvider>(context, listen: false);
+      await appProvider.validateUserDataAndState();
       GoRouter.of(context).go('/');
       return;
     }

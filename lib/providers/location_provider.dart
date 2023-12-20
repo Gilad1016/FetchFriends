@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
-import 'app_state/states_utils.dart';
-
 class LocationProvider {
   Location location = Location();
   late LocationData _locationData;

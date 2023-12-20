@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:dogy_park/providers/app_state/states_utils.dart';
 import 'package:dogy_park/providers/location_provider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/user_data.dart';
@@ -38,8 +37,7 @@ class AppStateProvider with ChangeNotifier {
   }
 
   Future<bool> updateLoginState() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final userToken = sharedPreferences.getString('token') ?? '';
+    final userToken = _sharedPreferences.getString('token') ?? '';
 
     if (userToken.isNotEmpty) {
       _appState = AppState.loggedIn;
@@ -70,7 +68,7 @@ class AppStateProvider with ChangeNotifier {
     return false;
   }
 
-  Future<void> onAppStart() async {
+  Future<void> validateUserDataAndState() async {
     _appState = AppState.unauthenticated;
 
     if (!await updateLoginState()) {
@@ -82,8 +80,6 @@ class AppStateProvider with ChangeNotifier {
       notifyListeners();
       return;
     }
-
-    // final dataProvider = Provider.of<DataProvider>(context, listen: false);
 
     if (!await updateMyDogs()) {
       notifyListeners();

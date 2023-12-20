@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     if (login == AppState.loggedIn) {
-      appProvider.onAppStart();
+      appProvider.validateUserDataAndState();
     }
   }
 
