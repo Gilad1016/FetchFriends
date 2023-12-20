@@ -8,6 +8,18 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "archive",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/archive-3.4.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "args",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/args-2.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "async",
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/async-2.11.0",
       "packageUri": "lib/",
@@ -24,6 +36,18 @@
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/characters-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "checked_yaml",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/checked_yaml-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "cli_util",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/cli_util-0.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "clock",
@@ -52,6 +76,12 @@
     {
       "name": "collection",
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/collection-1.18.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "convert",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/convert-3.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -194,10 +224,10 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "flutter_lints",
-      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/flutter_lints-3.0.1",
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/flutter_launcher_icons-0.13.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.18"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -234,6 +264,12 @@
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "image",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/image-4.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "image_picker",
@@ -290,10 +326,10 @@
       "languageVersion": "2.19"
     },
     {
-      "name": "lints",
-      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/lints-3.0.0",
+      "name": "json_annotation",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/json_annotation-4.8.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.19"
     },
     {
       "name": "location",
@@ -374,6 +410,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "petitparser",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/petitparser-6.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/platform-3.1.3",
       "packageUri": "lib/",
@@ -384,6 +426,12 @@
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.7",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "pointycastle",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/pointycastle-3.7.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
     },
     {
       "name": "provider",
@@ -524,13 +572,25 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "xml",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/xml-6.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "yaml",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/yaml-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "dogy_park",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2023-12-19T07:38:06.622552Z",
+  "generated": "2023-12-20T09:56:30.025055Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

@@ -15,9 +15,10 @@ class _BootPageState extends State<BootPage> {
 
   void onStartUp() async {
     //WAIT 1 SECOND
-    await Future.delayed(const Duration(seconds: 1));
+    final wait = Future.delayed(const Duration(seconds: 1));
     // TODO: REMOVE WAIT
     await _appProvider.validateUserDataAndState();
+    await wait;
   }
 
   @override
