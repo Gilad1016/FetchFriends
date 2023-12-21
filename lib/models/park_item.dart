@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ParkItem {
   String id = '';
   String name = '';
-  String mapsURL = '';
+  Uri mapsURL = Uri.parse('');
   GeoPoint location = const GeoPoint(0, 0);
 
   ParkItem({required this.name, required this.mapsURL});
@@ -20,7 +20,7 @@ class ParkItem {
 
     return ParkItem(
       name: docDocument['name'] as String,
-      mapsURL: docDocument['mapsURL'] as String,
+      mapsURL: Uri.parse(docDocument['mapsURL'] as String),
     );
   }
 
@@ -31,4 +31,5 @@ class ParkItem {
       'mapsURL': mapsURL,
     };
   }
+
 }

@@ -14,7 +14,7 @@ class AppStateProvider with ChangeNotifier {
   late final SharedPreferences _sharedPreferences;
   final StreamController<bool> _loginStateChange =
       StreamController<bool>.broadcast();
-  late DataProvider _dataProvider;
+  late final DataProvider _dataProvider;
 
 
   AppState _appState = AppState.init;

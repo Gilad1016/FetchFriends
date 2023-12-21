@@ -20,7 +20,7 @@ class _ParkHomePageState extends State<ParkHomePage> {
   late Query dogData = FirebaseFirestore.instance.collection('dogs');
   ParkItem park = ParkItem(
       name: 'Sokolov Garden',
-      mapsURL: 'https://maps.app.goo.gl/QrmnpJT3EBZEppEMA');
+      mapsURL: Uri.parse('https://maps.app.goo.gl/QrmnpJT3EBZEppEMA'));
 
   onStartUp(BuildContext context) async {
     // final authProvider = Provider.of<AuthProvider>(context, listen: false);

@@ -7,16 +7,22 @@ class CustomInputText extends StatefulWidget {
   final bool obscureText; // Optional
   final TextEditingController controller;
   final Icon prefixIcon;
+  final IconButton suffixIcon;
+  final void Function(String text)? onChanged;
 
-  const CustomInputText({
-    super.key,
-    required this.labelText,
-    required this.hintText,
-    required this.controller,
-    this.keyboardType = TextInputType.text,
-    this.obscureText = false,
-    this.prefixIcon = const Icon(Icons.text_fields)
-  });
+  const CustomInputText(
+      {super.key,
+      required this.labelText,
+      required this.hintText,
+      required this.controller,
+      this.keyboardType = TextInputType.text,
+      this.obscureText = false,
+      this.prefixIcon = const Icon(Icons.text_fields),
+      this.suffixIcon = const IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: null,
+      ),
+      this.onChanged});
 
   @override
   _CustomInputTextState createState() => _CustomInputTextState();
@@ -58,8 +64,9 @@ class _CustomInputTextState extends State<CustomInputText> {
                     });
                   },
                 )
-              : null,
+              : widget.suffixIcon,
         ),
+        onChanged: widget.onChanged,
       ),
     );
   }

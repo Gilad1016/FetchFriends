@@ -1,16 +1,12 @@
-import 'dart:io';
-
-import 'package:dogy_park/providers/app_state/app_state_provider.dart';
-import 'package:dogy_park/providers/auth_provider.dart';
-import 'package:dogy_park/widgets/custom_button.dart';
+import 'package:dogy_park/models/park_item.dart';
+import 'package:dogy_park/widgets/inputs/custom_input.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/dog_item.dart';
-import '../../providers/app_state/states_utils.dart';
 import '../../providers/data_provider.dart';
+import '../../providers/location_provider.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/park_tile.dart';
 import '../../widgets/top_bar/app_bar.dart';
 
 class AddPreferredParkPage extends StatefulWidget {
@@ -21,123 +17,92 @@ class AddPreferredParkPage extends StatefulWidget {
 }
 
 class _AddPreferredParkPageState extends State<AddPreferredParkPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  File? _selectedImage;
-  late AppStateProvider _appProvider;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
+  final _searchTextController = TextEditingController();
+  List<Widget> _searchResults = [];
+  bool _showNextButton = false;
+  late final DataProvider _dataProvider;
+  late final ParkItem _selectedPark;
+  late final LocationProvider _locationProvider;
 
   @override
   void initState() {
     super.initState();
-    _appProvider = Provider.of<AppStateProvider>(context, listen: false);
-  }
-
-  Future<void> _takePicture() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _selectedImage = image != null ? File(image.path) : null;
+    _searchTextController.addListener(() {
+      setState(() {
+        _showNextButton = _searchTextController.text.isNotEmpty;
+      });
     });
+    _dataProvider = Provider.of<DataProvider>(context, listen: false);
+    _locationProvider = LocationProvider();
+    _locationProvider.getLocation();
   }
 
-  void _submitForm(context) async {
-    final dogName = _nameController.text;
-    final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    if (dogName.isEmpty) {
+  Future<void> _onSearchTextChanged(String text) async {
+    if (text.isEmpty) {
+      setState(() {
+        _searchResults.clear();
+        _showNextButton = false;
+      });
       return;
     }
 
-    await Provider.of<DataProvider>(context, listen: false).addDog(
-      DogItem(
-        name: dogName,
-        imageUrl: _selectedImage?.path,
-        ownerUID: await authProvider.getMyToken(),
-      ),
-    );
+    // final searchLower = text.toLowerCase();
+    final parks = await _dataProvider.searchParks(
+        text, _locationProvider.locationData);
+    print('Parks: $parks');
+    List<Widget> parkTiles = [];
+    for (var park in parks) {
+      parkTiles.add(ParkTile(
+        parkItem: park,
+        onSavePark: (park) => _onParkSelected(park),
+      ));
+    }
+    setState(() {
+      _searchResults = parkTiles;
+      _showNextButton = text.isNotEmpty;
+    });
+  } //(park) => _onParkSelected(park), // Use ParkItem object
 
-
+  void _onParkSelected(ParkItem park) {
+    print('Park selected: ${park.name}');
   }
 
-  void test() {
-    _appProvider.state = AppState.loggedInWithDogs;
-    GoRouter.of(context).pushReplacement('/');
-
-  }
-  //TODO: delete and use edit profile logic
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        titleText: 'Add a Dog',
+        titleText: 'Choose Preferred Park',
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            children: [
-              const SizedBox(height: 32.0),
-              GestureDetector(
-                onTap: _takePicture,
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey[300],
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomInputText(
+                  controller: _searchTextController,
+                  hintText: 'Search for parks',
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        _searchTextController.clear();
+                        _searchResults.clear();
+                        _showNextButton = false;
+                      });
+                    },
                   ),
-                  child: _selectedImage == null
-                      ? const Icon(
-                    Icons.add_a_photo,
-                    size: 60,
-                    color: Colors.grey,
-                  )
-                      : ClipOval(
-                    child: Image.file(
-                      _selectedImage!,
-                      width: 150,
-                      height: 150,
-                      fit: BoxFit.cover,
-                    ),
+                  onChanged: _onSearchTextChanged,
+                  labelText: 'Search for parks',
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _searchResults.length,
+                    itemBuilder: (context, index) => _searchResults[index],
                   ),
-                ),
-              ),
-              const SizedBox(height: 32.0),
-              //TODO: create a generic custom input widget
-              // EmailInput(controller: _nameController),
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Dog Name',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a dog name';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32.0),
-              CustomButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    _submitForm(context);
-                    test();
-                  }
-                },
-                text: 'Add Dog',
-              ),
-            ],
-          ),
-        ),
-      ),
+                )
+              ])),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
@@ -8,7 +9,7 @@ class LocationProvider {
   late LocationData _locationData;
   bool _serviceEnabled = false;
   final StreamController<bool> _onLocationStateChange =
-  StreamController.broadcast();
+      StreamController.broadcast();
 
   Stream<bool> get onLocationStateChange => _onLocationStateChange.stream;
 
@@ -16,6 +17,8 @@ class LocationProvider {
     _onLocationStateChange.add(isGranted);
   }
 
+  GeoPoint get locationData =>
+      GeoPoint(_locationData.latitude!, _locationData.longitude!);
 
   Future<void> checkService() async {
     _serviceEnabled = await location.serviceEnabled();
@@ -56,9 +59,9 @@ class LocationProvider {
   }
 
   Future<bool> isLocationReady() async {
-    return await location.serviceEnabled() && await location.hasPermission() == PermissionStatus.granted;
+    return await location.serviceEnabled() &&
+        await location.hasPermission() == PermissionStatus.granted;
   }
-
 
   double? get latitude => _locationData.latitude;
 

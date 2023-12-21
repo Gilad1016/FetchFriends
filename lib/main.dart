@@ -59,7 +59,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onAuthStateChange(AppState login) {
-    print("onAuthStateChange: $login");
     if (login == AppState.unauthenticated) {
       appProvider.state = AppState.unauthenticated;
       return;
