@@ -25,7 +25,7 @@ class CustomInputText extends StatefulWidget {
       this.onChanged});
 
   @override
-  _CustomInputTextState createState() => _CustomInputTextState();
+  State<CustomInputText> createState() => _CustomInputTextState();
 }
 
 class _CustomInputTextState extends State<CustomInputText> {

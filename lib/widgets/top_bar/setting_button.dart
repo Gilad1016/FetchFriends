@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../design/color_pallette.dart';
-import '../../providers/auth_provider.dart';
+import '../../providers/backend_service/auth_provider.dart';
 import '../../providers/router/routes_utils.dart';
 
 class SettingWidget extends StatelessWidget {
@@ -42,7 +42,6 @@ class SettingWidget extends StatelessWidget {
       onSelected: (value) {
         switch (value) {
           case 1:
-            print('Profile');
             GoRouter.of(context).pushNamed(AppPage.profile.toName);
             break;
           case 2:

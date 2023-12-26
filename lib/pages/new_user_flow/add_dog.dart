@@ -1,16 +1,18 @@
 import 'dart:io';
 
 import 'package:dogy_park/providers/app_state/app_state_provider.dart';
-import 'package:dogy_park/providers/auth_provider.dart';
 import 'package:dogy_park/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/backend_service/auth_provider.dart';
 import '../../models/dog_item.dart';
 import '../../providers/app_state/states_utils.dart';
+import '../../providers/backend_service/backend_service.dart';
 import '../../providers/data_provider.dart';
+import '../../widgets/inputs/custom_input.dart';
 import '../../widgets/top_bar/app_bar.dart';
 
 class AddDogPage extends StatefulWidget {
@@ -25,17 +27,19 @@ class _AddDogPageState extends State<AddDogPage> {
   final _nameController = TextEditingController();
   File? _selectedImage;
   late AppStateProvider _appProvider;
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    super.dispose();
-  }
+  late BackendService _backendService;
 
   @override
   void initState() {
     super.initState();
     _appProvider = Provider.of<AppStateProvider>(context, listen: false);
+    _backendService = Provider.of<BackendService>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 
   Future<void> _takePicture() async {
@@ -54,22 +58,20 @@ class _AddDogPageState extends State<AddDogPage> {
       return;
     }
 
-    await Provider.of<DataProvider>(context, listen: false).addDog(
+    _backendService.addDog(
       DogItem(
         name: dogName,
         imageUrl: _selectedImage?.path,
         ownerUID: await authProvider.getMyToken(),
       ),
     );
-
-
   }
 
   void test() {
     _appProvider.state = AppState.loggedInWithDogs;
     GoRouter.of(context).pushReplacement('/');
-
   }
+
   //TODO: delete and use edit profile logic
   @override
   Widget build(BuildContext context) {
@@ -110,19 +112,12 @@ class _AddDogPageState extends State<AddDogPage> {
                 ),
               ),
               const SizedBox(height: 32.0),
-              //TODO: create a generic custom input widget
-              // EmailInput(controller: _nameController),
-              TextFormField(
+              CustomInputText(
+                labelText: 'Dog Name',
+                hintText: 'Enter your dog\'s name',
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Dog Name',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a dog name';
-                  }
-                  return null;
-                },
+                keyboardType: TextInputType.text,
+                prefixIcon: const Icon(Icons.text_fields),
               ),
               const SizedBox(height: 32.0),
               CustomButton(

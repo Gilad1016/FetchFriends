@@ -21,13 +21,13 @@ class BackWidget extends StatelessWidget {
         margin: const EdgeInsets.all(10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          // color: const Color(0xffF7F8F8),
+          color: AppColors.secondaryColor,
           borderRadius: BorderRadius.circular(50),
         ),
         child: const Icon(
           CupertinoIcons.back,
           size: 20,
-          color: AppColors.secondaryColor,
+          color: AppColors.primaryColor,
         ),
       ),
     );

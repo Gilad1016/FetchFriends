@@ -19,12 +19,12 @@ class EditDogCard extends StatefulWidget {
   });
 
   @override
-  _EditDogCardState createState() => _EditDogCardState(dogItem, onEditCancel);
+  State<EditDogCard> createState() => _EditDogCardState(dogItem, onEditCancel);
 }
 
 class _EditDogCardState extends State<EditDogCard> {
   // Edited values
-  String _editedName = '';
+  final String _editedName = '';
   File? _newImage;
 
   _EditDogCardState(DogItem dogItem, VoidCallback onEditCancel);

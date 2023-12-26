@@ -23,7 +23,7 @@ class LocationPermissionPage extends StatelessWidget {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Error requesting location permissions: ${request}'),
+        content: Text('Error requesting location permissions: $request'),
       ),
     );
   }

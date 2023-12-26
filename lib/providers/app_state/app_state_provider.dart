@@ -14,7 +14,7 @@ class AppStateProvider with ChangeNotifier {
   late final SharedPreferences _sharedPreferences;
   final StreamController<bool> _loginStateChange =
       StreamController<bool>.broadcast();
-  late final DataProvider _dataProvider;
+  // late final DataProvider _dataProvider;
 
 
   AppState _appState = AppState.init;
@@ -24,14 +24,13 @@ class AppStateProvider with ChangeNotifier {
     savedParksId: [],
   );
 
-  AppStateProvider(this._sharedPreferences, this._dataProvider);
+  AppStateProvider(this._sharedPreferences);
 
   Stream<bool> get loginStateChange => _loginStateChange.stream;
 
   AppState get state => _appState;
 
   set state(AppState value) {
-    print("changed state: $value");
     _appState = value;
     notifyListeners();
   }
@@ -58,13 +57,13 @@ class AppStateProvider with ChangeNotifier {
   }
 
   Future<bool> updateMyDogs() async {
-    final myDogs = await _dataProvider.getMyDogs(_userData.userToken);
-    if (myDogs!.isNotEmpty) {
-      _appState = AppState.loggedInWithDogs;
-      _userData.dogIds = myDogs.map((dog) => dog.id).toList();
-      _userData.dogItems = myDogs;
-      return true;
-    }
+    // final myDogs = await _dataProvider.getMyDogs(_userData.userToken);
+    // if (myDogs!.isNotEmpty) {
+    //   _appState = AppState.loggedInWithDogs;
+    //   _userData.dogIds = myDogs.map((dog) => dog.id).toList();
+    //   _userData.dogItems = myDogs;
+    //   return true;
+    // }
     return false;
   }
 

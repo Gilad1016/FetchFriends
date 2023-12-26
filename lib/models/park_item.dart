@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ParkItem {
   String id = '';
   String name = '';
   Uri mapsURL = Uri.parse('');
-  GeoPoint location = const GeoPoint(0, 0);
+  int latitude = 0;
+  int longitude = 0;
 
   ParkItem({required this.name, required this.mapsURL});
 

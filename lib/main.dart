@@ -1,28 +1,19 @@
 import 'dart:async';
 
 import 'package:dogy_park/providers/app_state/states_utils.dart';
-import 'package:dogy_park/providers/data_provider.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:dogy_park/providers/backend_service/backend_service.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'design/color_pallette.dart';
-import 'firebase_options.dart';
 import 'package:dogy_park/providers/app_state/app_state_provider.dart';
-import 'package:dogy_park/providers/auth_provider.dart';
+import './providers/backend_service/auth_provider.dart';
 import 'package:dogy_park/providers/router/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await FirebaseAppCheck.instance.activate(
-      webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-      androidProvider: AndroidProvider.debug);
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
 
@@ -32,26 +23,27 @@ void main() async {
 class MyApp extends StatefulWidget {
   final SharedPreferences sharedPreferences;
 
-  const MyApp({
+  MyApp({
     super.key,
     required this.sharedPreferences,
   });
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
-  late DataProvider dataProvider;
+  late BackendService backendService;
 
   late StreamSubscription<AppState> authSubscription;
 
   @override
   void initState() {
-    dataProvider = DataProvider();
-    appProvider = AppStateProvider(widget.sharedPreferences, dataProvider);
+    backendService = BackendService();
+    appProvider = AppStateProvider(widget.sharedPreferences);
     authProvider = AuthProvider();
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
 
@@ -82,7 +74,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         Provider<AuthProvider>(create: (_) => authProvider),
-        Provider<DataProvider>(create: (_) => dataProvider),
+        Provider<BackendService>(create: (_) => backendService),
       ],
       child: Builder(
         builder: (context) {

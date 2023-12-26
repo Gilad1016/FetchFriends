@@ -1,8 +1,9 @@
+import 'package:dogy_park/providers/backend_service/backend_service.dart';
 import 'package:dogy_park/widgets/inputs/custom_input.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../../providers/auth_provider.dart';
+import '../../providers/backend_service/auth_provider.dart';
 import '../../widgets/top_bar/back_button.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/top_bar/app_bar.dart';

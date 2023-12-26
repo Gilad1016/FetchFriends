@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../providers/data_provider.dart';
 import '../../providers/location_provider.dart';
-import '../../widgets/custom_button.dart';
 import '../../widgets/park_tile.dart';
 import '../../widgets/top_bar/app_bar.dart';
 
@@ -20,7 +19,7 @@ class _AddPreferredParkPageState extends State<AddPreferredParkPage> {
   final _searchTextController = TextEditingController();
   List<Widget> _searchResults = [];
   bool _showNextButton = false;
-  late final DataProvider _dataProvider;
+  // late final DataProvider _dataProvider;
   late final ParkItem _selectedPark;
   late final LocationProvider _locationProvider;
 
@@ -32,7 +31,7 @@ class _AddPreferredParkPageState extends State<AddPreferredParkPage> {
         _showNextButton = _searchTextController.text.isNotEmpty;
       });
     });
-    _dataProvider = Provider.of<DataProvider>(context, listen: false);
+    // _dataProvider = Provider.of<DataProvider>(context, listen: false);
     _locationProvider = LocationProvider();
     _locationProvider.getLocation();
   }
@@ -47,16 +46,15 @@ class _AddPreferredParkPageState extends State<AddPreferredParkPage> {
     }
 
     // final searchLower = text.toLowerCase();
-    final parks = await _dataProvider.searchParks(
-        text, _locationProvider.locationData);
-    print('Parks: $parks');
+    // final parks = await _dataProvider.searchParks(
+    //     text, _locationProvider.locationData);
     List<Widget> parkTiles = [];
-    for (var park in parks) {
-      parkTiles.add(ParkTile(
-        parkItem: park,
-        onSavePark: (park) => _onParkSelected(park),
-      ));
-    }
+    // for (var park in parks) {
+    //   parkTiles.add(ParkTile(
+    //     parkItem: park,
+    //     onSavePark: (park) => _onParkSelected(park),
+    //   ));
+    // }
     setState(() {
       _searchResults = parkTiles;
       _showNextButton = text.isNotEmpty;

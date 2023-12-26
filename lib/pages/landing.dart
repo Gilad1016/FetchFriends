@@ -33,6 +33,12 @@ class LandingPage extends StatelessWidget {
                 GoRouter.of(context).pushNamed(AppPage.register.toName);
               },
             ),
+            CustomButton(
+              text: 'TEST',
+              onPressed: () {
+                GoRouter.of(context).pushNamed(AppPage.test.toName);
+              },
+            ),
           ],
         ),
       ),

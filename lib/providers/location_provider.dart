@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
@@ -17,8 +16,7 @@ class LocationProvider {
     _onLocationStateChange.add(isGranted);
   }
 
-  GeoPoint get locationData =>
-      GeoPoint(_locationData.latitude!, _locationData.longitude!);
+  LocationData get locationData => _locationData;
 
   Future<void> checkService() async {
     _serviceEnabled = await location.serviceEnabled();

@@ -7,7 +7,7 @@ class ArrivalButton extends StatefulWidget {
   const ArrivalButton({super.key});
 
   @override
-  _ArrivalButtonState createState() => _ArrivalButtonState();
+  State<ArrivalButton> createState() => _ArrivalButtonState();
 }
 
 class _ArrivalButtonState extends State<ArrivalButton> {

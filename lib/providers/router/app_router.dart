@@ -99,14 +99,14 @@ class AppRouter {
           return AppPage.requestPermission.toPath;
 
         case AppState.loggedInWithDogs:
-          return AppPage.addPreferredPark.toPath;
-          // //TODO: after add parks is done change this to add parks
-          // if ((state.matchedLocation == AppPage.landing.toPath ||
-          //     state.matchedLocation == AppPage.login.toPath ||
-          //     state.matchedLocation == AppPage.register.toPath ||
-          //     state.matchedLocation == AppPage.boot.toPath)) {
-          //   return AppPage.parkHome.toPath;
-          // }
+          // return AppPage.addPreferredPark.toPath;
+        // //TODO: after add parks is done change this to add parks
+          if ((state.matchedLocation == AppPage.landing.toPath ||
+              state.matchedLocation == AppPage.login.toPath ||
+              state.matchedLocation == AppPage.register.toPath ||
+              state.matchedLocation == AppPage.boot.toPath)) {
+            return AppPage.parkHome.toPath;
+          }
 
         case AppState.loggedInWithDogsAndSavedParks:
           if ((state.matchedLocation == AppPage.landing.toPath ||

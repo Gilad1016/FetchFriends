@@ -1,10 +1,11 @@
 import 'package:dogy_park/design/color_pallette.dart';
 import 'package:dogy_park/models/arrival_item.dart';
-import 'package:dogy_park/providers/auth_provider.dart';
-import 'package:dogy_park/providers/data_provider.dart';
+import '../../providers/backend_service/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_picker_spinner/time_picker_spinner.dart';
+
+import '../../providers/data_provider.dart';
 
 class ArrivalPopup extends StatefulWidget {
   final Function() onButtonPressed;
@@ -12,25 +13,25 @@ class ArrivalPopup extends StatefulWidget {
   const ArrivalPopup({super.key, required this.onButtonPressed});
 
   @override
-  _ArrivalPopupState createState() => _ArrivalPopupState();
+  State<ArrivalPopup> createState() => _ArrivalPopupState();
 }
 
 class _ArrivalPopupState extends State<ArrivalPopup> {
   DateTime _arrivalTime = DateTime.now();
   int _arrivalDay = 0;
-  late final DataProvider dataProvider;
+  // late final DataProvider dataProvider;
   late final AuthProvider authProvider;
   String error = '';
 
   onButtonPressed() async {
-    dataProvider = Provider.of<DataProvider>(context, listen: false);
+    // dataProvider = Provider.of<DataProvider>(context, listen: false);
     authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    final myDogs =
-        await dataProvider.getMyDogs(await authProvider.getMyToken());
+    // final myDogs =
+    //     await dataProvider.getMyDogs(await authProvider.getMyToken());
 
     //TODO: handle logic for finding my park
-    final parks = await dataProvider.getParks();
+    // final parks = await dataProvider.getParks();
 
     DateTime arrivalTime = _arrivalTime;
     arrivalTime = arrivalTime.add(Duration(days: _arrivalDay));
@@ -38,17 +39,16 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
       error = 'Arrival time must be in the future';
       return;
     }
-    print(arrivalTime);
 
-    ArrivalItem arrival = ArrivalItem(
-      time: arrivalTime,
-      parkId: parks[0].id,
-    );
+    // ArrivalItem arrival = ArrivalItem(
+    //   time: arrivalTime,
+      // parkId: parks[0].id,
+    // );
 
-    for (var dog in myDogs!) {
-      dog.arrival = arrival;
-      dataProvider.updateDog(dog);
-    }
+    // for (var dog in myDogs!) {
+    //   dog.arrival = arrival;
+    //   dataProvider.updateDog(dog);
+    // }
 
     // Close popup based on widget callback
     setState(() {

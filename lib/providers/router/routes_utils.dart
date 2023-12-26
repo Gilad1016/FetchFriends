@@ -10,6 +10,7 @@ enum AppPage {
   profile,
   requestPermission,
   addPreferredPark,
+  test
 }
 
 extension AppPageExtension on AppPage {
@@ -35,6 +36,8 @@ extension AppPageExtension on AppPage {
         return "/requestPermission";
       case AppPage.addPreferredPark:
         return "/addPreferredPark";
+      case AppPage.test:
+        return "/test";
       default:
         return "/";
     }
@@ -62,6 +65,8 @@ extension AppPageExtension on AppPage {
         return "REQUEST_PERMISSION";
       case AppPage.addPreferredPark:
         return "ADD_PREFERRED_PARK";
+      case AppPage.test:
+        return "TEST";
       default:
         return "PARK";
     }

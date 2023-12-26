@@ -15,7 +15,7 @@ class DogHero extends StatefulWidget {
   });
 
   @override
-  _DogHeroState createState() => _DogHeroState();
+  State<DogHero> createState() => _DogHeroState();
 }
 
 class _DogHeroState extends State<DogHero> {

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dogy_park/models/park_item.dart';
 
 class ArrivalItem {
@@ -10,7 +9,7 @@ class ArrivalItem {
 
   factory ArrivalItem.fromMap(Map<String, dynamic> docDocument) {
     return ArrivalItem(
-      time: (docDocument['time'] as Timestamp).toDate(),
+      time: docDocument['time'] as DateTime,
       parkId: docDocument['parkId'] as String,
     );
   }
