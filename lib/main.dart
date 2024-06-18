@@ -1,16 +1,15 @@
 import 'dart:async';
 
-import 'package:dogy_park/providers/app_state/states_utils.dart';
-import 'package:dogy_park/providers/backend_service/backend_service.dart';
+import 'package:Fetch/common/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'design/color_pallette.dart';
-import 'package:dogy_park/providers/app_state/app_state_provider.dart';
-import './providers/backend_service/auth_provider.dart';
-import 'package:dogy_park/providers/router/app_router.dart';
+import 'auth/auth_provider.dart';
+// import 'backend_service/backend_service.dart';
+import 'common/design/color_pallette.dart';
+import 'common/providers/app_state/app_state_provider.dart';
+import 'common/providers/app_state/states_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,7 @@ void main() async {
 class MyApp extends StatefulWidget {
   final SharedPreferences sharedPreferences;
 
-  MyApp({
+  const MyApp({
     super.key,
     required this.sharedPreferences,
   });
@@ -36,17 +35,16 @@ class _MyAppState extends State<MyApp> {
 
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
-  late BackendService backendService;
+  // late BackendService backendService;
 
   late StreamSubscription<AppState> authSubscription;
 
   @override
   void initState() {
-    backendService = BackendService();
     appProvider = AppStateProvider(widget.sharedPreferences);
     authProvider = AuthProvider();
     authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
-
+    authProvider.refresh();
     super.initState();
   }
 
@@ -74,7 +72,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         Provider<AuthProvider>(create: (_) => authProvider),
-        Provider<BackendService>(create: (_) => backendService),
+        // Provider<BackendService>(create: (_) => backendService),
       ],
       child: Builder(
         builder: (context) {
