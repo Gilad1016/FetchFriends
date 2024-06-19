@@ -8,15 +8,15 @@ import 'package:pocketbase/pocketbase.dart';
 // TODO: add email verification support
 // TODO: add social login support
 class AuthProvider {
-  late final PocketBase pb;
-  late final AppStateProvider appStateProvider;
+  late final PocketBase _pb;
+  late final AppStateProvider _appStateProvider;
 
   AuthProvider() {
     _initialize();
   }
 
   Future<void> _initialize() async {
-    appStateProvider = AppStateProvider();
+    _appStateProvider = AppStateProvider();
     final prefs = await SharedPreferences.getInstance();
 
     final store = AsyncAuthStore(
@@ -25,21 +25,22 @@ class AuthProvider {
       clear: () async => prefs.remove('pb_auth'),
     );
 
-    pb = PocketBase('http://127.0.0.1:8090/', authStore: store);
+    _pb = PocketBase('http://127.0.0.1:8090/', authStore: store);
     refresh();
   }
 
   Future<String> login(String email, String password) async {
     RecordAuth authData;
     try {
-      authData = await pb.collection('users').authWithPassword(email, password);
+      authData =
+          await _pb.collection('users').authWithPassword(email, password);
     } catch (e) {
       return 'Incorrect email or password';
     }
     if (authData.token == "") {
       return 'Incorrect email or password';
     }
-    appStateProvider.revalidateUserState();
+    _appStateProvider.revalidateUserState();
     return 'success';
   }
 
@@ -52,28 +53,29 @@ class AuthProvider {
     };
     RecordModel authData;
     try {
-      authData = await pb.collection('users').create(body: body);
+      authData = await _pb.collection('users').create(body: body);
     } catch (e) {
       print(e);
       return 'Error creating account';
     }
-    if (authData.data == "") { //TODO: check token is valid
+    if (authData.data == "") {
+      //TODO: check token is valid
       return 'Error creating account';
     }
-    appStateProvider.revalidateUserState();
+    _appStateProvider.revalidateUserState();
     return 'success';
   }
 
   void logOut() {
-    pb.authStore.clear();
+    _pb.authStore.clear();
   }
 
   Future<void> refresh() async {
-    if (!pb.authStore.isValid) {
+    if (!_pb.authStore.isValid) {
       print('authStore is not valid');
       logOut();
       return;
     }
-    final authData = await pb.collection('users').authRefresh();
+    final authData = await _pb.collection('users').authRefresh();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:Fetch/common/router/app_router.dart';
+import 'package:Fetch/dog_management/dog_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +25,13 @@ class _MyAppState extends State<MyApp> {
 
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
+  late DogProvider dogProvider;
 
   @override
   void initState() {
     appProvider = AppStateProvider();
     authProvider = AuthProvider();
+    dogProvider = DogProvider();
     super.initState();
   }
 
@@ -39,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         Provider<AuthProvider>(create: (_) => authProvider),
-        // Provider<BackendService>(create: (_) => backendService),
+        Provider<DogProvider>(create: (_) => dogProvider),
       ],
       child: Builder(
         builder: (context) {

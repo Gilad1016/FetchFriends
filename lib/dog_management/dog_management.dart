@@ -10,8 +10,8 @@ class DogManagement extends StatelessWidget {
   const DogManagement({
     this.dogItems = const [],
     this.initCreateNew = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   void onCreateNewDog() {
     // Add the logic to create a new dog item and add it to the list

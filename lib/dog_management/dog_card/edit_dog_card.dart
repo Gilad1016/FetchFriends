@@ -45,8 +45,8 @@ class _EditDogCardState extends State<EditDogCard> {
   Widget build(BuildContext context) {
     final onEditCancel = widget.onEditCancel;
     return Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 10),
-      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 20, bottom: 10, right: 60),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(50),
@@ -58,7 +58,7 @@ class _EditDogCardState extends State<EditDogCard> {
       child: Form(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Camera form for image selection
             CameraForm(
@@ -78,7 +78,7 @@ class _EditDogCardState extends State<EditDogCard> {
             const SizedBox(height: 10),
             // Cancel and save buttons
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomButton(
                   onPressed: () => onEditCancel(),
