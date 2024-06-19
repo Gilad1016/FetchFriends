@@ -57,8 +57,8 @@ class _ParkHomePageState extends State<ParkHomePage> {
           },
         ),
       ),
-      floatingActionButton: const ArrivalButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButton: const ArrivalButton(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
