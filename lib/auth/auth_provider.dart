@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../common/providers/app_state/app_state_provider.dart';
-import '../common/providers/app_state/states_utils.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 // TODO: show incorrect password error message
@@ -44,15 +43,25 @@ class AuthProvider {
     return 'success';
   }
 
-  Future<void> register(
+  Future<String> register(
       String email, String password, String passwordConfirm) async {
     final body = <String, dynamic>{
       "email": email,
       "password": password,
       "passwordConfirm": passwordConfirm,
     };
-
-    final record = await pb.collection('users').create(body: body);
+    RecordModel authData;
+    try {
+      authData = await pb.collection('users').create(body: body);
+    } catch (e) {
+      print(e);
+      return 'Error creating account';
+    }
+    if (authData.data == "") { //TODO: check token is valid
+      return 'Error creating account';
+    }
+    appStateProvider.revalidateUserState();
+    return 'success';
   }
 
   void logOut() {

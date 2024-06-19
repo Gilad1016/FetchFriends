@@ -23,14 +23,10 @@ class LoginPage extends StatelessWidget {
 
     String msg = await authProvider.login(
         _emailController.text, _passwordController.text);
-    // if (msg != 'success') {
-    //   // Set the loginErrorMessageNotifier value to the error message.
-    //   _loginErrorMessageNotifier.value = msg;
-    // }
-    //
-    // if (msg == 'success') {
-    //   GoRouter.of(context).pushReplacement('/');
-    // }
+    if (msg != 'success') {
+      // Set the loginErrorMessageNotifier value to the error message.
+      _loginErrorMessageNotifier.value = msg;
+    }
   }
 
   void _onForgotPasswordButtonPressed() {
@@ -38,11 +34,6 @@ class LoginPage extends StatelessWidget {
   }
 
   void _onRegisterButtonPressed(BuildContext context) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => RegisterPage()),
-    // );
-
     GoRouter.of(context).pushReplacement('/register');
   }
 

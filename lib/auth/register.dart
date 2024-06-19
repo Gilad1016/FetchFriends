@@ -33,10 +33,6 @@ class RegisterPage extends StatelessWidget {
       // Set the loginErrorMessageNotifier value to the error message.
       _registerErrorMessageNotifier.value = msg;
     }
-
-    if (msg == 'success') {
-      GoRouter.of(context).pushReplacement('/');
-    }
   }
 
   void _onForgotPasswordButtonPressed() {
@@ -44,10 +40,6 @@ class RegisterPage extends StatelessWidget {
   }
 
   void _onLoginButtonPressed(BuildContext context) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => LoginPage()),
-    // );
     GoRouter.of(context).pushReplacement('/login');
   }
 

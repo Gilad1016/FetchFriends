@@ -1,15 +1,10 @@
-import 'dart:async';
-
 import 'package:Fetch/common/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'auth/auth_provider.dart';
-// import 'backend_service/backend_service.dart';
 import 'common/design/color_pallette.dart';
 import 'common/providers/app_state/app_state_provider.dart';
-import 'common/providers/app_state/states_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
