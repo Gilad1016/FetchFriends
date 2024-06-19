@@ -21,9 +21,8 @@ class LoginPage extends StatelessWidget {
   void _onLoginButtonPressed(context) async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-    await authProvider.login(
+    String msg = await authProvider.login(
         _emailController.text, _passwordController.text);
-    // String msg = 'success';
     // if (msg != 'success') {
     //   // Set the loginErrorMessageNotifier value to the error message.
     //   _loginErrorMessageNotifier.value = msg;

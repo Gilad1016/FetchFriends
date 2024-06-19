@@ -17,7 +17,7 @@ class _BootPageState extends State<BootPage> {
     //WAIT 1 SECOND
     final wait = Future.delayed(const Duration(seconds: 1));
     // TODO: REMOVE WAIT
-    await _appProvider.validateUserDataAndState();
+    await _appProvider.revalidateUserState();
     await wait;
   }
 

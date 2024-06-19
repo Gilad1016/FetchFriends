@@ -6,13 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../user_data.dart';
 
-String loginKey = "5FD6G46SDF4GD64F1VG9SD68";
-
 class AppStateProvider with ChangeNotifier {
   late final SharedPreferences _sharedPreferences;
-  final StreamController<bool> _loginStateChange =
-      StreamController<bool>.broadcast();
-
 
   AppState _appState = AppState.init;
   final UserData _userData = UserData(
@@ -20,9 +15,16 @@ class AppStateProvider with ChangeNotifier {
     dogIds: [],
   );
 
-  AppStateProvider(this._sharedPreferences);
+  AppStateProvider(){
+    _initialize();
+  }
 
-  Stream<bool> get loginStateChange => _loginStateChange.stream;
+  Future<void> _initialize() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
+    await updateLoginState();
+    await updateMyDogs();
+    notifyListeners();
+  }
 
   AppState get state => _appState;
 
@@ -31,15 +33,18 @@ class AppStateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> updateLoginState() async {
-    final userToken = _sharedPreferences.getString('token') ?? '';
+  Future<void> updateLoginState() async {
+    print('updateLoginState');
+    final userToken = _sharedPreferences.getString('pb_auth') ?? '';
 
     if (userToken.isNotEmpty) {
-      _appState = AppState.loggedIn;
-      _userData.userToken = userToken;
-      return true;
+      if (_appState == AppState.unauthenticated || _appState == AppState.init) {
+        _appState = AppState.loggedIn;
+        _userData.userToken = userToken;
+      }
+      return;
     }
-    return false;
+    _appState = AppState.unauthenticated;
   }
 
   // Future<bool> updateLocationState() async {
@@ -63,26 +68,11 @@ class AppStateProvider with ChangeNotifier {
     return false;
   }
 
-  Future<void> validateUserDataAndState() async {
-    _appState = AppState.unauthenticated;
-
-    if (!await updateLoginState()) {
-      notifyListeners();
-      return;
-    }
-    //
-    // if (!await updateLocationState()) {
-    //   notifyListeners();
-    //   return;
-    // }
-
-    if (!await updateMyDogs()) {
-      notifyListeners();
-      return;
-    }
-
+  Future<void> revalidateUserState() async {
+    print(_appState);
+    updateLoginState();
+    updateMyDogs();
+    print(_appState);
     notifyListeners();
-    // final savedParks = await Provider.of<DataProvider>(context, listen: false)
-    //     .getSavedParks(userToken);
   }
 }

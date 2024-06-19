@@ -13,19 +13,13 @@ import 'common/providers/app_state/states_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-
-  runApp(MyApp(sharedPreferences: sharedPreferences));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final SharedPreferences sharedPreferences;
 
   const MyApp({
-    super.key,
-    required this.sharedPreferences,
-  });
+    super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -35,34 +29,12 @@ class _MyAppState extends State<MyApp> {
 
   late AppStateProvider appProvider;
   late AuthProvider authProvider;
-  // late BackendService backendService;
-
-  late StreamSubscription<AppState> authSubscription;
 
   @override
   void initState() {
-    appProvider = AppStateProvider(widget.sharedPreferences);
+    appProvider = AppStateProvider();
     authProvider = AuthProvider();
-    authSubscription = authProvider.onAuthStateChange.listen(onAuthStateChange);
-    authProvider.refresh();
     super.initState();
-  }
-
-  void onAuthStateChange(AppState login) {
-    if (login == AppState.unauthenticated) {
-      appProvider.state = AppState.unauthenticated;
-      return;
-    }
-
-    if (login == AppState.loggedIn) {
-      appProvider.validateUserDataAndState();
-    }
-  }
-
-  @override
-  void dispose() {
-    authSubscription.cancel();
-    super.dispose();
   }
 
   @override

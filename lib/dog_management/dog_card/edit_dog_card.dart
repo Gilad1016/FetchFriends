@@ -60,13 +60,6 @@ class _EditDogCardState extends State<EditDogCard> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomInputText(
-              labelText: 'Name',
-              hintText: 'Enter your dog\'s name',
-              controller: _dogController,
-              onChanged: (text) => setState(() {}),
-            ),
-            const SizedBox(height: 10),
             // Camera form for image selection
             CameraForm(
               selectedImage: _newImage,
@@ -76,6 +69,13 @@ class _EditDogCardState extends State<EditDogCard> {
                 });},
             ),
             const SizedBox(height: 20),
+            CustomInputText(
+              labelText: 'Name',
+              hintText: 'Enter your dog\'s name',
+              controller: _dogController,
+              onChanged: (text) => setState(() {}),
+            ),
+            const SizedBox(height: 10),
             // Cancel and save buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

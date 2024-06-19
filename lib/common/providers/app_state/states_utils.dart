@@ -2,7 +2,7 @@ enum AppState {
   init,
   unauthenticated,
   loggedIn,
-  noLocationPermission,
+  // noLocationPermission,
   loggedInWithDogs,
-  loggedInWithDogsAndSavedParks,
+  // loggedInWithDogsAndSavedParks,
 }

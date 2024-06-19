@@ -77,8 +77,8 @@ class AppRouter {
         case AppState.loggedIn:
           return AppPage.addDog.toPath;
 
-        case AppState.noLocationPermission:
-          return AppPage.requestPermission.toPath;
+        // case AppState.noLocationPermission:
+        //   return AppPage.requestPermission.toPath;
 
         case AppState.loggedInWithDogs:
           // return AppPage.addPreferredPark.toPath;
@@ -90,13 +90,13 @@ class AppRouter {
             return AppPage.parkHome.toPath;
           }
 
-        case AppState.loggedInWithDogsAndSavedParks:
-          if ((state.matchedLocation == AppPage.landing.toPath ||
-              state.matchedLocation == AppPage.login.toPath ||
-              state.matchedLocation == AppPage.register.toPath ||
-              state.matchedLocation == AppPage.boot.toPath)) {
-            return AppPage.parkHome.toPath;
-          }
+        // case AppState.loggedInWithDogsAndSavedParks:
+        //   if ((state.matchedLocation == AppPage.landing.toPath ||
+        //       state.matchedLocation == AppPage.login.toPath ||
+        //       state.matchedLocation == AppPage.register.toPath ||
+        //       state.matchedLocation == AppPage.boot.toPath)) {
+        //     return AppPage.parkHome.toPath;
+        //   }
       }
 
       return state.matchedLocation;
