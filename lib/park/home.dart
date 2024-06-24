@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../auth/auth_provider.dart';
-// import '../backend_service/backend_service.dart';
-import '../common/widgets/arrival/arrival_button.dart';
 import '../common/widgets/arrival_tile.dart';
 import '../common/widgets/top_bar/app_bar.dart';
-import '../common/widgets/top_bar/setting_button.dart';
 import 'park_item.dart';
 import '../dog_management/dog_item.dart';
 
@@ -18,8 +13,6 @@ class ParkHomePage extends StatefulWidget {
 
 class _ParkHomePageState extends State<ParkHomePage> {
   late final List<DogItem> dogData;
-  // late BackendService _backendService;
-  late AuthProvider _authProvider;
 
   ParkItem park = ParkItem(
       name: 'Sokolov Garden',
@@ -36,8 +29,6 @@ class _ParkHomePageState extends State<ParkHomePage> {
   @override
   void initState() {
     super.initState();
-    _authProvider = Provider.of<AuthProvider>(context, listen: false);
-    // _backendService = Provider.of<BackendService>(context, listen: false);
     dogData = [];
     WidgetsBinding.instance.addPostFrameCallback((_) => onStartUp(context));
   }
@@ -46,7 +37,7 @@ class _ParkHomePageState extends State<ParkHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-          titleText: 'Sokolov Garden', trailingWidget: SettingWidget()),
+          titleText: 'Sokolov Garden'),
       body: Padding(
         padding: const EdgeInsets.only(bottom: 40, left: 28, right: 28),
         child: ListView.builder(

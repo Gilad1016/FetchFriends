@@ -21,7 +21,6 @@ class AppStateProvider with ChangeNotifier {
 
   Future<void> _initialize() async {
     _sharedPreferences = await SharedPreferences.getInstance();
-    await updateLoginState();
     await updateMyDogs();
     notifyListeners();
   }
@@ -33,31 +32,7 @@ class AppStateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateLoginState() async {
-    print('updateLoginState');
-    final userToken = _sharedPreferences.getString('pb_auth') ?? '';
-
-    if (userToken.isNotEmpty) {
-      if (_appState == AppState.unauthenticated || _appState == AppState.init) {
-        _appState = AppState.loggedIn;
-        _userData.userToken = userToken;
-      }
-      return;
-    }
-    _appState = AppState.unauthenticated;
-  }
-
-  // Future<bool> updateLocationState() async {
-  //   final LocationProvider locationProvider = LocationProvider();
-  //   if (await locationProvider.isLocationReady()) {
-  //     return true;
-  //   }
-  //
-  //   _appState = AppState.noLocationPermission;
-  //   return false;
-  // }
-
-  Future<bool> updateMyDogs() async {
+  Future<void> updateMyDogs() async {
     // final myDogs = await _dataProvider.getMyDogs(_userData.userToken);
     // if (myDogs!.isNotEmpty) {
     //   _appState = AppState.loggedInWithDogs;
@@ -65,14 +40,11 @@ class AppStateProvider with ChangeNotifier {
     //   _userData.dogItems = myDogs;
     //   return true;
     // }
-    return false;
+    _appState = AppState.newUser;
   }
 
   Future<void> revalidateUserState() async {
-    print(_appState);
-    updateLoginState();
     updateMyDogs();
-    print(_appState);
     notifyListeners();
   }
 }

@@ -1,16 +1,10 @@
 enum AppPage {
   splash,
-  login,
-  register,
   parkHome,
   error,
   landing,
   boot,
   addDog,
-  profile,
-  requestPermission,
-  addPreferredPark,
-  test
 }
 
 extension AppPageExtension on AppPage {
@@ -18,10 +12,6 @@ extension AppPageExtension on AppPage {
     switch (this) {
       case AppPage.parkHome:
         return "/";
-      case AppPage.login:
-        return "/login";
-      case AppPage.register:
-        return "/register";
       case AppPage.error:
         return "/error";
       case AppPage.landing:
@@ -30,14 +20,6 @@ extension AppPageExtension on AppPage {
         return "/boot";
       case AppPage.addDog:
         return "/addDog";
-      case AppPage.profile:
-        return "/profile";
-      case AppPage.requestPermission:
-        return "/requestPermission";
-      case AppPage.addPreferredPark:
-        return "/addPreferredPark";
-      case AppPage.test:
-        return "/test";
       default:
         return "/";
     }
@@ -47,10 +29,6 @@ extension AppPageExtension on AppPage {
     switch (this) {
       case AppPage.parkHome:
         return "PARK";
-      case AppPage.login:
-        return "LOGIN";
-      case AppPage.register:
-        return "REGISTER";
       case AppPage.error:
         return "ERROR";
       case AppPage.landing:
@@ -59,14 +37,6 @@ extension AppPageExtension on AppPage {
         return "BOOT";
       case AppPage.addDog:
         return "ADD_DOG";
-      case AppPage.profile:
-        return "PROFILE";
-      case AppPage.requestPermission:
-        return "REQUEST_PERMISSION";
-      case AppPage.addPreferredPark:
-        return "ADD_PREFERRED_PARK";
-      case AppPage.test:
-        return "TEST";
       default:
         return "PARK";
     }
@@ -76,10 +46,6 @@ extension AppPageExtension on AppPage {
     switch (this) {
       case AppPage.parkHome:
         return "My App";
-      case AppPage.login:
-        return "My App Log In";
-      case AppPage.register:
-        return "My App Register";
       case AppPage.error:
         return "My App Error";
       case AppPage.landing:
@@ -88,10 +54,6 @@ extension AppPageExtension on AppPage {
         return "My App Boot";
       case AppPage.addDog:
         return "My App Add Dog";
-      case AppPage.profile:
-        return "My App Profile";
-      case AppPage.requestPermission:
-        return "My App Request Permission";
       default:
         return "My App";
     }

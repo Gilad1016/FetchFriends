@@ -3,8 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../dog_management/dog_mng.dart';
 import '../../park/home.dart';
-import '../../auth/register.dart';
-import '../../auth/login.dart';
 import '../../landing.dart';
 import '../pages/boot.dart';
 import '../pages/error.dart';
@@ -20,22 +18,12 @@ class AppRouter {
 
   late final GoRouter _goRouter = GoRouter(
     refreshListenable: appProvider,
-    // initialLocation: AppPage.boot.toPath,
+    initialLocation: AppPage.boot.toPath,
     routes: <GoRoute>[
       GoRoute(
         path: AppPage.parkHome.toPath,
         name: AppPage.parkHome.toName,
         builder: (context, state) => const ParkHomePage(),
-      ),
-      GoRoute(
-        path: AppPage.login.toPath,
-        name: AppPage.login.toName,
-        builder: (context, state) => LoginPage(),
-      ),
-      GoRoute(
-        path: AppPage.register.toPath,
-        name: AppPage.register.toName,
-        builder: (context, state) => RegisterPage(),
       ),
       GoRoute(
         path: AppPage.landing.toPath,
@@ -68,35 +56,16 @@ class AppRouter {
         case AppState.init:
           return AppPage.boot.toPath;
 
-        case AppState.unauthenticated:
-          if ((state.matchedLocation != AppPage.landing.toPath) &&
-              (state.matchedLocation != AppPage.login.toPath) &&
-              (state.matchedLocation != AppPage.register.toPath)) {
-            return AppPage.landing.toPath;
-          }
-        case AppState.loggedIn:
+        case AppState.newUser:
           return AppPage.addDog.toPath;
 
-        // case AppState.noLocationPermission:
-        //   return AppPage.requestPermission.toPath;
-
-        case AppState.loggedInWithDogs:
+        case AppState.knownUser:
           // return AppPage.addPreferredPark.toPath;
         // //TODO: after add parks is done change this to add parks
           if ((state.matchedLocation == AppPage.landing.toPath ||
-              state.matchedLocation == AppPage.login.toPath ||
-              state.matchedLocation == AppPage.register.toPath ||
               state.matchedLocation == AppPage.boot.toPath)) {
             return AppPage.parkHome.toPath;
           }
-
-        // case AppState.loggedInWithDogsAndSavedParks:
-        //   if ((state.matchedLocation == AppPage.landing.toPath ||
-        //       state.matchedLocation == AppPage.login.toPath ||
-        //       state.matchedLocation == AppPage.register.toPath ||
-        //       state.matchedLocation == AppPage.boot.toPath)) {
-        //     return AppPage.parkHome.toPath;
-        //   }
       }
 
       return state.matchedLocation;

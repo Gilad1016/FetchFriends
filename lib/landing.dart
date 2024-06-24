@@ -22,21 +22,9 @@ class LandingPage extends StatelessWidget {
               subheaderText: 'Find out \'Who let the dogs out?\' \nand where?',
             ),
             CustomButton(
-              text: 'LOGIN',
+              text: 'Join app',
               onPressed: () {
-                GoRouter.of(context).pushNamed(AppPage.login.toName);
-              },
-            ),
-            CustomButton(
-              text: 'REGISTER',
-              onPressed: () {
-                GoRouter.of(context).pushNamed(AppPage.register.toName);
-              },
-            ),
-            CustomButton(
-              text: 'TEST',
-              onPressed: () {
-                GoRouter.of(context).pushNamed(AppPage.test.toName);
+                GoRouter.of(context).pushNamed(AppPage.addDog.toName);
               },
             ),
           ],
