@@ -58,40 +58,41 @@ class _DogMngPageState extends State<DogMngPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(titleText: 'Dogies'),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(children: [
-          Expanded(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true, // To wrap the content if it's not too long
-              children: [
-                for (var dog in _dogItems)
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: DogCard(
-                      dogItem: dog,
-                      onEditPressed: () {
-                        //TODO: add edit functionality
-                      },
-                    ),
-                  ),
-                const SizedBox(width: 20),
-              ],
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(children: [
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Wrap(
+                  spacing: 10, // To add space between each widget
+                  children: [
+                    for (var dog in _dogItems)
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: DogCard(
+                          dogItem: dog,
+                          onEditPressed: () {
+                            //TODO: add edit functionality
+                          },
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Visibility(
-            visible: _dogItems.isNotEmpty,
-            child: CustomButton(
-              text: 'Next',
-              onPressed: () {
-                Navigator.pushNamed(context, '/next_page');
-              },
+            const SizedBox(height: 20),
+            Visibility(
+              visible: _dogItems.isNotEmpty,
+              child: CustomButton(
+                text: 'Next',
+                onPressed: () {
+                  Navigator.pushNamed(context, '/next_page');
+                },
+              ),
             ),
-          ),
-        ]),
-      ),
+          ]),
+        )
     );
   }
 }

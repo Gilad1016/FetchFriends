@@ -17,6 +17,7 @@ class DogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 200,
       margin: const EdgeInsets.only(top: 20, bottom: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -28,7 +29,7 @@ class DogCard extends StatelessWidget {
         ),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
@@ -43,16 +44,16 @@ class DogCard extends StatelessWidget {
           const SizedBox(height: 10),
           (dogItem.imageUrl != null)
               ? CircleAvatar(
-                  backgroundImage: NetworkImage(dogItem.imageUrl!),
-                  minRadius: 100,
-                  maxRadius: 100,
-                )
+            backgroundImage: NetworkImage(dogItem.imageUrl!),
+            minRadius: 100,
+            maxRadius: 100,
+          )
               : const SizedBox(width: 50), // Placeholder if no image
           const SizedBox(height: 20),
           // Add conditional widget for pencil emoji if isEditable
           if (onEditPressed != null)
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
                   onPressed: onEditPressed ?? () {},
