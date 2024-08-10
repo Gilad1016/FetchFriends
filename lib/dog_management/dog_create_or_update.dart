@@ -8,21 +8,23 @@ import '../../common/widgets/custom_button.dart';
 import '../../common/widgets/inputs/camera_form.dart';
 import '../../common/widgets/inputs/custom_input.dart';
 
-class EditDogCard extends StatefulWidget {
+class DogCreateOrUpdate extends StatefulWidget {
   final DogItem dogItem;
   final VoidCallback onEditCancel;
+  final void Function(DogItem) postDog;
 
-  const EditDogCard({
+  const DogCreateOrUpdate({
     required this.dogItem,
+    required this.postDog,
     required this.onEditCancel,
     super.key,
   });
 
   @override
-  State<EditDogCard> createState() => _EditDogCardState();
+  State<DogCreateOrUpdate> createState() => _DogCreateOrUpdateState();
 }
 
-class _EditDogCardState extends State<EditDogCard> {
+class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
   late TextEditingController _dogController;
   String? _newImage;
 
@@ -86,15 +88,13 @@ class _EditDogCardState extends State<EditDogCard> {
                 ),
                 const SizedBox(width: 10),
                 CustomButton(
-                  onPressed: () async {
-                    if (Form.of(context).validate()) {
-                      await _updateDogName(_dogController.text);
-                      if (_newImage != null) {
-                        await _updateDogImage(_newImage as File?);
-                      }
-                      // Close edit mode and navigate back
-                      onEditCancel();
-                    }
+                  onPressed: () {
+                    // Update dog name
+                    _updateDogName(_dogController.text);
+                    // Update dog image
+                    _updateDogImage(_newImage != null ? File(_newImage!) : null);
+                    // Post updated dog
+                    widget.postDog(widget.dogItem);
                   },
                   text: 'Save',
                 ),

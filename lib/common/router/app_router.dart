@@ -1,7 +1,7 @@
 import 'package:Fetch/common/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../dog_management/dog_mng.dart';
+import '../../dog_management/dog_management.dart';
 import '../../park/home.dart';
 import '../../landing.dart';
 import '../pages/boot.dart';

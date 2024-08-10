@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../dog_management/dog_item.dart';
-import '../../common/design/color_pallette.dart';
-import '../../common/widgets/custom_button.dart';
+import '../../dog_management/dog_item.dart';
+import '../common/design/color_pallette.dart';
+import '../common/widgets/custom_button.dart';
 
 class DogCard extends StatelessWidget {
   final DogItem dogItem;
