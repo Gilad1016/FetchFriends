@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../dog_management/dog_item.dart';
 import '../common/design/color_pallette.dart';
 import '../common/widgets/custom_button.dart';
+import 'dog_create_or_update.dart'; // Import the component you want to display in an overlay
 
 class DogCard extends StatelessWidget {
   final DogItem dogItem;
@@ -56,7 +57,12 @@ class DogCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomButton(
-                  onPressed: onEditPressed ?? () {},
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => DogCreateOrUpdate(dogItem: dogItem),
+                    );
+                  },
                   text: 'Edit 📝',
                 ),
               ],

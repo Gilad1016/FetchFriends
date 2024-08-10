@@ -1,108 +1,104 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart'; // Assuming you're using the PocketBase client package
 
-import '../../../dog_management/dog_item.dart';
-import '../../common/design/color_pallette.dart';
-import '../../common/widgets/custom_button.dart';
-import '../../common/widgets/inputs/camera_form.dart';
-import '../../common/widgets/inputs/custom_input.dart';
+import '../../dog_management/dog_item.dart';
+import '../common/design/color_pallette.dart';
+import '../common/widgets/custom_button.dart';
 
 class DogCreateOrUpdate extends StatefulWidget {
-  final DogItem dogItem;
-  final VoidCallback onEditCancel;
-  final void Function(DogItem) postDog;
+  final DogItem? dogItem;
 
-  const DogCreateOrUpdate({
-    required this.dogItem,
-    required this.postDog,
-    required this.onEditCancel,
-    super.key,
-  });
+  const DogCreateOrUpdate({this.dogItem, super.key});
 
   @override
-  State<DogCreateOrUpdate> createState() => _DogCreateOrUpdateState();
+  _DogCreateOrUpdateState createState() => _DogCreateOrUpdateState();
 }
 
 class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
-  late TextEditingController _dogController;
-  String? _newImage;
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _imageUrlController;
+  final PocketBase pb = PocketBase('http://your-pocketbase-url'); // Replace with your PocketBase URL
 
   @override
   void initState() {
     super.initState();
-    _dogController = TextEditingController(text: widget.dogItem.name);
+    _nameController = TextEditingController(text: widget.dogItem?.name ?? '');
+    _imageUrlController = TextEditingController(text: widget.dogItem?.imageUrl ?? '');
   }
 
-  // Update logic functions (replace with your actual update methods)
-  Future<void> _updateDogName(String newName) async {
-    // ... Update dog name with newName ...
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _imageUrlController.dispose();
+    super.dispose();
   }
 
-  Future<void> _updateDogImage(File? newImage) async {
-    // ... Update dog image with newImage ...
+  Future<void> _saveDog() async {
+    // if (_formKey.currentState!.validate()) {
+    //   try {
+    //     if (widget.dogItem == null) {
+    //       // Create new dog
+    //       final record = await pb.collection('dogs').create({
+    //         'name': _nameController.text,
+    //         'imageUrl': _imageUrlController.text,
+    //       });
+    //       print('Dog created: ${record.id}');
+    //     } else {
+    //       // Update existing dog
+    //       final record = await pb.collection('dogs').update(
+    //         widget.dogItem!.id,
+    //         {
+    //           'name': _nameController.text,
+    //           'imageUrl': _imageUrlController.text,
+    //         },
+    //       );
+    //       print('Dog updated: ${record.id}');
+    //     }
+    //     Navigator.pop(context, true); // Return true to indicate success
+    //   } catch (e) {
+    //     print('Error: $e');
+    //     // Handle error appropriately
+    //   }
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    final onEditCancel = widget.onEditCancel;
-    return Container(
-      margin: const EdgeInsets.only(top: 20, bottom: 10, right: 60),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          color: AppColors.primaryColor,
-          width: 5,
-        ),
-      ),
-      child: Form(
+    return AlertDialog(
+      title: Text(widget.dogItem == null ? 'Create Dog' : 'Update Dog'),
+      content: Form(
+        key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Camera form for image selection
-            CameraForm(
-              selectedImage: _newImage,
-              onImageSelected: (String? image) {
-                setState(() {
-                  _newImage = image;
-                });},
+            TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: 'Name'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a name';
+                }
+                return null;
+              },
             ),
-            const SizedBox(height: 20),
-            CustomInputText(
-              labelText: 'Name',
-              hintText: 'Enter your dog\'s name',
-              controller: _dogController,
-              onChanged: (text) => setState(() {}),
-            ),
-            const SizedBox(height: 10),
-            // Cancel and save buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomButton(
-                  onPressed: () => onEditCancel(),
-                  text: 'Cancel',
-                ),
-                const SizedBox(width: 10),
-                CustomButton(
-                  onPressed: () {
-                    // Update dog name
-                    _updateDogName(_dogController.text);
-                    // Update dog image
-                    _updateDogImage(_newImage != null ? File(_newImage!) : null);
-                    // Post updated dog
-                    widget.postDog(widget.dogItem);
-                  },
-                  text: 'Save',
-                ),
-              ],
+            TextFormField(
+              controller: _imageUrlController,
+              decoration: const InputDecoration(labelText: 'Image URL'),
             ),
           ],
         ),
       ),
+      actions: [
+        CustomButton(
+          onPressed: () => Navigator.pop(context), // Cancel action
+          text: 'Cancel',
+        ),
+        CustomButton(
+          onPressed: _saveDog,
+          text: widget.dogItem == null ? 'Create' : 'Update',
+        ),
+      ],
     );
   }
 }
