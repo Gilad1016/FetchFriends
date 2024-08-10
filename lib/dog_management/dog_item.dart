@@ -4,13 +4,15 @@ class DogItem {
   String? imageUrl;
 
   DogItem(
-      {required this.name,
+      {required this.id,
+      required this.name,
       this.imageUrl});
 
   factory DogItem.fromMap(Map<String, dynamic> docDocument) {
     assert(docDocument['name'] != null);
     assert(docDocument['ownerUID'] != null);
     return DogItem(
+      id: docDocument['id'] as String,
       name: docDocument['name'] as String,
       imageUrl: docDocument['imageUrl'] == null
           ? null

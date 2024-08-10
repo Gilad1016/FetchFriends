@@ -1,9 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../common/providers/app_state/app_state_provider.dart';
 import '../common/widgets/custom_button.dart';
 import 'dog_card.dart';
 import 'dog_item.dart';
@@ -22,32 +19,18 @@ class DogMngPage extends StatefulWidget {
 class _DogMngPageState extends State<DogMngPage> {
   final _nameController = TextEditingController();
   File? _selectedImage;
-  late AppStateProvider _appProvider;
   late DogProvider _dogProvider;
-  final List<DogItem> _dogItems = [];
 
   @override
   void initState() {
     super.initState();
-    _appProvider = Provider.of<AppStateProvider>(context, listen: false);
     _dogProvider = Provider.of<DogProvider>(context, listen: false);
-    _dogItems.add(DogItem(name: 'Buddy'));
-    _dogItems.add(DogItem(name: 'Rex'));
-    _dogItems.add(DogItem(name: 'Luna'));
-    _dogItems.add(DogItem(name: 'Max'));
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     super.dispose();
-  }
-
-  void _onCreateNewDog(DogItem dog) {
-    setState(() {
-      _dogItems.add(dog);
-    });
-    // _dogProvider.addDog(dog);
   }
 
   Future<void> _showCreateOrUpdateDogDialog() async {
@@ -57,7 +40,7 @@ class _DogMngPageState extends State<DogMngPage> {
     );
 
     if (newDog != null) {
-      _onCreateNewDog(newDog);
+      _dogProvider.addDog(newDog.name, 'ownerUID'); // Replace 'ownerUID' with actual ownerUID
     }
   }
 
@@ -71,39 +54,47 @@ class _DogMngPageState extends State<DogMngPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Wrap(
-                  spacing: 10, // To add space between each widget
-                  children: [
-                    for (var dog in _dogItems)
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: DogCard(
-                          dogItem: dog,
-                          onEditPressed: () {
-                            //TODO: add edit functionality
-                          },
+              child: Consumer<DogProvider>(
+                builder: (context, provider, child) {
+                  return SingleChildScrollView(
+                    child: Wrap(
+                      spacing: 10, // To add space between each widget
+                      children: [
+                        for (var dog in provider.dogItems)
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: DogCard(
+                              dogItem: dog,
+                              onEditPressed: () {
+                                // TODO: add edit functionality
+                              },
+                            ),
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: AddDogButton(
+                            onPressed: _showCreateOrUpdateDogDialog,
+                          ),
                         ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: AddDogButton(
-                        onPressed: _showCreateOrUpdateDogDialog,
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
             const SizedBox(height: 20),
-            Visibility(
-              visible: _dogItems.isNotEmpty,
-              child: CustomButton(
-                text: 'Next',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/next_page');
-                },
-              ),
+            Consumer<DogProvider>(
+              builder: (context, provider, child) {
+                return Visibility(
+                  visible: provider.dogItems.isNotEmpty,
+                  child: CustomButton(
+                    text: 'Next',
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/next_page');
+                    },
+                  ),
+                );
+              },
             ),
           ],
         ),
