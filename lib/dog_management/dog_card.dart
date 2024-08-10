@@ -18,39 +18,37 @@ class DogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
       margin: const EdgeInsets.only(top: 20, bottom: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(40),
         border: Border.all(
           color: AppColors.primaryColor,
           width: 5,
         ),
       ),
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          if(dogItem.imageUrl != null)
+              CircleAvatar(
+            backgroundImage: NetworkImage(dogItem.imageUrl!),
+            minRadius: 100,
+            maxRadius: 100,
+          ),
+          const SizedBox(height: 20),
           Text(
             dogItem.name,
             style: const TextStyle(
-              fontSize: 44,
+              fontSize: 30,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5,
               color: AppColors.primaryColor, // Text color
             ),
           ),
           const SizedBox(height: 10),
-          (dogItem.imageUrl != null)
-              ? CircleAvatar(
-            backgroundImage: NetworkImage(dogItem.imageUrl!),
-            minRadius: 100,
-            maxRadius: 100,
-          )
-              : const SizedBox(width: 50), // Placeholder if no image
-          const SizedBox(height: 20),
           // Add conditional widget for pencil emoji if isEditable
           if (onEditPressed != null)
             Row(
@@ -63,7 +61,7 @@ class DogCard extends StatelessWidget {
                       builder: (BuildContext context) => DogCreateOrUpdate(dogItem: dogItem),
                     );
                   },
-                  text: 'Edit 📝',
+                  text: '📝',
                 ),
               ],
             ),

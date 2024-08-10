@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:Fetch/dog_management/dog_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +8,9 @@ import '../common/widgets/custom_button.dart';
 import 'dog_card.dart';
 import 'dog_item.dart';
 import '../common/widgets/top_bar/app_bar.dart';
+import 'dog_create_or_update.dart';
+import 'add_dog_button.dart';
+import 'dog_provider.dart';
 
 class DogMngPage extends StatefulWidget {
   const DogMngPage({super.key});
@@ -29,18 +31,10 @@ class _DogMngPageState extends State<DogMngPage> {
     super.initState();
     _appProvider = Provider.of<AppStateProvider>(context, listen: false);
     _dogProvider = Provider.of<DogProvider>(context, listen: false);
-    _dogItems.add(DogItem(
-      name: 'Buddy',
-    ));
-    _dogItems.add(DogItem(
-      name: 'Rex',
-    ));
-    _dogItems.add(DogItem(
-      name: 'Luna',
-    ));
-    _dogItems.add(DogItem(
-      name: 'Max',
-    ));
+    _dogItems.add(DogItem(name: 'Buddy'));
+    _dogItems.add(DogItem(name: 'Rex'));
+    _dogItems.add(DogItem(name: 'Luna'));
+    _dogItems.add(DogItem(name: 'Max'));
   }
 
   @override
@@ -50,20 +44,34 @@ class _DogMngPageState extends State<DogMngPage> {
   }
 
   void _onCreateNewDog(DogItem dog) {
-    _dogItems.add(dog);
+    setState(() {
+      _dogItems.add(dog);
+    });
     // _dogProvider.addDog(dog);
+  }
+
+  Future<void> _showCreateOrUpdateDogDialog() async {
+    final newDog = await showDialog<DogItem>(
+      context: context,
+      builder: (context) => const DogCreateOrUpdate(),
+    );
+
+    if (newDog != null) {
+      _onCreateNewDog(newDog);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(titleText: 'Dogies'),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(children: [
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Expanded(
               child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
                 child: Wrap(
                   spacing: 10, // To add space between each widget
                   children: [
@@ -77,6 +85,12 @@ class _DogMngPageState extends State<DogMngPage> {
                           },
                         ),
                       ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: AddDogButton(
+                        onPressed: _showCreateOrUpdateDogDialog,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -91,8 +105,9 @@ class _DogMngPageState extends State<DogMngPage> {
                 },
               ),
             ),
-          ]),
-        )
+          ],
+        ),
+      ),
     );
   }
 }
