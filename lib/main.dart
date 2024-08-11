@@ -1,12 +1,12 @@
-import 'package:Fetch/common/router/app_router.dart';
-import 'package:Fetch/dog_management/dog_provider.dart';
-import 'package:Fetch/park/arrivals_provider.dart';
-import 'package:Fetch/park/park_provider.dart';
+import 'package:fetch/park/arrivals_provider.dart';
+import 'package:fetch/park/park_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'common/design/color_pallette.dart';
 import 'common/providers/app_state/app_state_provider.dart';
+import 'common/router/app_router.dart';
+import 'dog_management/dog_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
         ChangeNotifierProvider(create: (_) => DogProvider()),
-        Provider<ArrivalsProvider>(create: (_) => ArrivalsProvider()),
+        ChangeNotifierProvider(create: (_) => ArrivalsProvider()),
         Provider<ParkProvider>(create: (_) => ParkProvider()),
       ],
       child: Builder(

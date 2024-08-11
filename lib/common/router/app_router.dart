@@ -1,4 +1,4 @@
-import 'package:Fetch/common/router/routes_utils.dart';
+import 'package:fetch/common/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../dog_management/dog_management.dart';

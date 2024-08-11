@@ -1,4 +1,4 @@
-name: Fetch
+name: fetch
 description: A social network for dog owners, centered around dog parks
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

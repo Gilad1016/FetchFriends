@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:Fetch/common/providers/app_state/states_utils.dart';
+import 'package:fetch/common/providers/app_state/states_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

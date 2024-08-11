@@ -11,7 +11,7 @@ class ArrivalPopup extends StatefulWidget {
 }
 
 class _ArrivalPopupState extends State<ArrivalPopup> {
-  DateTime _arrivalTime = DateTime.now();
+  final DateTime _arrivalTime = DateTime.now();
   int _arrivalDay = 0;
   String error = '';
 

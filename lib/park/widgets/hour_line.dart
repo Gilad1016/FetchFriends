@@ -16,13 +16,13 @@ class HourLine extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            width: 2.0,
+            width: 1.0,
             color: isCurrentHour ? Colors.red : Colors.grey,
           ),
         ),
         Expanded(
           child: Container(
-            width: 2.0,
+            width: 1.0,
             color: isCurrentHour ? Colors.red : Colors.grey,
           ),
         ),
