@@ -1,3 +1,4 @@
+import 'package:Fetch/park/widgets/time_line.dart';
 import 'package:flutter/material.dart';
 import '../common/widgets/top_bar/app_bar.dart';
 import 'park_item.dart';
@@ -33,35 +34,29 @@ class _ParkSchedulePageState extends State<ParkSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
+    return const Scaffold(
+      appBar: CustomAppBar(
           titleText: 'Sokolov Garden'),
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 40, left: 28, right: 28),
-      child:
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: parkData.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(parkData[index].name),
-                    onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => DogDetailPage(dog: dogData[index]),
-                      //   ),
-                      // );
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+        padding: EdgeInsets.only(bottom: 40, left: 28, right: 28),
+        child: Timeline(),
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Expanded(
+        //       child: ListView.builder(
+        //         itemCount: parkData.length,
+        //         itemBuilder: (context, index) {
+        //           return ListTile(
+        //             title: Text(parkData[index].name),
+        //             onTap: () {
+        //             },
+        //           );
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
       // floatingActionButton: const ArrivalButton(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
