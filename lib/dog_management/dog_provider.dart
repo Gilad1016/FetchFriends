@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../common/providers/app_state/app_state_provider.dart';
-import 'package:pocketbase/pocketbase.dart';
+// import 'package:pocketbase/pocketbase.dart';
 
 import 'dog_item.dart';
 class DogProvider extends ChangeNotifier {
