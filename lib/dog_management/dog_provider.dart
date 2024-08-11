@@ -49,7 +49,7 @@ class DogProvider extends ChangeNotifier {
     await prefs.setString('dogs', dogsString);
   }
 
-  Future<String> addDog(String name, String ownerUID) async {
+  Future<String> addDog(String name) async {
     // final body = <String, dynamic>{
     //   "name": name,
     //   "ownerUID": ownerUID,

@@ -10,10 +10,6 @@ class AppStateProvider with ChangeNotifier {
   late final SharedPreferences _sharedPreferences;
 
   AppState _appState = AppState.init;
-  final UserData _userData = UserData(
-    userToken: '',
-    dogIds: [],
-  );
 
   AppStateProvider(){
     _initialize();
@@ -33,15 +29,7 @@ class AppStateProvider with ChangeNotifier {
   }
 
   Future<void> updateMyDogs() async {
-    // final myDogs = await _dataProvider.getMyDogs(_userData.userToken);
-    // if (myDogs!.isNotEmpty) {
-    //   _appState = AppState.loggedInWithDogs;
-    //   _userData.dogIds = myDogs.map((dog) => dog.id).toList();
-    //   _userData.dogItems = myDogs;
-    //   return true;
-    // }
-    final prefs = await SharedPreferences.getInstance();
-    final dogsString = prefs.getString('dogs');
+    final dogsString = _sharedPreferences.getString('dogs');
     if (dogsString != null) {
         _appState = AppState.knownUser;
     } else {

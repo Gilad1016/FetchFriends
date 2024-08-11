@@ -40,7 +40,7 @@ class _DogMngPageState extends State<DogMngPage> {
     );
 
     if (newDog != null) {
-      _dogProvider.addDog(newDog.name, 'ownerUID'); // Replace 'ownerUID' with actual ownerUID
+      _dogProvider.addDog(newDog.name);
     }
   }
 
@@ -51,7 +51,7 @@ class _DogMngPageState extends State<DogMngPage> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
               child: Consumer<DogProvider>(

@@ -38,7 +38,7 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
       final dogProvider = Provider.of<DogProvider>(context, listen: false);
       if (widget.dogItem == null) {
         // Create new dog
-        await dogProvider.addDog(_nameController.text, _imageUrlController.text);
+        await dogProvider.addDog(_nameController.text);
       } else {
         // Update existing dog
         await dogProvider.updateDog(
