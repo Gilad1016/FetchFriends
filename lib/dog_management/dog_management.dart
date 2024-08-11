@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../common/router/routes_utils.dart';
 import '../common/widgets/custom_button.dart';
 import 'dog_card.dart';
 import 'dog_item.dart';
@@ -85,8 +87,8 @@ class _DogMngPageState extends State<DogMngPage> {
                   child: CustomButton(
                     text: 'Next',
                     onPressed: () {
-                      Navigator.pushNamed(context, '/');
-                    },
+                      GoRouter.of(context).pushNamed(AppPage.parkHome.toName);
+                      },
                   ),
                 );
               },

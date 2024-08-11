@@ -2,7 +2,7 @@ import 'package:Fetch/common/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../dog_management/dog_management.dart';
-import '../../park/home.dart';
+import '../../park/park_schedule.dart';
 import '../../landing.dart';
 import '../pages/boot.dart';
 import '../pages/error.dart';
@@ -23,7 +23,7 @@ class AppRouter {
       GoRoute(
         path: AppPage.parkHome.toPath,
         name: AppPage.parkHome.toName,
-        builder: (context, state) => const ParkHomePage(),
+        builder: (context, state) => const ParkSchedulePage(),
       ),
       GoRoute(
         path: AppPage.landing.toPath,

@@ -3,8 +3,8 @@ class ParkItem {
   String id = '';
   String name = '';
   Uri mapsURL = Uri.parse('');
-  int latitude = 0;
-  int longitude = 0;
+  // int latitude = 0;
+  // int longitude = 0;
 
   ParkItem({required this.name, required this.mapsURL});
 

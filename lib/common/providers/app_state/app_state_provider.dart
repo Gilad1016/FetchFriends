@@ -40,7 +40,13 @@ class AppStateProvider with ChangeNotifier {
     //   _userData.dogItems = myDogs;
     //   return true;
     // }
-    _appState = AppState.newUser;
+    final prefs = await SharedPreferences.getInstance();
+    final dogsString = prefs.getString('dogs');
+    if (dogsString != null) {
+        _appState = AppState.knownUser;
+    } else {
+        _appState = AppState.newUser;
+    }
   }
 
   Future<void> revalidateUserState() async {

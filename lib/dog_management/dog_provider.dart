@@ -36,6 +36,7 @@ class DogProvider extends ChangeNotifier {
     if (dogsString != null) {
       final List<dynamic> dogsList = jsonDecode(dogsString);
       _dogItems = dogsList.map((dog) => DogItem.fromMap(dog)).toList();
+      appStateProvider.revalidateUserState();
     } else {
       _dogItems = [];
     }
