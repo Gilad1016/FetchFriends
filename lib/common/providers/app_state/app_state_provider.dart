@@ -4,8 +4,6 @@ import 'package:Fetch/common/providers/app_state/states_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../user_data.dart';
-
 class AppStateProvider with ChangeNotifier {
   late final SharedPreferences _sharedPreferences;
 
