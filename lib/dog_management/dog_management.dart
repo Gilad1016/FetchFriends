@@ -18,7 +18,6 @@ class DogMngPage extends StatefulWidget {
 
 class _DogMngPageState extends State<DogMngPage> {
   final _nameController = TextEditingController();
-  File? _selectedImage;
   late DogProvider _dogProvider;
 
   @override
@@ -65,9 +64,6 @@ class _DogMngPageState extends State<DogMngPage> {
                             padding: const EdgeInsets.all(10),
                             child: DogCard(
                               dogItem: dog,
-                              onEditPressed: () {
-                                // TODO: add edit functionality
-                              },
                             ),
                           ),
                         Padding(
@@ -90,7 +86,7 @@ class _DogMngPageState extends State<DogMngPage> {
                   child: CustomButton(
                     text: 'Next',
                     onPressed: () {
-                      Navigator.pushNamed(context, '/next_page');
+                      Navigator.pushNamed(context, '/');
                     },
                   ),
                 );

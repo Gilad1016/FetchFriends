@@ -7,11 +7,9 @@ import 'dog_create_or_update.dart'; // Import the component you want to display 
 
 class DogCard extends StatelessWidget {
   final DogItem dogItem;
-  final VoidCallback? onEditPressed;
 
   const DogCard({
     required this.dogItem,
-    required this.onEditPressed,
     super.key,
   });
 
@@ -50,7 +48,6 @@ class DogCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           // Add conditional widget for pencil emoji if isEditable
-          if (onEditPressed != null)
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
