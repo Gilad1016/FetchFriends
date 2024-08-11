@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pocketbase/pocketbase.dart'; // Assuming you're using the PocketBase client package
-
+import 'package:provider/provider.dart';
 import '../../dog_management/dog_item.dart';
-import '../common/design/color_pallette.dart';
 import '../common/widgets/custom_button.dart';
+import 'dog_provider.dart';
 
 class DogCreateOrUpdate extends StatefulWidget {
   final DogItem? dogItem;
@@ -18,7 +17,6 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _imageUrlController;
-  final PocketBase pb = PocketBase('http://your-pocketbase-url'); // Replace with your PocketBase URL
 
   @override
   void initState() {
@@ -34,33 +32,22 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
     super.dispose();
   }
 
-  Future<void> _saveDog() async {
-    // if (_formKey.currentState!.validate()) {
-    //   try {
-    //     if (widget.dogItem == null) {
-    //       // Create new dog
-    //       final record = await pb.collection('dogs').create({
-    //         'name': _nameController.text,
-    //         'imageUrl': _imageUrlController.text,
-    //       });
-    //       print('Dog created: ${record.id}');
-    //     } else {
-    //       // Update existing dog
-    //       final record = await pb.collection('dogs').update(
-    //         widget.dogItem!.id,
-    //         {
-    //           'name': _nameController.text,
-    //           'imageUrl': _imageUrlController.text,
-    //         },
-    //       );
-    //       print('Dog updated: ${record.id}');
-    //     }
-    //     Navigator.pop(context, true); // Return true to indicate success
-    //   } catch (e) {
-    //     print('Error: $e');
-    //     // Handle error appropriately
-    //   }
-    // }
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      final dogProvider = Provider.of<DogProvider>(context, listen: false);
+      if (widget.dogItem == null) {
+        // Create new dog
+        await dogProvider.addDog(_nameController.text, _imageUrlController.text);
+      } else {
+        // Update existing dog
+        await dogProvider.updateDog(
+          widget.dogItem!.id,
+          _nameController.text,
+          // _imageUrlController.text,
+        );
+      }
+    }
+    Navigator.pop(context);
   }
 
   @override
@@ -91,11 +78,11 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
       ),
       actions: [
         CustomButton(
-          onPressed: () => Navigator.pop(context), // Cancel action
+          onPressed: () => Navigator.pop(context),
           text: 'Cancel',
         ),
         CustomButton(
-          onPressed: _saveDog,
+          onPressed: _submitForm,
           text: widget.dogItem == null ? 'Create' : 'Update',
         ),
       ],

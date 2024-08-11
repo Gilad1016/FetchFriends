@@ -58,7 +58,7 @@ class _DogMngPageState extends State<DogMngPage> {
                 builder: (context, provider, child) {
                   return SingleChildScrollView(
                     child: Wrap(
-                      spacing: 10, // To add space between each widget
+                      spacing: 10,
                       children: [
                         for (var dog in provider.dogItems)
                           Padding(

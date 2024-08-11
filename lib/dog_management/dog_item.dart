@@ -10,7 +10,6 @@ class DogItem {
 
   factory DogItem.fromMap(Map<String, dynamic> docDocument) {
     assert(docDocument['name'] != null);
-    assert(docDocument['ownerUID'] != null);
     return DogItem(
       id: docDocument['id'] as String,
       name: docDocument['name'] as String,

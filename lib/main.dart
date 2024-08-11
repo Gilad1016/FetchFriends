@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
         Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
-        Provider<DogProvider>(create: (_) => dogProvider),
+        ChangeNotifierProvider(create: (_) => DogProvider()),
       ],
       child: Builder(
         builder: (context) {
