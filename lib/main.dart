@@ -1,5 +1,6 @@
 import 'package:fetch/park/arrivals_provider.dart';
 import 'package:fetch/park/park_provider.dart';
+import 'package:fetch/phone_size_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -14,16 +15,13 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-
-  const MyApp({
-    super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   late AppStateProvider appProvider;
   late DogProvider dogProvider;
 
@@ -48,16 +46,18 @@ class _MyAppState extends State<MyApp> {
         builder: (context) {
           final GoRouter goRouter =
               Provider.of<AppRouter>(context, listen: false).router;
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: "FetchFriends",
-            routeInformationParser: goRouter.routeInformationParser,
-            routeInformationProvider: goRouter.routeInformationProvider,
-            routerDelegate: goRouter.routerDelegate,
-            theme: ThemeData(
-              fontFamily: 'Fredoka',
-              primaryColor: AppColors.primaryColor,
-              canvasColor: AppColors.backgroundColor,
+          return PhoneSizeWrapper(
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              title: "FetchFriends",
+              routeInformationParser: goRouter.routeInformationParser,
+              routeInformationProvider: goRouter.routeInformationProvider,
+              routerDelegate: goRouter.routerDelegate,
+              theme: ThemeData(
+                fontFamily: 'Fredoka',
+                primaryColor: AppColors.primaryColor,
+                canvasColor: AppColors.backgroundColor,
+              ),
             ),
           );
         },
