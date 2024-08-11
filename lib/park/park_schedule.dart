@@ -37,9 +37,7 @@ class _ParkSchedulePageState extends State<ParkSchedulePage> {
     return const Scaffold(
       appBar: CustomAppBar(
           titleText: 'Sokolov Garden'),
-      body: Padding(
-        padding: EdgeInsets.only(bottom: 40, left: 28, right: 28),
-        child: Timeline(),
+      body: Timeline(),
         // Column(
         //   mainAxisAlignment: MainAxisAlignment.center,
         //   children: [
@@ -57,7 +55,6 @@ class _ParkSchedulePageState extends State<ParkSchedulePage> {
         //     ),
         //   ],
         // ),
-      ),
       // floatingActionButton: const ArrivalButton(),
       // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

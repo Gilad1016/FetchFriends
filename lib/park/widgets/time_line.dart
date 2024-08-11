@@ -22,7 +22,7 @@ class Timeline extends StatelessWidget {
           final String hourLabel = DateFormat('ha').format(
               DateTime(0, 0, 0, i));
           hourLines.add(SizedBox(
-            width: hourWidth,
+            width: hourWidth-2,
             child: HourLine(hourLabel: hourLabel, isCurrentHour: false),
           ));
         }
