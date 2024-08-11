@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../Items/arrival_item.dart';
 import 'hour_line.dart';
 
 class Timeline extends StatelessWidget {
@@ -8,8 +9,13 @@ class Timeline extends StatelessWidget {
 
   //TODO: adjust such that current time is the center of the screen
   // and we have 20 hours a head of us and 4 hours behind us
+
   @override
   Widget build(BuildContext context) {
+    final List<ArrivalItem> arrivalItems = [
+      // Your list of ArrivalItems here...
+    ];
+
     return LayoutBuilder(
       builder: (context, constraints) {
         final double width = constraints.maxWidth;
@@ -22,7 +28,7 @@ class Timeline extends StatelessWidget {
           final String hourLabel = DateFormat('ha').format(
               DateTime(0, 0, 0, i));
           hourLines.add(SizedBox(
-            width: hourWidth-2,
+            width: hourWidth - 2,
             child: HourLine(hourLabel: hourLabel, isCurrentHour: false),
           ));
         }

@@ -1,7 +1,10 @@
+import 'package:Fetch/park/Items/arrival_item.dart';
+import 'package:Fetch/park/arrivals_provider.dart';
+import 'package:Fetch/park/widgets/arrival/arrival_button.dart';
 import 'package:Fetch/park/widgets/time_line.dart';
 import 'package:flutter/material.dart';
 import '../common/widgets/top_bar/app_bar.dart';
-import 'park_item.dart';
+import 'package:provider/provider.dart';
 
 class ParkSchedulePage extends StatefulWidget {
   const ParkSchedulePage({super.key});
@@ -11,24 +14,18 @@ class ParkSchedulePage extends StatefulWidget {
 }
 
 class _ParkSchedulePageState extends State<ParkSchedulePage> {
-  late final List<ParkItem> parkData;
-
-  ParkItem park = ParkItem(
-      name: 'Sokolov Garden',
-      mapsURL: Uri.parse('https://maps.app.goo.gl/QrmnpJT3EBZEppEMA'));
+  late ArrivalsProvider _arrivalsProvider;
+  late List<ArrivalItem> arrivals;
 
   onStartUp(BuildContext context) async {
-    // _backendService.getDogs().then((data) {
-    //   setState(() {
-    //     dogData = data!;
-    //   });
-    // });
+    _arrivalsProvider = Provider.of<ArrivalsProvider>(context, listen: false);
+    arrivals = _arrivalsProvider.arrivalItems;
   }
 
   @override
   void initState() {
     super.initState();
-    parkData = [];
+    arrivals = [];
     WidgetsBinding.instance.addPostFrameCallback((_) => onStartUp(context));
   }
 
@@ -38,25 +35,8 @@ class _ParkSchedulePageState extends State<ParkSchedulePage> {
       appBar: CustomAppBar(
           titleText: 'Sokolov Garden'),
       body: Timeline(),
-        // Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: [
-        //     Expanded(
-        //       child: ListView.builder(
-        //         itemCount: parkData.length,
-        //         itemBuilder: (context, index) {
-        //           return ListTile(
-        //             title: Text(parkData[index].name),
-        //             onTap: () {
-        //             },
-        //           );
-        //         },
-        //       ),
-        //     ),
-        //   ],
-        // ),
-      // floatingActionButton: const ArrivalButton(),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: ArrivalButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

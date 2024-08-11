@@ -1,13 +1,13 @@
+import 'package:Fetch/dog_management/widgets/dog_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../common/router/routes_utils.dart';
 import '../common/widgets/custom_button.dart';
-import 'dog_card.dart';
 import 'dog_item.dart';
 import '../common/widgets/top_bar/app_bar.dart';
 import 'dog_create_or_update.dart';
-import 'add_dog_button.dart';
+import 'widgets/add_dog_button.dart';
 import 'dog_provider.dart';
 
 class DogMngPage extends StatefulWidget {
