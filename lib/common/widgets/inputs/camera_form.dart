@@ -42,7 +42,7 @@ class CameraFormState extends State<CameraForm> {
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
       _selectedImage = image?.path;
       if (image != null) {
-        final File file = File(image.path);
+        // final File file = File(image.path);
         final String fileName = image.path.split('/').last;
         final String filePath = 'images/$fileName';
         // final File newImage = await file.copy(filePath);

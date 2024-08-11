@@ -23,64 +23,16 @@
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="dogy_park">
+  <meta name="apple-mobile-web-app-title" content="test_3_24">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>dogy_park</title>
+  <title>fetch</title>
   <link rel="manifest" href="manifest.json">
-
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
-
-  <style>
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .custom-container {
-      width: 366px;
-      height: 700px;
-      border: 3px solid green;
-      border-radius: 30px;
-      overflow: hidden;
-      /* display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between; */
-    }
-  </style>
 </head>
 <body>
-  <div class="custom-container"></div>
-
-  <script>
-    window.addEventListener('load', async function(ev) {
-      const flutterAppDiv = document.querySelector(".custom-container"); // Use querySelector to get a single element
-  
-      // Download main.dart.js
-      await _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: async function (engineInitializer) {
-          let appRunner = await engineInitializer.initializeEngine({
-            hostElement: flutterAppDiv,
-          });
-          await appRunner.runApp();
-        },
-      });
-    });
-  </script>
-  </body>
-  </html>
+<script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
