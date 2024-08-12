@@ -2,13 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../common/providers/app_state/app_state_provider.dart';
-// import 'package:pocketbase/pocketbase.dart';
 
 import 'dog_item.dart';
 class DogProvider extends ChangeNotifier {
   // late final PocketBase pb;
-  late final AppStateProvider appStateProvider;
   List<DogItem> _dogItems = [];
 
   DogProvider() {
@@ -18,7 +15,6 @@ class DogProvider extends ChangeNotifier {
   List<DogItem> get dogItems => _dogItems;
 
   Future<void> _initialize() async {
-    appStateProvider = AppStateProvider();
     // pb = PocketBase('http://127.0.0.1:8090/');
     await fetchDogs();
   }
@@ -36,7 +32,6 @@ class DogProvider extends ChangeNotifier {
     if (dogsString != null) {
       final List<dynamic> dogsList = jsonDecode(dogsString);
       _dogItems = dogsList.map((dog) => DogItem.fromMap(dog)).toList();
-      appStateProvider.revalidateUserState();
     } else {
       _dogItems = [];
     }

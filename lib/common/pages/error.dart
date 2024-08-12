@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../router/routes_utils.dart';
+import '../providers/router/routes_utils.dart';
 
 
 class ErrorPage extends StatelessWidget {

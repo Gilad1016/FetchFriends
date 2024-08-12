@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'common/providers/router/routes_utils.dart';
 import 'common/widgets/custom_button.dart';
 import 'common/widgets/text_widget.dart';
-import 'common/router/routes_utils.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});

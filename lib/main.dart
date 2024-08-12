@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'common/design/color_pallette.dart';
 import 'common/providers/app_state/app_state_provider.dart';
-import 'common/router/app_router.dart';
+import 'common/providers/router/app_router.dart';
 import 'dog_management/dog_provider.dart';
 
 void main() async {

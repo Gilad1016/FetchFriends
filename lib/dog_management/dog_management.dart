@@ -1,8 +1,9 @@
+import 'package:fetch/common/providers/app_state/app_state_provider.dart';
 import 'package:fetch/dog_management/widgets/dog_card.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../common/router/routes_utils.dart';
+import '../common/providers/router/routes_utils.dart';
 import '../common/widgets/custom_button.dart';
 import 'dog_item.dart';
 import '../common/widgets/top_bar/app_bar.dart';
@@ -19,12 +20,14 @@ class DogMngPage extends StatefulWidget {
 
 class _DogMngPageState extends State<DogMngPage> {
   final _nameController = TextEditingController();
+  late AppStateProvider _appProvider;
   late DogProvider _dogProvider;
 
   @override
   void initState() {
     super.initState();
     _dogProvider = Provider.of<DogProvider>(context, listen: false);
+    _appProvider = Provider.of<AppStateProvider>(context, listen: false);
   }
 
   @override
@@ -38,7 +41,7 @@ class _DogMngPageState extends State<DogMngPage> {
       context: context,
       builder: (context) => const DogCreateOrUpdate(),
     );
-
+    _appProvider.revalidateUserState();
     if (newDog != null) {
       _dogProvider.addDog(newDog.name);
     }
@@ -88,7 +91,7 @@ class _DogMngPageState extends State<DogMngPage> {
                     text: 'Next',
                     onPressed: () {
                       GoRouter.of(context).pushNamed(AppPage.parkHome.toName);
-                      },
+                    },
                   ),
                 );
               },

@@ -9,7 +9,7 @@ class AppStateProvider with ChangeNotifier {
 
   AppState _appState = AppState.init;
 
-  AppStateProvider(){
+  AppStateProvider() {
     _initialize();
   }
 
@@ -29,9 +29,9 @@ class AppStateProvider with ChangeNotifier {
   Future<void> updateMyDogs() async {
     final dogsString = _sharedPreferences.getString('dogs');
     if (dogsString != null) {
-        _appState = AppState.knownUser;
+      _appState = AppState.knownUser;
     } else {
-        _appState = AppState.newUser;
+      _appState = AppState.newUser;
     }
   }
 

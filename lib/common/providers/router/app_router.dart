@@ -1,13 +1,13 @@
-import 'package:fetch/common/router/routes_utils.dart';
+import 'package:fetch/common/providers/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../dog_management/dog_management.dart';
-import '../../park/park_schedule.dart';
-import '../../landing.dart';
-import '../pages/boot.dart';
-import '../pages/error.dart';
-import '../providers/app_state/app_state_provider.dart';
-import '../providers/app_state/states_utils.dart';
+import '../../../dog_management/dog_management.dart';
+import '../../../landing.dart';
+import '../../../park/park_schedule.dart';
+import '../../pages/boot.dart';
+import '../../pages/error.dart';
+import '../app_state/app_state_provider.dart';
+import '../app_state/states_utils.dart';
 
 class AppRouter {
   late final AppStateProvider appProvider;

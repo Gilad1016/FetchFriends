@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:pocketbase/pocketbase.dart';
 
 import 'Items/park_item.dart';
+import '../common/config.dart';
 
 class ParkProvider {
   late final PocketBase pb;
@@ -14,7 +15,7 @@ class ParkProvider {
   List<ParkItem> get parkItems => _parkItems;
 
   Future<void> _initialize() async {
-    pb = PocketBase('http://127.0.0.1:8090/');
+    pb = PocketBase(pbAddress); //http://127.0.0.1:8090/
     await fetchParks();
   }
 
