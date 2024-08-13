@@ -7,6 +7,9 @@ import '../arrivals_provider.dart';
 import 'arrival/arrival_icon.dart';
 import 'hour_line.dart';
 
+//TODO: need to make a decision about proportions, in the timeline each hour is
+// small. but people can't input arrival longer that 1 hour. so we need to
+// make a decision about how to represent the time. maybe enlarge the timeline
 class Timeline extends StatefulWidget {
   const Timeline({super.key});
 
@@ -114,7 +117,7 @@ class _TimelineState extends State<Timeline> {
             bottom: 0,
             child: Container(
               width: 5.0,
-              color: Colors.red,
+              color: Colors.redAccent,
             ),
           ),
           for (final icon in

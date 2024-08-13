@@ -46,9 +46,7 @@ class ArrivalsProvider with ChangeNotifier {
   }
 
   Future<void> saveArrival(ArrivalItem item) async {
-    final recordId = await pb.collection('arrivals').create(body: item.toMap());
-    print(recordId);
-    // Update the arrival list after saving
+    await pb.collection('arrivals').create(body: item.toMap());
     fetchArrivals();
   }
 

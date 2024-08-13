@@ -66,7 +66,6 @@ class DogProvider extends ChangeNotifier {
     // }
     final newDog = DogItem(id: DateTime.now().toString(), name: name);
     _dogItems.add(newDog);
-    print('Dog added: $name'); // Debugging line
     await _saveDogsToLocalStorage();
     notifyListeners();
     return 'success';
