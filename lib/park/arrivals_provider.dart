@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:pocketbase/pocketbase.dart';
+import '../common/config.dart';
 import 'Items/arrival_item.dart';
 
 class ArrivalsProvider with ChangeNotifier {
@@ -21,7 +22,7 @@ class ArrivalsProvider with ChangeNotifier {
   }
 
   Future<void> _initialize() async {
-    pb = PocketBase('http://127.0.0.1:8090/');
+    pb = PocketBase(pbAddress);
     await fetchArrivals();
     _subscribeToArrivals();
   }

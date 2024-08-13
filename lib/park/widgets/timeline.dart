@@ -20,7 +20,7 @@ class _TimelineState extends State<Timeline> {
     final now = DateTime.now();
 
     // Get the list of arrivals from the provider
-    final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;
+    final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;//TODO: get only the next 20 hours and previous 4 hours
 
     // Add hours to the timeline
     final List<Widget> hourLines = [];
