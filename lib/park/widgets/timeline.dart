@@ -19,12 +19,15 @@ class _TimelineState extends State<Timeline> {
     final now = DateTime.now();
 
     // Get the list of arrivals from the provider
-    final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;
+    final arrivals = Provider
+        .of<ArrivalsProvider>(context)
+        .arrivalItems;
 
     // Add hours to the timeline
     final List<Widget> hourLines = [];
     for (int i = 0; i < 24; i++) {
-      final String hourLabel = DateFormat('ha').format(DateTime(0, 0, 0, i));
+      final String hourLabel = DateFormat('ha').format(
+          DateTime(0, 0, 0, (i + now.hour - 4) % 24));
       hourLines.add(SizedBox(
         width: hourWidth - 1,
         child: HourLine(hourLabel: hourLabel),
@@ -33,7 +36,7 @@ class _TimelineState extends State<Timeline> {
 
     // Calculate the position of the current time line
     final double currentHourOffset =
-        (now.hour + now.minute / 60.0) * hourWidth;
+        (4.5 + now.minute / 60.0) * hourWidth;
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -52,11 +55,11 @@ class _TimelineState extends State<Timeline> {
               color: Colors.red,
             ),
           ),
-          // Position the arrival items on the timeline
           for (final item in arrivals)
             Positioned(
-              left: (item.startTime.hour + item.startTime.minute / 60.0) *
-                  hourWidth,
+              left: ((item.startTime.hour - now.hour + 4.5) +
+                  item.startTime.minute / 60.0) *
+                  (hourWidth - 1),
               top: 50,
               child: ArrivalIcon(
                 text: item.dog,
