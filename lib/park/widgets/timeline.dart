@@ -18,6 +18,7 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
+  static const double hourWidth = 240;
   late Timer _timer;
   DateTime _now = DateTime.now();
   late ArrivalsProvider _arrivalsProvider;
@@ -81,7 +82,6 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
     _arrivalsProvider = Provider.of<ArrivalsProvider>(context);
-    const double hourWidth = 60;
 
     // Get the list of arrivals from the provider
     // final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;
