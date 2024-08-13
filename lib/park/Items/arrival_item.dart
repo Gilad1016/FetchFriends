@@ -7,6 +7,7 @@ class ArrivalItem {
   String parkId = '';
   ParkItem? park;
   String dog = '';
+  int rowNum = 0;
 
   ArrivalItem(
       {required this.startTime, required this.parkId,required this.dog}) {

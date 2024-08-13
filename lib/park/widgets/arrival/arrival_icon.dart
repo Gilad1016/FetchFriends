@@ -4,11 +4,15 @@ import '../../../common/design/color_pallette.dart';
 class ArrivalIcon extends StatelessWidget {
   final String text;
   final double width;
+  final DateTime startTime;
+  final int rowNum;
 
   const ArrivalIcon({
     super.key,
     required this.text,
     required this.width,
+    required this.startTime,
+    required this.rowNum,
   });
 
   @override
