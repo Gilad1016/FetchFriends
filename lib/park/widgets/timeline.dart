@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../arrivals_provider.dart';
+import 'arrival/arrival_icon.dart';
 import 'hour_line.dart';
 
 class Timeline extends StatefulWidget {
@@ -27,7 +28,7 @@ class _TimelineState extends State<Timeline> {
       final String hourLabel = DateFormat('ha').format(DateTime(0, 0, 0, i));
       hourLines.add(SizedBox(
         width: hourWidth - 1,
-        child: HourLine(hourLabel: hourLabel, isCurrentHour: i == now.hour),
+        child: HourLine(hourLabel: hourLabel),
       ));
     }
 
@@ -58,14 +59,7 @@ class _TimelineState extends State<Timeline> {
               left: item.startTime.hour + (item.startTime.hour + item.startTime.minute / 60.0) *
                   hourWidth,
               bottom: 0,
-              child: Container(
-                width: 5.0,
-                height: 30.0, // Adjust the height as needed
-                color: Colors.blue, // Different color for each arrival
-                child: Tooltip(
-                  message: item.id,
-                ),
-              ),
+              child: ArrivalIcon(text: item.id, width: (item.endTime.hour - item.startTime.hour) * hourWidth),
             ),
         ],
       ),

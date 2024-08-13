@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 class HourLine extends StatelessWidget {
   final String hourLabel;
-  final bool isCurrentHour;
 
-  const HourLine({required this.hourLabel, required this.isCurrentHour, super.key});
+  const HourLine({required this.hourLabel, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,18 +11,18 @@ class HourLine extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Text(isCurrentHour ? "Now" : hourLabel),
+          child: Text(hourLabel),
         ),
         Expanded(
           child: Container(
             width: 1.0,
-            color: isCurrentHour ? Colors.red : Colors.grey,
+            color: Colors.grey,
           ),
         ),
         Expanded(
           child: Container(
             width: 1.0,
-            color: isCurrentHour ? Colors.red : Colors.grey,
+            color: Colors.grey,
           ),
         ),
       ],

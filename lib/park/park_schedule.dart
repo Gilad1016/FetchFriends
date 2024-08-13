@@ -10,7 +10,7 @@ class ParkSchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: CustomAppBar(titleText: 'Sokolov Garden'),
-      body: CircularProgressIndicator(),//Timeline(),
+      body: Timeline(), //CircularProgressIndicator(),//
       floatingActionButton: ArrivalButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
