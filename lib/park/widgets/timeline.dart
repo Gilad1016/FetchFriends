@@ -15,8 +15,7 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final double hourWidth = width / 6;
+    const double hourWidth = 60;
     final now = DateTime.now();
 
     // Get the list of arrivals from the provider

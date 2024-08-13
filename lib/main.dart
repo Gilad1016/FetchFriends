@@ -22,22 +22,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late AppStateProvider appProvider;
-  late DogProvider dogProvider;
-
-  @override
-  void initState() {
-    appProvider = AppStateProvider();
-    dogProvider = DogProvider();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AppStateProvider>(create: (_) => appProvider),
-        Provider<AppRouter>(create: (_) => AppRouter(appProvider)),
+        ChangeNotifierProvider(create: (_) => AppStateProvider()),
+        ProxyProvider<AppStateProvider, AppRouter>(
+          update: (_, appStateProvider, __) => AppRouter(appStateProvider),
+        ),
         ChangeNotifierProvider(create: (_) => DogProvider()),
         ChangeNotifierProvider(create: (_) => ArrivalsProvider()),
         Provider<ParkProvider>(create: (_) => ParkProvider()),

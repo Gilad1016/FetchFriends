@@ -21,12 +21,10 @@ class DogMngPage extends StatefulWidget {
 class _DogMngPageState extends State<DogMngPage> {
   final _nameController = TextEditingController();
   late AppStateProvider _appProvider;
-  late DogProvider _dogProvider;
 
   @override
   void initState() {
     super.initState();
-    _dogProvider = Provider.of<DogProvider>(context, listen: false);
     _appProvider = Provider.of<AppStateProvider>(context, listen: false);
   }
 
@@ -41,11 +39,12 @@ class _DogMngPageState extends State<DogMngPage> {
       context: context,
       builder: (context) => const DogCreateOrUpdate(),
     );
-    _appProvider.revalidateUserState();
+
     if (newDog != null) {
-      _dogProvider.addDog(newDog.name);
+      await _appProvider.revalidateUserState();
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

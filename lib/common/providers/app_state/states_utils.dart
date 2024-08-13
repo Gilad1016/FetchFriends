@@ -1,5 +1,5 @@
 enum AppState {
   init,
   newUser,
-  knownUser,
+  knownUser, error,
 }

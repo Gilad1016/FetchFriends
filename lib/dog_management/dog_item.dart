@@ -26,4 +26,16 @@ class DogItem {
       'imageUrl': imageUrl?.toString(),
     };
   }
+
+  DogItem copyWith({
+    String? id,
+    String? name,
+    String? imageUrl,
+  }) {
+    return DogItem(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 }

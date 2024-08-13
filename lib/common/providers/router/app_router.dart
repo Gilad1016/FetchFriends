@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 import '../../../dog_management/dog_management.dart';
 import '../../../landing.dart';
 import '../../../park/park_schedule.dart';
-import '../../pages/boot.dart';
+import '../../pages/splash.dart';
 import '../../pages/error.dart';
 import '../app_state/app_state_provider.dart';
 import '../app_state/states_utils.dart';
 
 class AppRouter {
-  late final AppStateProvider appProvider;
+  final AppStateProvider appProvider;
 
   GoRouter get router => _goRouter;
 
@@ -38,7 +38,7 @@ class AppRouter {
       GoRoute(
         path: AppPage.boot.toPath,
         name: AppPage.boot.toName,
-        builder: (context, state) => const BootPage(),
+        builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
         path: AppPage.addDog.toPath,
@@ -66,8 +66,12 @@ class AppRouter {
               state.matchedLocation == AppPage.boot.toPath)) {
             return AppPage.parkHome.toPath;
           }
+
+        case AppState.error:
+          return AppPage.error.toPath;
       }
 
+      // return null;  // Returning null means no redirectio
       return state.matchedLocation;
     },
   );

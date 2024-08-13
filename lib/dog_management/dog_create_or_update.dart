@@ -38,7 +38,13 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
       final dogProvider = Provider.of<DogProvider>(context, listen: false);
       if (widget.dogItem == null) {
         // Create new dog
-        await dogProvider.addDog(_nameController.text);
+        final newDog = DogItem(
+          id: DateTime.now().toString(),
+          name: _nameController.text,
+          imageUrl: _imageUrlController.text,
+        );
+        await dogProvider.addDog(newDog.name);
+        Navigator.pop(context, newDog); // Return the new dog
       } else {
         // Update existing dog
         await dogProvider.updateDog(
@@ -46,10 +52,14 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
           _nameController.text,
           // _imageUrlController.text,
         );
+        Navigator.pop(context, widget.dogItem!.copyWith(
+          name: _nameController.text,
+          imageUrl: _imageUrlController.text,
+        )); // Return the updated dog
       }
     }
-    Navigator.pop(context);
   }
+
 
   @override
   Widget build(BuildContext context) {
