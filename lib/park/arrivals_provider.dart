@@ -47,17 +47,14 @@ class ArrivalsProvider with ChangeNotifier {
   }
 
   void _subscribeToArrivals() {
-    // Subscribe to real-time updates for the 'arrivals' collection
     pb.collection('arrivals').subscribe('*', (event) {
       switch (event.action) {
         case 'create':
-        // New record created
           final newArrival =
           ArrivalItem.fromMap(event.record!.id, event.record!.data);
           _arrivalItems.add(newArrival);
           break;
         case 'update':
-        // Record updated
           final updatedArrival =
           ArrivalItem.fromMap(event.record!.id, event.record!.data);
           _arrivalItems = _arrivalItems.map((item) {
@@ -65,13 +62,13 @@ class ArrivalsProvider with ChangeNotifier {
           }).toList();
           break;
         case 'delete':
-        // Record deleted
           _arrivalItems.removeWhere((item) => item.id == event.record!.id);
           break;
       }
-      notifyListeners(); // Notify listeners after every event
+      notifyListeners();
     });
   }
+
 
   @override
   void dispose() {
