@@ -30,9 +30,15 @@ class ArrivalsProvider with ChangeNotifier {
     _subscribeToArrivals();
   }
 
+  //TODO: fix filter to support dynamic day. currently there is a problem with
+  // midnight crossing
   Future<List<ArrivalItem>> fetchArrivals() async {
-    final result = await pb.collection('arrivals').getFullList();
-    _arrivalItems = result
+    final result = await pb.collection('arrivals')
+        // .getFullList();
+        .getList(
+      filter: 'start_time >= @todayStart && start_time <= @todayEnd',
+    );
+    _arrivalItems = result.items
         .map((record) => ArrivalItem.fromMap(record.id, record.data))
         .toList();
     notifyListeners();
@@ -52,7 +58,10 @@ class ArrivalsProvider with ChangeNotifier {
         case 'create':
           final newArrival =
           ArrivalItem.fromMap(event.record!.id, event.record!.data);
-          _arrivalItems.add(newArrival);
+          if (newArrival.startTime.isAfter(DateTime.now().subtract(const Duration(hours: 24))) &&
+              newArrival.startTime.isBefore(DateTime.now().add(const Duration(hours: 24)))) {
+            _arrivalItems.add(newArrival);
+          }
           break;
         case 'update':
           final updatedArrival =

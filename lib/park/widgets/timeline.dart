@@ -17,6 +17,7 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   late Timer _timer;
   DateTime _now = DateTime.now();
+  late ArrivalsProvider _arrivalsProvider;
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _TimelineState extends State<Timeline> {
     super.dispose();
   }
 
+  //TODO: handle bug with not optimal organization of arrivals
   List<ArrivalIcon> generateArrivalIcons(List<ArrivalItem> arrivals, double hourWidth) {
     // Sort the arrivals by startTime
     arrivals.sort((a, b) => a.startTime.compareTo(b.startTime));
@@ -63,7 +65,7 @@ class _TimelineState extends State<Timeline> {
       icons.add(
         ArrivalIcon(
           text: currentArrival.dog,
-          width: (currentArrival.endTime.hour - currentArrival.startTime.hour) * hourWidth,
+          width: (currentArrival.endTime.difference(currentArrival.startTime).inMinutes / 60.0) * hourWidth,
           startTime: currentArrival.startTime,
           rowNum: currentArrival.rowNum,
         ),
@@ -75,10 +77,14 @@ class _TimelineState extends State<Timeline> {
 
   @override
   Widget build(BuildContext context) {
+    _arrivalsProvider = Provider.of<ArrivalsProvider>(context);
     const double hourWidth = 60;
 
     // Get the list of arrivals from the provider
-    final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;
+    // final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;
+
+    // Generate the list of ArrivalIcons with adjusted row positions
+    // final arrivalIcons = generateArrivalIcons(arrivals, hourWidth);
 
     // Add hours to the timeline
     final List<Widget> hourLines = [];
@@ -111,22 +117,17 @@ class _TimelineState extends State<Timeline> {
               color: Colors.red,
             ),
           ),
-          for (final item in arrivals)
+          for (final icon in
+          generateArrivalIcons(_arrivalsProvider.arrivalItems, hourWidth))
             Positioned(
-              left: ((item.startTime.hour - _now.hour + 4.5) +
-                  item.startTime.minute / 60.0) *
-                  (hourWidth),
-              top: 50 * (item.rowNum + 1),
-              child: ArrivalIcon(
-                text: item.dog,
-                width: (item.endTime.hour - item.startTime.hour) * hourWidth,
-                startTime: item.startTime,
-                rowNum: item.rowNum,
-              ),
+              left: ((icon.startTime.hour - _now.hour + 4.5) +
+                  icon.startTime.minute / 60.0) *
+                  hourWidth,
+              top: 50 * (icon.rowNum + 1),
+              child: icon,
             ),
         ],
       ),
     );
   }
-
 }
