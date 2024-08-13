@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../arrivals_provider.dart';
 import 'arrival/arrival_icon.dart';
 import 'hour_line.dart';
@@ -20,7 +19,7 @@ class _TimelineState extends State<Timeline> {
     final now = DateTime.now();
 
     // Get the list of arrivals from the provider
-    final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;//TODO: get only the next 20 hours and previous 4 hours
+    final arrivals = Provider.of<ArrivalsProvider>(context).arrivalItems;
 
     // Add hours to the timeline
     final List<Widget> hourLines = [];
@@ -33,7 +32,7 @@ class _TimelineState extends State<Timeline> {
     }
 
     // Calculate the position of the current time line
-    final double currentHourOffset = now.hour +
+    final double currentHourOffset =
         (now.hour + now.minute / 60.0) * hourWidth;
 
     return SingleChildScrollView(
@@ -56,10 +55,13 @@ class _TimelineState extends State<Timeline> {
           // Position the arrival items on the timeline
           for (final item in arrivals)
             Positioned(
-              left: item.startTime.hour + (item.startTime.hour + item.startTime.minute / 60.0) *
+              left: (item.startTime.hour + item.startTime.minute / 60.0) *
                   hourWidth,
-              bottom: 0,
-              child: ArrivalIcon(text: item.id, width: (item.endTime.hour - item.startTime.hour) * hourWidth),
+              top: 50,
+              child: ArrivalIcon(
+                text: item.dog,
+                width: (item.endTime.hour - item.startTime.hour) * hourWidth,
+              ),
             ),
         ],
       ),

@@ -12,13 +12,16 @@ class ArrivalsProvider with ChangeNotifier {
     _initialize();
   }
 
-  List<ArrivalItem> get arrivalItems => _arrivalItems;
+  List<ArrivalItem> get arrivalItems {
+    final now = DateTime.now();
+    final startTime = now.subtract(const Duration(hours: 4));
+    final endTime = now.add(const Duration(hours: 20));
 
-  void addArrivalItem(ArrivalItem item) {
-    _arrivalItems.add(item);
-    notifyListeners();
-    // Save the new arrival to the database
-    saveArrival(item);
+    return _arrivalItems
+        .where((item) =>
+    item.startTime.isAfter(startTime) &&
+        item.startTime.isBefore(endTime))
+        .toList();
   }
 
   Future<void> _initialize() async {
@@ -27,25 +30,11 @@ class ArrivalsProvider with ChangeNotifier {
     _subscribeToArrivals();
   }
 
-  void updateArrivalItem(ArrivalItem item) {
-    _arrivalItems.removeWhere((element) => element.id == item.id);
-    _arrivalItems.add(item);
-    notifyListeners();
-    // Save the updated arrival to the database
-    saveArrival(item);
-  }
-
-  Future<void> deleteArrivalItem(String id) async {
-    await pb.collection('arrivals').delete(id);
-    _arrivalItems.removeWhere((element) => element.id == id);
-    notifyListeners();
-  }
-
   Future<List<ArrivalItem>> fetchArrivals() async {
     final result = await pb.collection('arrivals').getFullList();
-    _arrivalItems = result.map((record) =>
-        ArrivalItem.fromMap(record.id, record.data)
-    ).toList();
+    _arrivalItems = result
+        .map((record) => ArrivalItem.fromMap(record.id, record.data))
+        .toList();
     notifyListeners();
     return _arrivalItems;
   }
@@ -63,12 +52,14 @@ class ArrivalsProvider with ChangeNotifier {
       switch (event.action) {
         case 'create':
         // New record created
-          final newArrival = ArrivalItem.fromMap(event.record!.id, event.record!.data);
+          final newArrival =
+          ArrivalItem.fromMap(event.record!.id, event.record!.data);
           _arrivalItems.add(newArrival);
           break;
         case 'update':
         // Record updated
-          final updatedArrival = ArrivalItem.fromMap(event.record!.id, event.record!.data);
+          final updatedArrival =
+          ArrivalItem.fromMap(event.record!.id, event.record!.data);
           _arrivalItems = _arrivalItems.map((item) {
             return item.id == updatedArrival.id ? updatedArrival : item;
           }).toList();
