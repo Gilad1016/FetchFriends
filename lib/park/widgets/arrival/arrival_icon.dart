@@ -22,7 +22,7 @@ class ArrivalIcon extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(25),
           border: Border.all(
             color: AppColors.accentColor,
             width: 5,
