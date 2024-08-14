@@ -81,8 +81,6 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
     _arrivalsProvider = Provider.of<ArrivalsProvider>(context);
-    _arrivalsProvider.fetchArrivals();
-    _arrivalsProvider.subscribeToArrivals();
 
     final List<Widget> hourLines = [];
     for (int i = 0; i < 24; i++) {

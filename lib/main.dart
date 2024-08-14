@@ -40,6 +40,8 @@ class _MyAppState extends State<MyApp> {
               return ArrivalsProvider()..parkProvider = parkProvider;
             }
             arrivalsProvider.parkProvider = parkProvider;
+            arrivalsProvider.fetchArrivals();
+            arrivalsProvider.subscribeToArrivals();
             return arrivalsProvider;
           },
         ),
