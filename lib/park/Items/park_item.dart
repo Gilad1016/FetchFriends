@@ -6,7 +6,7 @@ class ParkItem {
   // int latitude = 0;
   // int longitude = 0;
 
-  ParkItem({required this.name, required this.mapsURL});
+  ParkItem({required this.name, required this.mapsURL, required this.id});
 
   factory ParkItem.fromMap(Map<String, dynamic> docDocument) {
     //
@@ -19,6 +19,7 @@ class ParkItem {
     // print('Distance: ${distance.toString()} km');
 
     return ParkItem(
+      id: docDocument['id'] as String,
       name: docDocument['name'] as String,
       mapsURL: Uri.parse(docDocument['mapsURL'] as String),
     );

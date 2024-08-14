@@ -33,7 +33,16 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(create: (_) => DogProvider()),
         ChangeNotifierProvider<ParkProvider>(create: (_) => ParkProvider()),
-        ChangeNotifierProvider<ArrivalsProvider>(create: (_) => ArrivalsProvider(ParkProvider())),
+        ChangeNotifierProxyProvider<ParkProvider, ArrivalsProvider>(
+          create: (_) => ArrivalsProvider(),
+          update: (_, parkProvider, arrivalsProvider) {
+            if (arrivalsProvider == null) {
+              return ArrivalsProvider()..parkProvider = parkProvider;
+            }
+            arrivalsProvider.parkProvider = parkProvider;
+            return arrivalsProvider;
+          },
+        ),
       ],
       child: Builder(
         builder: (context) {

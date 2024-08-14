@@ -8,7 +8,7 @@ import '../common/config.dart';
 class ParkProvider with ChangeNotifier {
   late final PocketBase pb;
   List<ParkItem> _parkItems = [];
-  late ParkItem _currentPark = ParkItem(name: '', mapsURL: Uri.parse(''));
+  late ParkItem _currentPark = ParkItem(id: '', name: '', mapsURL: Uri.parse(''));
 
   ParkProvider() {
     _initialize();

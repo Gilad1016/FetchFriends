@@ -8,10 +8,21 @@ import 'Items/arrival_item.dart';
 class ArrivalsProvider with ChangeNotifier {
   late final PocketBase pb;
   List<ArrivalItem> _arrivalItems = [];
-  late ParkProvider parkProvider;
+  late ParkProvider _parkProvider;
 
-  ArrivalsProvider(this.parkProvider) {
-    _initialize();
+  set parkProvider(ParkProvider parkProvider) {
+    _parkProvider = parkProvider;
+    notifyListeners();
+  }
+
+  ArrivalsProvider() {
+    pb = PocketBase(pbAddress);
+  }
+
+  @override
+  void dispose() {
+    pb.collection('arrivals').unsubscribe('*');
+    super.dispose();
   }
 
   List<ArrivalItem> get arrivalItems {
@@ -19,34 +30,21 @@ class ArrivalsProvider with ChangeNotifier {
     final startTime = now.subtract(const Duration(hours: 4));
     final endTime = now.add(const Duration(hours: 20));
 
-    return _arrivalItems
-        .where((item) =>
+    return _arrivalItems.where((item) =>
     item.startTime.isAfter(startTime) &&
-        item.startTime.isBefore(endTime))
-        .toList();
+        item.startTime.isBefore(endTime)).toList();
   }
 
-  Future<void> _initialize() async {
-    print(pbAddress);
-    pb = PocketBase(pbAddress);
-    await fetchArrivals();
-    _subscribeToArrivals();
-  }
+  Future<void> fetchArrivals() async {
+    if (_parkProvider.currentPark.id.isEmpty) return;
 
-  //TODO: fix filter to support dynamic day. currently there is a problem with
-  // midnight crossing
-  Future<List<ArrivalItem>> fetchArrivals() async {
-    final result = await pb.collection('arrivals')
-        // .getFullList();
-        .getList(
-      filter: 'start_time >= @todayStart && start_time <= @todayEnd',
-          // '&& at = ${parkProvider.currentPark!.id}',
+    final result = await pb.collection('arrivals').getList(
+      filter: 'start_time >= @todayStart && start_time <= @todayEnd'
+          '&& at.id = "${_parkProvider.currentPark.id}"',
     );
-    _arrivalItems = result.items
-        .map((record) => ArrivalItem.fromMap(record.id, record.data))
-        .toList();
+    _arrivalItems = result.items.map((record) =>
+        ArrivalItem.fromMap(record.id, record.data)).toList();
     notifyListeners();
-    return _arrivalItems;
   }
 
   Future<void> saveArrival(ArrivalItem item) async {
@@ -54,7 +52,7 @@ class ArrivalsProvider with ChangeNotifier {
     fetchArrivals();
   }
 
-  void _subscribeToArrivals() {
+  void subscribeToArrivals() {
     pb.collection('arrivals').subscribe('*', (event) {
       print('Arrival event: ${event.action}');
       switch (event.action) {
@@ -79,13 +77,5 @@ class ArrivalsProvider with ChangeNotifier {
       }
       notifyListeners();
     });
-  }
-
-
-  @override
-  void dispose() {
-    // Unsubscribe from real-time updates when the provider is disposed
-    pb.collection('arrivals').unsubscribe('*');
-    super.dispose();
   }
 }
