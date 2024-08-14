@@ -11,7 +11,7 @@ class DogCreateOrUpdate extends StatefulWidget {
   const DogCreateOrUpdate({this.dogItem, super.key});
 
   @override
-  _DogCreateOrUpdateState createState() => _DogCreateOrUpdateState();
+  State<DogCreateOrUpdate> createState() => _DogCreateOrUpdateState();
 }
 
 class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
