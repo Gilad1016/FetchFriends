@@ -32,8 +32,8 @@ class _MyAppState extends State<MyApp> {
           update: (_, appStateProvider, __) => AppRouter(appStateProvider),
         ),
         ChangeNotifierProvider(create: (_) => DogProvider()),
-        ChangeNotifierProvider(create: (_) => ArrivalsProvider()),
-        Provider<ParkProvider>(create: (_) => ParkProvider()),
+        ChangeNotifierProvider<ParkProvider>(create: (_) => ParkProvider()),
+        ChangeNotifierProvider<ArrivalsProvider>(create: (_) => ArrivalsProvider(ParkProvider())),
       ],
       child: Builder(
         builder: (context) {

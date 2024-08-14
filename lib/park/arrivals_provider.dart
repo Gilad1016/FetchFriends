@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fetch/park/park_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pocketbase/pocketbase.dart';
 import '../common/config.dart';
@@ -7,8 +8,9 @@ import 'Items/arrival_item.dart';
 class ArrivalsProvider with ChangeNotifier {
   late final PocketBase pb;
   List<ArrivalItem> _arrivalItems = [];
+  late ParkProvider parkProvider;
 
-  ArrivalsProvider() {
+  ArrivalsProvider(this.parkProvider) {
     _initialize();
   }
 
@@ -25,6 +27,7 @@ class ArrivalsProvider with ChangeNotifier {
   }
 
   Future<void> _initialize() async {
+    print(pbAddress);
     pb = PocketBase(pbAddress);
     await fetchArrivals();
     _subscribeToArrivals();
@@ -37,6 +40,7 @@ class ArrivalsProvider with ChangeNotifier {
         // .getFullList();
         .getList(
       filter: 'start_time >= @todayStart && start_time <= @todayEnd',
+          // '&& at = ${parkProvider.currentPark!.id}',
     );
     _arrivalItems = result.items
         .map((record) => ArrivalItem.fromMap(record.id, record.data))
@@ -52,6 +56,7 @@ class ArrivalsProvider with ChangeNotifier {
 
   void _subscribeToArrivals() {
     pb.collection('arrivals').subscribe('*', (event) {
+      print('Arrival event: ${event.action}');
       switch (event.action) {
         case 'create':
           final newArrival =
