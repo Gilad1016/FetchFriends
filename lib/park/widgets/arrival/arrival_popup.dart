@@ -1,3 +1,4 @@
+import 'package:fetch/common/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../common/design/color_pallette.dart';
@@ -17,9 +18,10 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
   String error = '';
 
   void _onConfirm() {
-    if (_selectedDateTime.isBefore(DateTime.now())) {
+    if (_selectedDateTime.isBefore(
+        DateTime.now().subtract(const Duration(hours: 1)))) {
       setState(() {
-        error = 'Arrival time must be in the future';
+        error = 'Arrival time cannot be more than 1 hour in the past';
       });
       return;
     }
@@ -42,32 +44,30 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            'When will you arrive?',
+            'When are you coming?',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: AppColors.primaryColor,
             ),
           ),
-          const SizedBox(height: 16.0),
-
-          // DateTime Picker
-          ElevatedButton(
+          // DateTime Picker Button
+          CustomButton(
             onPressed: () async {
               final pickedDate = await showDatePicker(
                 context: context,
                 initialDate: _selectedDateTime,
-                firstDate: DateTime.now(),
+                firstDate: DateTime.now().subtract(const Duration(hours: 1)),
                 lastDate: DateTime.now().add(const Duration(days: 365)),
               );
 
-              if (pickedDate != null) {
+              if (pickedDate != null && mounted) {
                 final pickedTime = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay.fromDateTime(_selectedDateTime),
                 );
 
-                if (pickedTime != null) {
+                if (pickedTime != null && mounted) {
                   setState(() {
                     _selectedDateTime = DateTime(
                       pickedDate.year,
@@ -81,14 +81,26 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
                 }
               }
             },
-            child: Text(
-              'Pick Arrival Date & Time: ${DateFormat.yMd().add_jm().format(_selectedDateTime)}',
-            ),
+            text: DateFormat.yMd().add_jm().format(_selectedDateTime),
           ),
           const SizedBox(height: 16.0),
 
           // Duration Toggle
           ToggleButtons(
+            borderRadius: BorderRadius.circular(25),
+            // Rounded corners
+            borderWidth: 2,
+            // Border width
+            borderColor: AppColors.primaryColor,
+            // Border color for unselected buttons
+            selectedBorderColor: AppColors.primaryColor,
+            // Border color for selected button
+            fillColor: AppColors.primaryColor.withOpacity(0.75),
+            // Background color for selected button
+            selectedColor: Colors.white,
+            // Text color for selected button
+            color: AppColors.primaryColor,
+            // Text color for unselected buttons
             isSelected: [
               _selectedDuration == const Duration(minutes: 15),
               _selectedDuration == const Duration(minutes: 30),
@@ -114,24 +126,13 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
               });
             },
             children: const [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('15 min'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('30 min'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('45 min'),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text('1 hour'),
-              ),
+              Text('15m', style: TextStyle(fontSize: 20.0),),
+              Text('30m', style: TextStyle(fontSize: 20.0),),
+              Text('45m', style: TextStyle(fontSize: 20.0),),
+              Text('1h', style: TextStyle(fontSize: 20.0),),
             ],
           ),
+
           const SizedBox(height: 16.0),
 
           // Error Message
@@ -157,7 +158,7 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
               ),
               ElevatedButton(
                 onPressed: _onConfirm,
-                child: const Text('Confirm'),
+                child: const Text('See you there!'),
               ),
             ],
           ),
