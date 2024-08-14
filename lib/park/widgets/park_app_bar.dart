@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../common/design/color_pallette.dart';
 import '../park_provider.dart';
 
 class ParkAppBar extends StatefulWidget implements PreferredSizeWidget {
-
-  const ParkAppBar({super.key });
+  const ParkAppBar({super.key});
 
   @override
   State<ParkAppBar> createState() => _ParkAppBarState();
@@ -34,9 +32,19 @@ class _ParkAppBarState extends State<ParkAppBar> {
       backgroundColor: AppColors.backgroundColor,
       elevation: 0.0,
       centerTitle: true,
-      leading: Container(),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          _parkProvider.previousPark();
+        },
+      ),
       actions: <Widget>[
-        Container(),
+        IconButton(
+          icon: const Icon(Icons.arrow_forward),
+          onPressed: () {
+            _parkProvider.nextPark();
+          },
+        ),
       ],
     );
   }

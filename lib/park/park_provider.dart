@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:pocketbase/pocketbase.dart';
-
 import 'Items/park_item.dart';
 import '../common/config.dart';
 
@@ -33,5 +32,19 @@ class ParkProvider with ChangeNotifier {
     _currentPark = _parkItems.first;
     notifyListeners();
     return _parkItems;
+  }
+
+  void nextPark() {
+    final currentIndex = _parkItems.indexOf(_currentPark);
+    final nextIndex = (currentIndex + 1) % _parkItems.length;
+    _currentPark = _parkItems[nextIndex];
+    notifyListeners();
+  }
+
+  void previousPark() {
+    final currentIndex = _parkItems.indexOf(_currentPark);
+    final previousIndex = (currentIndex - 1 + _parkItems.length) % _parkItems.length;
+    _currentPark = _parkItems[previousIndex];
+    notifyListeners();
   }
 }
