@@ -53,10 +53,6 @@ class AppRouter {
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
     redirect: (context, state) {
-      print("redirect");
-      print("state: ${appProvider.state}");
-      print("matchedLocation: ${state.matchedLocation}");
-
       switch (appProvider.state) {
         case AppState.init:
           return AppPage.boot.toPath;
