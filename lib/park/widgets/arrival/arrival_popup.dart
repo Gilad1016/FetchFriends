@@ -35,7 +35,7 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
         color: Colors.white,
@@ -158,7 +158,7 @@ class _ArrivalPopupState extends State<ArrivalPopup> {
               ),
               ElevatedButton(
                 onPressed: _onConfirm,
-                child: const Text('See you there!'),
+                child: const Text('Woof!'),
               ),
             ],
           ),
