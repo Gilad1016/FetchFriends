@@ -27,11 +27,10 @@ class ArrivalItem {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'startTime': startTime.toIso8601String(),
-      'endTime': endTime.toIso8601String(),
-      'parkId': park?.id ?? '',
-      'dog': dog,
+      'start_time': startTime.toString(),
+      'end_time': endTime.toString(),
+      'at': parkId,
+      'of': dog,
     };
   }
 }

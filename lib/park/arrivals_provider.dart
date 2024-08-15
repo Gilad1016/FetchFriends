@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fetch/dog_management/dog_item.dart';
 import 'package:fetch/park/park_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -50,8 +51,14 @@ class ArrivalsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveArrival(ArrivalItem item) async {
-    await pb.collection('arrivals').create(body: item.toMap());
+  Future<void> addArrival(DateTime dateTime,Duration duration,List<DogItem> dogs) async {
+    for(int i = 0; i < dogs.length; i++) {
+      final item = ArrivalItem(
+        startTime: dateTime, parkId: _parkProvider.currentPark.id, dog: dogs[i].name);
+      item.endTime = item.startTime.add(duration);
+      print('Adding arrival: ${item.toMap()}');
+      await pb.collection('arrivals').create(body: item.toMap());
+    }
     fetchArrivals();
   }
 
