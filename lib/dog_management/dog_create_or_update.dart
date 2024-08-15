@@ -4,7 +4,6 @@ import '../../dog_management/dog_item.dart';
 import '../common/widgets/custom_button.dart';
 import 'dog_provider.dart';
 
-//TODO: add delete functionality
 class DogCreateOrUpdate extends StatefulWidget {
   final DogItem? dogItem;
 
@@ -50,7 +49,6 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
         await dogProvider.updateDog(
           widget.dogItem!.id,
           _nameController.text,
-          // _imageUrlController.text,
         );
         Navigator.pop(context, widget.dogItem!.copyWith(
           name: _nameController.text,
@@ -60,6 +58,13 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
     }
   }
 
+  Future<void> _deleteDog() async {
+    if (widget.dogItem != null) {
+      final dogProvider = Provider.of<DogProvider>(context, listen: false);
+      await dogProvider.deleteDog(widget.dogItem!.id);
+      Navigator.pop(context); // Close the dialog after deletion
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +93,12 @@ class _DogCreateOrUpdateState extends State<DogCreateOrUpdate> {
         ),
       ),
       actions: [
+        if (widget.dogItem != null)
+          CustomButton(
+            onPressed: _deleteDog,
+            text: 'Delete',
+            // color: Colors.redAccent,
+          ),
         CustomButton(
           onPressed: () => Navigator.pop(context),
           text: 'Cancel',

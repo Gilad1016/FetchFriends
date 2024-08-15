@@ -71,6 +71,7 @@ class DogProvider extends ChangeNotifier {
     return 'success';
   }
 
+  //TODO: fix state if no dogs
   Future<String> deleteDog(String dogID) async {
     // try {
     //   await pb.collection('dogs').delete(dogID);
