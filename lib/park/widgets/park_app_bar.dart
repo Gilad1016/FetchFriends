@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../common/design/color_pallette.dart';
+import '../../common/providers/router/routes_utils.dart';
 import '../park_provider.dart';
 
 class ParkAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -50,10 +51,10 @@ class _ParkAppBarState extends State<ParkAppBar> {
           onSelected: (int result) {
             switch (result) {
               case 0:
-                GoRouter.of(context).go('/MngDog');
+                GoRouter.of(context).pushNamed(AppPage.mngDog.toName);
                 break;
               case 1:
-                GoRouter.of(context).go('/About');
+                GoRouter.of(context).pushNamed(AppPage.about.toName);
                 break;
             }
           },

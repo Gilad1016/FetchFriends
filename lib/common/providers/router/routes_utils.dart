@@ -5,6 +5,7 @@ enum AppPage {
   landing,
   boot,
   mngDog,
+  about,
 }
 
 extension AppPageExtension on AppPage {
@@ -20,6 +21,8 @@ extension AppPageExtension on AppPage {
         return "/boot";
       case AppPage.mngDog:
         return "/MngDog";
+      case AppPage.about:
+        return "/about";
       default:
         return "/";
     }
@@ -37,6 +40,8 @@ extension AppPageExtension on AppPage {
         return "BOOT";
       case AppPage.mngDog:
         return "MNG_DOG";
+      case AppPage.about:
+        return "ABOUT";
       default:
         return "PARK";
     }

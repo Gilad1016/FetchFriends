@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../design/color_pallette.dart';
 
@@ -26,7 +27,7 @@ class BackWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         child: const Icon(
-          CupertinoIcons.back,
+          Icons.arrow_back,
           size: 20,
           color: AppColors.primaryColor,
         ),

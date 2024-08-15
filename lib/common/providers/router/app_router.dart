@@ -1,6 +1,7 @@
 import 'package:fetch/common/providers/router/routes_utils.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../about/about.dart';
 import '../../../dog_management/dog_management.dart';
 import '../../../landing.dart';
 import '../../../park/park_schedule.dart';
@@ -44,6 +45,10 @@ class AppRouter {
         path: AppPage.mngDog.toPath,
         name: AppPage.mngDog.toName,
         builder: (context, state) => const DogMngPage(),
+      ),
+      GoRoute(path: AppPage.about.toPath,
+        name: AppPage.about.toName,
+        builder: (context, state) => const AboutPage(),
       ),
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error.toString()),
