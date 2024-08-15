@@ -34,12 +34,12 @@ class AboutPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-              'If you have any requests, suggestions, or bugs to report, please feel free to reach out through the project email:',
+              'If you have any requests, suggestions, or bugs to report, please feel free to use the feedback button or to reach out through my email:',
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 16),
             Text(
-              'go@fetch.com.',
+              'gilad.omesi@gmail.com.',
               style: TextStyle(fontSize: 28),
             ),
             SizedBox(height: 16),

@@ -1,3 +1,4 @@
+import 'package:feedback/feedback.dart';
 import 'package:fetch/park/arrivals_provider.dart';
 import 'package:fetch/park/park_provider.dart';
 import 'package:fetch/phone_size_wrapper.dart';
@@ -11,7 +12,11 @@ import 'dog_management/dog_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(
+    const BetterFeedback(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -37,7 +42,8 @@ class _MyAppState extends State<MyApp> {
           create: (_) => ArrivalsProvider(),
           update: (_, parkProvider, arrivalsProvider) {
             if (arrivalsProvider == null) {
-              return ArrivalsProvider()..parkProvider = parkProvider;
+              return ArrivalsProvider()
+                ..parkProvider = parkProvider;
             }
             arrivalsProvider.parkProvider = parkProvider;
             arrivalsProvider.fetchArrivals();
@@ -49,7 +55,9 @@ class _MyAppState extends State<MyApp> {
       child: Builder(
         builder: (context) {
           final GoRouter goRouter =
-              Provider.of<AppRouter>(context, listen: false).router;
+              Provider
+                  .of<AppRouter>(context, listen: false)
+                  .router;
           return PhoneSizeWrapper(
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,

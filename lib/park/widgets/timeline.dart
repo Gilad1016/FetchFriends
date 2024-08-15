@@ -23,21 +23,31 @@ class _TimelineState extends State<Timeline> {
   late Timer _timer;
   DateTime _now = DateTime.now();
   late ArrivalsProvider _arrivalsProvider;
+  late ScrollController _scrollController; // Add a ScrollController
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController(); // Initialize the ScrollController
+
     // Update the current time every minute
     _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
       setState(() {
         _now = DateTime.now();
       });
     });
+
+    // Scroll to the current time (red line) when the widget is first built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToCurrentTime();
+    });
   }
 
   @override
   void dispose() {
     _timer.cancel();
+    _scrollController.dispose(); // Dispose of the ScrollController
     super.dispose();
   }
 
@@ -76,6 +86,21 @@ class _TimelineState extends State<Timeline> {
       double adjustedScale = 1 + (scaleFactor - 1) * dampingFactor;
       hourWidth = (hourWidth * adjustedScale).clamp(minHourWidth, maxHourWidth);
     });
+
+    // Scroll to the current time after zooming
+    _scrollToCurrentTime();
+  }
+
+  void _scrollToCurrentTime() {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double currentHourOffset = (4.5 + _now.minute / 60.0) * hourWidth;
+
+    // Scroll to the position where the red line is centered on the screen
+    _scrollController.animateTo(
+      currentHourOffset - screenWidth / 4,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -99,6 +124,7 @@ class _TimelineState extends State<Timeline> {
         _updateHourWidth(details.scale);
       },
       child: SingleChildScrollView(
+        controller: _scrollController, // Attach the ScrollController
         scrollDirection: Axis.horizontal,
         child: Stack(
           children: [

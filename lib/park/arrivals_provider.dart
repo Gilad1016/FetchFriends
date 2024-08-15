@@ -39,9 +39,6 @@ class ArrivalsProvider with ChangeNotifier {
   Future<void> fetchArrivals() async {
     if (_parkProvider.currentPark.id.isEmpty) return;
 
-    print('Fetching arrivals for park: ${_parkProvider.currentPark.id}');
-    print('start_time >= @todayStart && start_time <= @todayEnd'
-        '&& at.id = "${_parkProvider.currentPark.id}"');
     final result = await pb.collection('arrivals').getList(
       filter: 'start_time >= @todayStart && start_time <= @todayEnd'
           '&& at.id = "${_parkProvider.currentPark.id}"',

@@ -44,6 +44,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "feedback",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/feedback-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "ffi",
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/ffi-2.1.3",
       "packageUri": "lib/",
@@ -92,6 +98,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "flutter_localizations",
+      "rootUri": "file:///Users/giladomesi/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "flutter_plugin_android_lifecycle",
       "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.21",
       "packageUri": "lib/",
@@ -135,7 +147,7 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+11",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+12",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -309,7 +321,7 @@
     },
     {
       "name": "shared_preferences_foundation",
-      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.1",
+      "rootUri": "file:///Users/giladomesi/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.2",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -416,7 +428,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-08-12T14:05:54.389775Z",
+  "generated": "2024-08-15T06:32:11.383638Z",
   "generator": "pub",
   "generatorVersion": "3.5.0",
   "flutterRoot": "file:///Users/giladomesi/flutter",

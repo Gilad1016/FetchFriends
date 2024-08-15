@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:feedback/feedback.dart'; // Import the feedback package
 import '../../common/design/color_pallette.dart';
 import '../../common/providers/router/routes_utils.dart';
 import '../park_provider.dart';
@@ -56,6 +57,11 @@ class _ParkAppBarState extends State<ParkAppBar> {
               case 1:
                 GoRouter.of(context).pushNamed(AppPage.about.toName);
                 break;
+              case 2:
+                BetterFeedback.of(context).show((feedback) {
+                  // Handle feedback submission here, e.g., send it to your backend or email
+                });
+                break;
             }
           },
           icon: const Icon(Icons.more_vert),
@@ -67,6 +73,10 @@ class _ParkAppBarState extends State<ParkAppBar> {
             const PopupMenuItem<int>(
               value: 1,
               child: Text('About'),
+            ),
+            const PopupMenuItem<int>(
+              value: 2,
+              child: Text('Feedback'),
             ),
           ],
         ),
