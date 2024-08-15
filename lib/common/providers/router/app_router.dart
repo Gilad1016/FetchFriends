@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../about/about.dart';
 import '../../../dog_management/dog_management.dart';
-import '../../../landing.dart';
+import '../../../landing/landing.dart';
 import '../../../park/park_schedule.dart';
 import '../../pages/splash.dart';
 import '../../pages/error.dart';
@@ -58,11 +58,15 @@ class AppRouter {
           return AppPage.boot.toPath;
 
         case AppState.newUser:
-          return AppPage.mngDog.toPath;
+          if (state.matchedLocation != AppPage.landing.toPath &&
+              state.matchedLocation != AppPage.mngDog.toPath) {
+            return AppPage.landing.toPath;
+          }
 
         case AppState.knownUser:
           if ((state.matchedLocation == AppPage.landing.toPath ||
-              state.matchedLocation == AppPage.boot.toPath)) {
+              state.matchedLocation == AppPage.boot.toPath) ||
+              state.matchedLocation == "/") {
             return AppPage.parkHome.toPath;
           }
 

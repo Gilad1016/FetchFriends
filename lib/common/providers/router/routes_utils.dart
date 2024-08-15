@@ -12,7 +12,7 @@ extension AppPageExtension on AppPage {
   String get toPath {
     switch (this) {
       case AppPage.parkHome:
-        return "/";
+        return "/park";
       case AppPage.error:
         return "/error";
       case AppPage.landing:
