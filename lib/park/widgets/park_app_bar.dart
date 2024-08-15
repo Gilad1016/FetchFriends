@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../common/design/color_pallette.dart';
 import '../park_provider.dart';
@@ -44,6 +45,29 @@ class _ParkAppBarState extends State<ParkAppBar> {
           onPressed: () {
             _parkProvider.nextPark();
           },
+        ),
+        PopupMenuButton<int>(
+          onSelected: (int result) {
+            switch (result) {
+              case 0:
+                GoRouter.of(context).go('/MngDog');
+                break;
+              case 1:
+                GoRouter.of(context).go('/About');
+                break;
+            }
+          },
+          icon: const Icon(Icons.more_vert),
+          itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+            const PopupMenuItem<int>(
+              value: 0,
+              child: Text('My dogs'),
+            ),
+            const PopupMenuItem<int>(
+              value: 1,
+              child: Text('About'),
+            ),
+          ],
         ),
       ],
     );

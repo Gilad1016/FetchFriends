@@ -4,7 +4,7 @@ enum AppPage {
   error,
   landing,
   boot,
-  addDog,
+  mngDog,
 }
 
 extension AppPageExtension on AppPage {
@@ -18,8 +18,8 @@ extension AppPageExtension on AppPage {
         return "/landing";
       case AppPage.boot:
         return "/boot";
-      case AppPage.addDog:
-        return "/addDog";
+      case AppPage.mngDog:
+        return "/MngDog";
       default:
         return "/";
     }
@@ -35,27 +35,10 @@ extension AppPageExtension on AppPage {
         return "LANDING";
       case AppPage.boot:
         return "BOOT";
-      case AppPage.addDog:
-        return "ADD_DOG";
+      case AppPage.mngDog:
+        return "MNG_DOG";
       default:
         return "PARK";
-    }
-  }
-
-  String get toTitle {
-    switch (this) {
-      case AppPage.parkHome:
-        return "My App";
-      case AppPage.error:
-        return "My App Error";
-      case AppPage.landing:
-        return "Welcome to My App";
-      case AppPage.boot:
-        return "My App Boot";
-      case AppPage.addDog:
-        return "My App Add Dog";
-      default:
-        return "My App";
     }
   }
 }

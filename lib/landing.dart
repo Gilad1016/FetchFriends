@@ -24,7 +24,7 @@ class LandingPage extends StatelessWidget {
             CustomButton(
               text: 'Join app',
               onPressed: () {
-                GoRouter.of(context).pushNamed(AppPage.addDog.toName);
+                GoRouter.of(context).pushNamed(AppPage.mngDog.toName);
               },
             ),
           ],

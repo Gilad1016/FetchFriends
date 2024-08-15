@@ -41,8 +41,8 @@ class AppRouter {
         builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
-        path: AppPage.addDog.toPath,
-        name: AppPage.addDog.toName,
+        path: AppPage.mngDog.toPath,
+        name: AppPage.mngDog.toName,
         builder: (context, state) => const DogMngPage(),
       ),
     ],
@@ -57,11 +57,9 @@ class AppRouter {
           return AppPage.boot.toPath;
 
         case AppState.newUser:
-          return AppPage.addDog.toPath;
+          return AppPage.mngDog.toPath;
 
         case AppState.knownUser:
-          // return AppPage.addPreferredPark.toPath;
-        // //TODO: after add parks is done change this to add parks
           if ((state.matchedLocation == AppPage.landing.toPath ||
               state.matchedLocation == AppPage.boot.toPath)) {
             return AppPage.parkHome.toPath;
@@ -71,7 +69,6 @@ class AppRouter {
           return AppPage.error.toPath;
       }
 
-      // return null;  // Returning null means no redirectio
       return state.matchedLocation;
     },
   );
