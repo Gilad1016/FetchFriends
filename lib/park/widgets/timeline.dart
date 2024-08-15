@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +93,7 @@ class _TimelineState extends State<Timeline> {
   }
 
   void _scrollToCurrentTime() {
-    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenWidth = kIsWeb ? 375 : MediaQuery.of(context).size.width;
     final double currentHourOffset = (4.5 + _now.minute / 60.0) * hourWidth;
 
     // Scroll to the position where the red line is centered on the screen
