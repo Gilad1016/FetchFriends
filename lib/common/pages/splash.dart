@@ -9,6 +9,7 @@ class SplashPage extends StatelessWidget {
 
   Future<void> onStartUp(BuildContext context) async {
     final appStateProvider = Provider.of<AppStateProvider>(context, listen: false);
+
     try {
       await appStateProvider.revalidateUserState();
     } catch (e) {
@@ -23,9 +24,9 @@ class SplashPage extends StatelessWidget {
       onStartUp(context);
     });
 
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Image.asset("assets/images/dog_bouncing_ball.gif"),
       ),
     );
   }

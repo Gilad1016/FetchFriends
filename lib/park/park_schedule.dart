@@ -14,9 +14,9 @@ class ParkSchedulePage extends StatelessWidget {
     final parkProvider = Provider.of<ParkProvider>(context);
 
     return parkProvider.currentPark.name == '' ?
-    const Scaffold(
+    Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: Image.asset("assets/images/dog_bouncing_ball.gif"),
       ),
     ) :
     const Scaffold(

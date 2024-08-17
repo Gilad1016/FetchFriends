@@ -38,11 +38,18 @@ dependencies:
   intl: ^0.19.0
   feedback: ^3.1.0
   http: ^1.2.2
-
+  flutter_launcher_icons: ^0.13.1
 #  location: ^6.0.2
 #  chatview: ^1.3.1
 
-
+flutter_launcher_icons:
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/IconKitchen/web/icon-512-maskable.png"
+  android: "launcher_icon"
+  image_path_android: "assets/IconKitchen/android/res/mipmap-xxxhdpi/fetch_friends.png"
+  adaptive_icon_background: "assets/IconKitchen/android/res/mipmap-xxxhdpi/fetch_friends_background.png"
+  adaptive_icon_foreground: "assets/IconKitchen/android/res/mipmap-xxxhdpi/fetch_friends_foreground.png"
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +63,8 @@ flutter:
   assets:
     - assets/who-let-the-dogs-out-logo-zip-file/png/logo-color.png
     - assets/who-let-the-dogs-out-logo-zip-file/png/logo-no-background.png
+    - assets/images/Ball.gif
+    - assets/images/dog_bouncing_ball.gif
 
 
   fonts:
